@@ -33,13 +33,14 @@ export class Contador {
   
     actualizarCuenta() {
       // this.cuentaElement.innerText = this.numero;
-        const gruposActuales = this.cuentaElement.querySelectorAll(".grupo");
+      const gruposActuales = this.cuentaElement.querySelectorAll(".grupo");
       const separadoresActuales = this.cuentaElement.querySelectorAll(".separador");
           if(gruposActuales.length > 0) {
               gruposActuales.forEach(grupo => this.cuentaElement.removeChild(grupo));
         separadoresActuales.forEach(separador => this.cuentaElement.removeChild(separador));
           }
       let grupoActual;
+      if(this.numero!=30) {
           for (let i = 0; i < this.numero; i++) {
               if(i%5 === 0){
                   const nuevoGrupo = document.createElement("div");
@@ -57,6 +58,13 @@ export class Contador {
               nuevoFosforo.src = "/img/fosforo.png";
               grupoActual.appendChild(nuevoFosforo)
           }
+        } else {
+          swal({
+            title: "El juego a Terminado!",
+            icon: "warning",
+            button: "Ok!",
+          });
+        }
     }
   }
 
