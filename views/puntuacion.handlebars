@@ -1,0 +1,58 @@
+
+    <body id="pintao">
+        <div class="table100 ver3 m-b-110">
+            <div class="table100-head">
+            <table>
+            <thead>
+        <tr>
+    <th class="column1">usuarios</th>
+    <th class="column2">Puntos</th>
+    </tr>
+    </thead>
+    </table>
+    </div>
+    <div class="table100-body js-pscroll ps ps--active-y">
+    <table id="tablapuntos">
+    <tbody>
+    <tr>
+            {{#each consulta1}}
+                <td class="column1"> {{this.usuario_log}}   </td>
+                <td class="column2"> {{this.puntaje_maximo}} </td>
+            {{/each}}
+    </tr>
+        
+    <tr>        
+      
+    </tr>
+    </tbody>
+    </table>
+    </div>
+    </div>
+    </body>
+    
+
+<!--
+    <div class="containerPuesto">
+            <center>Tabla de Lideres</center>
+        </div>
+        <div class="lider">
+            <div class="nombreLider">{{nombreUser1}}</div>
+            <div class="puntuacion">{{puntuacion1}}</div>
+        </div>
+        <div class="lider">
+            <div class="nombreLider">{{nombreUser2}}</div>
+            <div class="puntuacion">{{puntuacion2}}</div>
+        </div>
+        <div class="lider">
+            <div class="nombreLider">{{nombreUser3}}</div>
+            <div class="puntuacion">{{puntuacion3}}</div>
+        </div>
+        <div class="lider">
+            <div class="nombreLider">{{nombreUser4}}</div>
+            <div class="puntuacion">{{puntuacion4}}</div>
+        </div>
+        <div class="lider">
+            <div class="nombreLider">{{nombreUser5}}</div>
+            <div class="puntuacion">{{puntuacion5}}</div>
+    </div>
+!>
