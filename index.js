@@ -15,6 +15,15 @@ const exphbs  = require('express-handlebars'); //Para el manejo de los HTML
 const bodyParser = require('body-parser'); //Para el manejo de los strings JSON
 const MySQL = require('./modulos/mysql'); //Añado el archivo mysql.js presente en la carpeta módulos
 const session = require('express-session');
+const { initializeApp } = require("firebase/app");
+const {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  sendEmailVerification,
+  signOut,
+  GoogleAuthProvider,
+} = require("firebase/auth");
 const app = express(); //Inicializo express para el manejo de las peticiones
 
 app.use(express.static('public')); //Expongo al lado cliente la carpeta "public"
@@ -30,6 +39,23 @@ const Listen_Port = 3000; //Puerto por el que estoy ejecutando la página Web
 app.listen(Listen_Port, function() {
     console.log('Servidor NodeJS corriendo en http://localhost:' + Listen_Port + '/');
 });
+
+
+// Configuración de Firebase
+const firebaseConfig = {
+    apiKey: "AIzaSyDERAutq7CQnhSGjsjdewoia1T3NEv_rA4",
+    authDomain: "g05-tpi-2cuat-2023.firebaseapp.com",
+    projectId: "g05-tpi-2cuat-2023",
+    storageBucket: "g05-tpi-2cuat-2023.appspot.com",
+    messagingSenderId: "873208984450",
+    appId: "1:873208984450:web:307fac857d92c895dd159b"  
+  };
+
+  const appFirebase = initializeApp(firebaseConfig);
+  const auth = getAuth(appFirebase);
+
+  // Importar AuthService
+  const authService = require("./authservice");
 
 app.use(session({secret: '123456', resave: true, saveUninitialized: true}));
 
@@ -53,19 +79,33 @@ app.get('/', function(req, res)
 });
 let id = -1
 app.post('/register', async function(req, res){
-    let user_exists = await (MySQL.realizarQuery(`select user from users WHERE user = "${req.body.user}"`))
-    id = req.body.usuario
+
+    console.log("Soy un pedido POST", req.body);
+    let user_exists = await (MySQL.realizarQuery(`select usuario from usuarios WHERE usuario = "${req.body.user}"`))
+    id = req.body.email
     console.log(user_exists)
-    if (user_exists.length == 0) {
-        console.log(await (MySQL.realizarQuery("select * from users")))
-        await MySQL.realizarQuery(`insert into users (user,password,admin) values ("${req.body.user}","${req.body.pass}", 0)`)
-        res.render('home', {usuario:req.body.usuario}); 
+    const { email, password } = req.body;
+
+    try {
+        await authService.registerUser(auth, { email, password });
+        res.render("register", {
+          //message: "Registro exitoso. Puedes iniciar sesión ahora.",
+        });
+      } catch (error) {
+        console.error("Error en el registro:", error);
+        res.render("register", {
+          message: "Error en el registro: " + error.message,
+        });
     }
-    else{
-        res.render('register',);
-    }
-    
-    });
+});
+    /*if (user_exists.length == 0) {
+        console.log(await (MySQL.realizarQuery("select * from usuarios")))
+        await MySQL.realizarQuery(`insert into usuarios (usuario,contraseña,administrador) values ("${req.body.user}","${req.body.pass}", 0)`)
+        res.render('home', {usuario:req.body.email}); 
+    /*if (user_exists.length == 0) {
+        console.log(await (MySQL.realizarQuery("select * from usuarios")))
+        await MySQL.realizarQuery(`insert into usuarios (usuario,contraseña,administrador) values ("${req.body.user}","${req.body.pass}", 0)`)
+        res.render('home', {usuario:req.body.email}); 
 app.put('/login', async function(req, res){
     console.log("Soy un pedido PUT", req.body);  
     let response = await MySQL.realizarQuery(`SELECT * FROM users WHERE user = "${req.body.user}" AND password = "${req.body.pass}"`)
@@ -80,7 +120,7 @@ app.put('/login', async function(req, res){
     else{
         res.send({success:false})   
     }});
-
+*/
 app.get('/register', function(req, res){
     console.log(req.query); 
     res.render('register', null);
@@ -101,6 +141,22 @@ app.get('/reglas', function(req, res){
 });
 app.get('/anotador', function(req, res){
     res.render('anotador', null);
-});
+}); 
 
-
+app.post("/login", async (req, res) => {
+    const { email, password } = req.body;
+  
+    try {
+      const userCredential = await authService.loginUser(auth, {
+        email,
+        password,
+      });
+      // Aquí puedes redirigir al usuario a la página que desees después del inicio de sesión exitoso
+      res.redirect("/home");
+    } catch (error) {
+      console.error("Error en el inicio de sesión:", error);
+      res.render("login", {
+        message: "Error en el inicio de sesión: " + error.message,
+      });
+    }
+  });
