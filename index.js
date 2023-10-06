@@ -14,6 +14,7 @@ const express = require('express'); //Para el manejo del servidor Web
 const exphbs  = require('express-handlebars'); //Para el manejo de los HTML
 const bodyParser = require('body-parser'); //Para el manejo de los strings JSON
 const MySQL = require('./modulos/mysql'); //Añado el archivo mysql.js presente en la carpeta módulos
+
 const { initializeApp } = require("firebase/app");
 const {
   getAuth,
@@ -40,6 +41,9 @@ const firebaseConfig = {
   // Importar AuthService
   const authService = require("./authService");
 
+
+const session = require('express-session');
+
 const app = express(); //Inicializo express para el manejo de las peticiones
 
 app.use(express.static('public')); //Expongo al lado cliente la carpeta "public"
@@ -56,6 +60,20 @@ app.listen(Listen_Port, function() {
     console.log('Servidor NodeJS corriendo en http://localhost:' + Listen_Port + '/');
 });
 
+app.use(session({secret: '123456', resave: true, saveUninitialized: true}));
+
+/*
+    A PARTIR DE ESTE PUNTO GENERAREMOS NUESTRO CÓDIGO (PARA RECIBIR PETICIONES, MANEJO DB, ETC.)
+    A PARTIR DE ESTE PUNTO GENERAREMOS NUESTRO CÓDIGO (PARA RECIBIR PETICIONES, MANEJO DB, ETC.)
+    A PARTIR DE ESTE PUNTO GENERAREMOS NUESTRO CÓDIGO (PARA RECIBIR PETICIONES, MANEJO DB, ETC.)
+    A PARTIR DE ESTE PUNTO GENERAREMOS NUESTRO CÓDIGO (PARA RECIBIR PETICIONES, MANEJO DB, ETC.)
+    A PARTIR DE ESTE PUNTO GENERAREMOS NUESTRO CÓDIGO (PARA RECIBIR PETICIONES, MANEJO DB, ETC.)
+    A PARTIR DE ESTE PUNTO GENERAREMOS NUESTRO CÓDIGO (PARA RECIBIR PETICIONES, MANEJO DB, ETC.)
+    A PARTIR DE ESTE PUNTO GENERAREMOS NUESTRO CÓDIGO (PARA RECIBIR PETICIONES, MANEJO DB, ETC.)
+    A PARTIR DE ESTE PUNTO GENERAREMOS NUESTRO CÓDIGO (PARA RECIBIR PETICIONES, MANEJO DB, ETC.)
+    A PARTIR DE ESTE PUNTO GENERAREMOS NUESTRO CÓDIGO (PARA RECIBIR PETICIONES, MANEJO DB, ETC.)
+*/
+
 
 app.get('/', function(req, res)
 {
@@ -65,6 +83,7 @@ app.get('/', function(req, res)
 });
 let id = -1
 app.post('/register', async function(req, res){
+
     console.log("Soy un pedido POST", req.body);
     let user_exists = await (MySQL.realizarQuery(`select usuario from usuarios WHERE usuario = "${req.body.user}"`))
     id = req.body.email
@@ -86,6 +105,15 @@ app.post('/register', async function(req, res){
         console.log(await (MySQL.realizarQuery("select * from usuarios")))
         await MySQL.realizarQuery(`insert into usuarios (usuario,contraseña,administrador) values ("${req.body.user}","${req.body.pass}", 0)`)
         res.render('home', {usuario:req.body.email}); 
+
+    let user_exists = await (MySQL.realizarQuery(`select user from users WHERE user = "${req.body.user}"`))
+    id = req.body.usuario
+    console.log(user_exists)
+    if (user_exists.length == 0) {
+        console.log(await (MySQL.realizarQuery("select * from users")))
+        await MySQL.realizarQuery(`insert into users (user,password,admin) values ("${req.body.user}","${req.body.pass}", 0)`)
+        res.render('home', {usuario:req.body.usuario}); 
+
     }
     else{
         res.render('register',);
@@ -94,7 +122,7 @@ app.post('/register', async function(req, res){
     });
 app.put('/login', async function(req, res){
     console.log("Soy un pedido PUT", req.body);  
-    let response = await MySQL.realizarQuery(`SELECT * FROM usuarios WHERE usuario = "${req.body.user}" AND contraseña = "${req.body.pass}"`)
+    let response = await MySQL.realizarQuery(`SELECT * FROM users WHERE user = "${req.body.user}" AND password = "${req.body.pass}"`)
     id = req.body.user
     if (response.length > 0) {
         if(req.body.user =="n"){
