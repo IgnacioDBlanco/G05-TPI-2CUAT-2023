@@ -18,13 +18,32 @@
   }
   */
   
-  #b {
-    background-image: url("/img/fondolog.jpg");
-    background-repeat: no-repeat;
-    background-size: cover;
-    box-sizing: border-box;
-  }
-  
+#b {
+  background-image: url("/img/fondolog.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  box-sizing: border-box;
+}
+
+.iconcitos{
+  display:flex;
+  width: 100%;
+}
+
+.iconizquierda{
+  margin: 10px;
+  width: 95%;
+}
+
+.iconderecha{
+  align-items: right;
+  margin: 10px;
+}
+
+.botonesarriba{
+  cursor: pointer;
+}
+
   .login-form {
     width: 500px;
     height: 520px;
