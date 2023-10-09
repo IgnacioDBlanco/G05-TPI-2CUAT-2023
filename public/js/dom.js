@@ -61,3 +61,7 @@ function goToHome() {
   location.href ='/home';
 }
 
+function botonVolver() {
+  location.href = '/inicio'
+}
+

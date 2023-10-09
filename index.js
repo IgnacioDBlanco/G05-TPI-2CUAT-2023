@@ -156,5 +156,7 @@ app.get('/reglas', function(req, res){
 app.get('/anotador', function(req, res){
     res.render('anotador', null);
 });
-
+app.get('/inicio', function(req, res){
+    res.render('inicio', null);
+});
 
