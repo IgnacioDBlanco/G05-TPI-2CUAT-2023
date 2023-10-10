@@ -22,6 +22,7 @@ const {
   signInWithEmailAndPassword,
   sendEmailVerification,
   signOut,
+  loginUser,
   GoogleAuthProvider,
 } = require("firebase/auth");
 
@@ -99,6 +100,33 @@ app.post('/register', async function(req, res){
           message: "Error en el registro: " + error.message,
         });
       }
+
+      /*const loginUser = async (auth, { email, password }) => {
+        try {
+          const userCredential = await signInWithEmailAndPassword(
+            auth,
+            email,
+            password
+          );
+      
+          if (!userCredential.user.emailVerified) {
+            throw new Error(
+              "Por favor, verifica tu correo electrónico para iniciar sesión."
+            );
+          }
+      
+          console.log("Inicio de sesión exitoso para el usuario:", email);
+          return userCredential;
+        } catch (error) {
+          console.error("Error en el inicio de sesión:", error);
+          throw error;
+        }
+      };
+
+
+
+
+
     /*if (user_exists.length == 0) {
         console.log(await (MySQL.realizarQuery("select * from usuarios")))
         await MySQL.realizarQuery(`insert into usuarios (usuario,contraseña,administrador) values ("${req.body.user}","${req.body.pass}", 0)`)
@@ -115,7 +143,11 @@ app.post('/register', async function(req, res){
     }
     else{
         res.render('register',);
-    }*/
+    }
+    module.exports = {
+        registerUser,
+        loginUser,
+      };*/
     
     });
 app.put('/login', async function(req, res){
