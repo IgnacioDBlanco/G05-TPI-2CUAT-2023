@@ -28,6 +28,7 @@
 .iconcitos{
   display:flex;
   width: 100%;
+  height: 40px;
 }
 
 .iconizquierda{
@@ -40,9 +41,30 @@
   margin: 10px;
 }
 
-.botonesarriba{
+.botonesarribaizq{
   cursor: pointer;
+  position: absolute;
+  left: 0px;
+  margin: 10px;
+  transition: 250ms;
 }
+.botonesarribaizq:hover {
+ transform: scale(1.2);
+}
+
+
+.botonesarribader{
+  cursor: pointer;
+  position: absolute;
+  right: 0px;
+  margin: 10px;
+  transition: 250ms;
+}
+.botonesarribader:hover {
+ transform: scale(1.2);
+}
+
+
 
   .login-form {
     width: 500px;
@@ -256,15 +278,6 @@ h1 {
   transform: scale(1.2);
  }
 
- #boke {
-  background-color: #173138;
- }
- #pintao {
-  background-color: #173138;
- }
- #inf {
-  background-color: #173138;
- }
  
 
 .irajuego {
@@ -514,7 +527,7 @@ img{
 .botonesJugador{
 	position:fixed;
 	margin-top: auto;
-	top:50px;
+	top:85px;
 }
 
 #reset {

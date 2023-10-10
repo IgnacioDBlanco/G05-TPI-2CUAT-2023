@@ -60,10 +60,12 @@ export class Contador {
           }
         } else {
           swal({
-            title: "El juego a Terminado!",
+            title: "El juego ha terminado!",
             icon: "warning",
             button: "Ok!",
           });
+          p1.reset();
+          p2.reset();
         }
     }
   }
