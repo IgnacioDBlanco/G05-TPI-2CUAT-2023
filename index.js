@@ -81,18 +81,16 @@ app.get('/', function(req, res)
     console.log(req.query); //En req.query vamos a obtener el objeto con los parámetros enviados desde el frontend por método GET
     res.render('inicio', null); //Renderizo página "login" sin pasar ningún objeto a Handlebars
 });
-let id = -1
-app.post('/register', async function(req, res){
 
-    console.log("Soy un pedido POST", req.body);
-    let user_exists = await (MySQL.realizarQuery(`select usuario from usuarios WHERE usuario = "${req.body.user}"`))
-    id = req.body.email
-    console.log(user_exists)
+app.post('/register', async function(req, res){
+    let user_exists = await (MySQL.realizarQuery(`select * from usersProyect WHERE mail = "${req.body.user}"`))
+    //req.session.id = user_exists[0].id
+    //console.log(user_exists[0].id)
     const { email, password } = req.body;
 
     try {
         await authService.registerUser(auth, { email, password });
-        res.render("register", {
+        res.render("home", {
           //message: "Registro exitoso. Puedes iniciar sesión ahora.",
         });
       } catch (error) {
@@ -122,8 +120,7 @@ app.post('/register', async function(req, res){
     });
 app.put('/login', async function(req, res){
     console.log("Soy un pedido PUT", req.body);  
-    let response = await MySQL.realizarQuery(`SELECT * FROM users WHERE user = "${req.body.user}" AND password = "${req.body.pass}"`)
-    id = req.body.user
+    let response = await MySQL.realizarQuery(`SELECT * FROM usersProyect WHERE mail = "${req.body.user}" AND pass = "${req.body.pass}"`)
     if (response.length > 0) {
         if(req.body.user =="n"){
             res.send({success:true, admin:true})            
@@ -159,4 +156,10 @@ app.get('/anotador', function(req, res){
 app.get('/inicio', function(req, res){
     res.render('inicio', null);
 });
+
+
+
+/*  TRUCOO
+https://github.com/p4bl1t0/truco-argento/blob/master/js/truco.js
+ */
 
