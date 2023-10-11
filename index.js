@@ -101,7 +101,7 @@ app.post('/register', async function(req, res){
         });
       }
 
-      /*const loginUser = async (auth, { email, password }) => {
+      const loginUser = async (auth, { email, password }) => {
         try {
           const userCredential = await signInWithEmailAndPassword(
             auth,

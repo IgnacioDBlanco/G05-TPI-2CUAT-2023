@@ -12,21 +12,43 @@
   <path d="M9 4a.5.5 0 0 0-.812-.39L5.825 5.5H3.5A.5.5 0 0 0 3 6v4a.5.5 0 0 0 .5.5h2.325l2.363 1.89A.5.5 0 0 0 9 12V4zM6.312 6.39 8 5.04v5.92L6.312 9.61A.5.5 0 0 0 6 9.5H4v-3h2a.5.5 0 0 0 .312-.11zM12.025 8a4.486 4.486 0 0 1-1.318 3.182L10 10.475A3.489 3.489 0 0 0 11.025 8 3.49 3.49 0 0 0 10 5.525l.707-.707A4.486 4.486 0 0 1 12.025 8z"/>
 </svg>
 </div>
-    </div>
-    <div class="titulo">
-        <h1>
-            REGLAMENTO OFICIAL 
-        </h1>
-    </div>
+ <!-- Trigger/Open The Modal -->
+<button id="myBtn">Open Modal</button>
 
-    <div class="left">
-        <h1>01.</h1>
-        <h1> REGLAMENTO OFICIAL </h1>
-        <h1> EL JUEGO </h1>
-       <div id="myModal" class="modal"  >
+<!-- The Modal -->
+<div id="myModal" class="modal">
 
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <p>Some text in the Modal..</p>
+  </div>
 </div>
+<script>
+// Get the modal
+var modal = document.getElementById("myModal");
 
+// Get the button that opens the modal
+var btn = document.getElementById("myBtn");
 
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks on the button, open the modal
+btn.onclick = function() {
+  modal.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+</script>
 </body>
  
