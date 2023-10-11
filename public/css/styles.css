@@ -25,6 +25,12 @@
   box-sizing: border-box;
 }
 
+#boke{
+  background-image: url("/img/fondojuego.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  box-sizing: border-box;
+}
 .iconcitos{
   display:flex;
   width: 100%;
@@ -576,6 +582,22 @@ button{
 
 dialog{
 	font-size: larger;
+  color: white;
+  background-color: black;
+  border: 2px solid #D4AF37; 
+  border-radius: 10px;
+}
+
+#aceptar{
+  border: 2px solid #D4AF37;
+  border-radius: 10px;
+  color: white;
+	background-color:rgba(0, 0, 0, 0.6);
+  margin-left: 35%;
+}
+
+#aceptar:hover{
+  border: 2px solid #9e801d;
 }
 
 .separador{

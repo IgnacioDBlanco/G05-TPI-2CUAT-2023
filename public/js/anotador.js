@@ -37,10 +37,10 @@ export class Contador {
       const gruposActuales = this.cuentaElement.querySelectorAll(".grupo");
       const separadoresActuales = this.cuentaElement.querySelectorAll(".separador");
       const modal= document.querySelector("dialog");
-          if(gruposActuales.length > 0) {
-              gruposActuales.forEach(grupo => this.cuentaElement.removeChild(grupo));
+      if(gruposActuales.length > 0) {
+        gruposActuales.forEach(grupo => this.cuentaElement.removeChild(grupo));
         separadoresActuales.forEach(separador => this.cuentaElement.removeChild(separador));
-          }
+      }
       let grupoActual;
       if(this.numero!=30) {
           for (let i = 0; i < this.numero; i++) {
@@ -62,12 +62,7 @@ export class Contador {
           }
         } else {
           modal.showModal()
-          document.querySelector("#volver").addEventListener("click", ()=> modal.close())
-          document.querySelector("#aceptar").addEventListener("click", ()=> {
-          p1.reset();
-          p2.reset();
-          modal.close()
-        })};
+        };
           
         }
     }
