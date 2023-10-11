@@ -16,6 +16,7 @@ export class Contador {
       this.actualizarCuenta();
     }
   
+  
     agregar(cantidad = 1) {
       this.numero += cantidad;
       this.actualizarCuenta();
@@ -35,6 +36,7 @@ export class Contador {
       // this.cuentaElement.innerText = this.numero;
       const gruposActuales = this.cuentaElement.querySelectorAll(".grupo");
       const separadoresActuales = this.cuentaElement.querySelectorAll(".separador");
+      const modal= document.querySelector("dialog");
           if(gruposActuales.length > 0) {
               gruposActuales.forEach(grupo => this.cuentaElement.removeChild(grupo));
         separadoresActuales.forEach(separador => this.cuentaElement.removeChild(separador));
@@ -59,16 +61,16 @@ export class Contador {
               grupoActual.appendChild(nuevoFosforo)
           }
         } else {
-          swal({
-            title: "El juego ha terminado!",
-            icon: "warning",
-            button: "Ok!",
-          });
+          modal.showModal()
+          document.querySelector("#volver").addEventListener("click", ()=> modal.close())
+          document.querySelector("#aceptar").addEventListener("click", ()=> {
           p1.reset();
           p2.reset();
+          modal.close()
+        })};
+          
         }
     }
-  }
 
 
 
