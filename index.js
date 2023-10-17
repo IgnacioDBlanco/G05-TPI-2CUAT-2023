@@ -84,13 +84,10 @@ app.get('/', function(req, res)
 });
 
 app.post('/register', async function(req, res){
-    let user_exists = await (MySQL.realizarQuery(`select * from usersProyect WHERE mail = "${req.body.user}"`))
-    //req.session.id = user_exists[0].id
-    //console.log(user_exists[0].id)
     const { email, password } = req.body;
-
     try {
         await authService.registerUser(auth, { email, password });
+        await MySQL.realizarQuery (`insert into usersProyect (mail,pass) values ("${req.body.email}","${req.body.password}")`)
         res.render("home", {
           //message: "Registro exitoso. Puedes iniciar sesión ahora.",
         });
@@ -100,33 +97,6 @@ app.post('/register', async function(req, res){
           message: "Error en el registro: " + error.message,
         });
       }
-
-      const loginUser = async (auth, { email, password }) => {
-        try {
-          const userCredential = await signInWithEmailAndPassword(
-            auth,
-            email,
-            password
-          );
-      
-          if (!userCredential.user.emailVerified) {
-            throw new Error(
-              "Por favor, verifica tu correo electrónico para iniciar sesión."
-            );
-          }
-      
-          console.log("Inicio de sesión exitoso para el usuario:", email);
-          return userCredential;
-        } catch (error) {
-          console.error("Error en el inicio de sesión:", error);
-          throw error;
-        }
-      };
-
-
-
-
-
     /*if (user_exists.length == 0) {
         console.log(await (MySQL.realizarQuery("select * from usuarios")))
         await MySQL.realizarQuery(`insert into usuarios (usuario,contraseña,administrador) values ("${req.body.user}","${req.body.pass}", 0)`)
@@ -153,7 +123,17 @@ app.post('/register', async function(req, res){
 app.put('/login', async function(req, res){
     console.log("Soy un pedido PUT", req.body);  
     let response = await MySQL.realizarQuery(`SELECT * FROM usersProyect WHERE mail = "${req.body.user}" AND pass = "${req.body.pass}"`)
-    if (response.length > 0) {
+    let verifica = false
+    const {email , password} = {email : req.body.user, password : req.body.pass}
+    try {
+      authService.loginUser(auth, { email, password });
+      verifica = true
+    } catch (error) {
+      verifica = false
+      console.log(error)
+    }
+
+    if (response.length > 0 && verifica) {
         if(req.body.user =="n"){
             res.send({success:true, admin:true})            
         }
