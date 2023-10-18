@@ -19,14 +19,14 @@
   */
   
 #b {
-  background-image: url("/img/fondolog.jpg");
+  background-image: url("/images/fondolog.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   box-sizing: border-box;
 }
 
 #boke{
-  background-image: url("/img/fondojuego.jpg");
+  background-image: url("/images/fondojuego.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   box-sizing: border-box;
