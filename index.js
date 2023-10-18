@@ -88,41 +88,19 @@ app.post('/register', async function(req, res){
     try {
         await authService.registerUser(auth, { email, password });
         await MySQL.realizarQuery (`insert into usersProyect (mail,pass) values ("${req.body.email}","${req.body.password}")`)
-        res.render("home", {
-          //message: "Registro exitoso. Puedes iniciar sesión ahora.",
-        });
-      } catch (error) {
+        res.render("home");
+    } catch (error) {
         console.error("Error en el registro:", error);
         res.render("register", {
           message: "Error en el registro: " + error.message,
         });
       }
-    /*if (user_exists.length == 0) {
-        console.log(await (MySQL.realizarQuery("select * from usuarios")))
-        await MySQL.realizarQuery(`insert into usuarios (usuario,contraseña,administrador) values ("${req.body.user}","${req.body.pass}", 0)`)
-        res.render('home', {usuario:req.body.email}); 
+});
 
-    let user_exists = await (MySQL.realizarQuery(`select user from users WHERE user = "${req.body.user}"`))
-    id = req.body.usuario
-    console.log(user_exists)
-    if (user_exists.length == 0) {
-        console.log(await (MySQL.realizarQuery("select * from users")))
-        await MySQL.realizarQuery(`insert into users (user,password,admin) values ("${req.body.user}","${req.body.pass}", 0)`)
-        res.render('home', {usuario:req.body.usuario}); 
-
-    }
-    else{
-        res.render('register',);
-    }
-    module.exports = {
-        registerUser,
-        loginUser,
-      };*/
-    
-    });
 app.put('/login', async function(req, res){
-    console.log("Soy un pedido PUT", req.body);  
+    console.log("login", req.body);  
     let response = await MySQL.realizarQuery(`SELECT * FROM usersProyect WHERE mail = "${req.body.user}" AND pass = "${req.body.pass}"`)
+    if (response.length > 0) {
     let verifica = false
     const {email , password} = {email : req.body.user, password : req.body.pass}
     try {
@@ -137,12 +115,12 @@ app.put('/login', async function(req, res){
         if(req.body.user =="n"){
             res.send({success:true, admin:true})            
         }
-        else if (req.body.usuario!="n")
+        else if (req.body.usuario!="n"){
         res.send({success: true, admin:false})    
-    }
+    }}
     else{
         res.send({success:false})   
-    }});
+    }}});
 
 app.get('/register', function(req, res){
     console.log(req.query); 
@@ -169,6 +147,20 @@ app.get('/inicio', function(req, res){
     res.render('inicio', null);
 });
 
+app.put('/bannear', async function(req, res){
+    user_exists = await MySQL.realizarQuery(`select mail from usersProyect where mail = "${req.body.mail}"`)
+    console.log(user_exists)
+    if (user_exists.length > 0) {
+        await MySQL.realizarQuery(`delete from usersProyect where mail = "${req.body.mail}"`)
+        console.log("true")
+        res.send({bannear:true});    
+    }
+    else{
+        console.log("falseee")
+        res.send({bannear:false});
+    }
+    
+});
 
 
 /*  TRUCOO

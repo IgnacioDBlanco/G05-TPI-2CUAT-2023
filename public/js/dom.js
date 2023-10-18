@@ -1,13 +1,12 @@
 async function fetchLogin(data){
   try {
     const response = await fetch("/login", {
-      method: "PUT", // or 'POST'
+      method: "PUT", 
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
     });
-    //En result obtengo la respuesta
     const result = await response.json();
     console.log("Success:", result)
     
@@ -31,19 +30,15 @@ async function fetchLogin(data){
   }
 }
 
-//Esta funcion la llama el boton Ingresar que tiene que ser type button para ejecutar el onclick
 function login() {
-  //Leo los datos del input
   let user = document.getElementById("userId").value
   let pass = document.getElementById("passwordId").value
 
-  //Creo un objeto de forma instantanea
   let object = {
       user: user,
       pass: pass
   }
 
-  //data es el objeto que le paso al back
   if(object.user != "" && object.pass != ""){
     fetchLogin(object)
     
@@ -65,3 +60,53 @@ function botonVolver() {
   location.href = '/inicio'
 }
 
+async function fetchBannearJson(data){
+  try {
+    const response = await fetch("/bannear", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    const result = await response.json();
+    console.log("Success:", result)
+    
+      if (result.bannear == false) {
+        swal({
+          title: "no existe el usuario",
+          icon: "warning",
+          button: "Ok!",
+        });
+      } 
+      else if (result.bannear == true) {
+        swal({
+          title: "usuario banneado correctamente",
+          icon: "success",
+          button: "Ok!",
+        });
+
+  }}
+  catch (error) {
+    console.error("Error:", error);
+  }
+}
+
+
+function bannearUser() {
+  let mail = document.getElementById("mail_ban").value
+
+  let data = {
+     mail:mail
+  }
+
+  if(data.mail != ""){
+    fetchBannearJson(data) 
+  }
+  else{
+    swal({
+      title: "No ingreso ningun mail",
+      button: "Ok!",
+    });
+  }
+}
