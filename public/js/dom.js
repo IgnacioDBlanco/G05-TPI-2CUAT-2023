@@ -74,14 +74,14 @@ async function fetchBannearJson(data){
     
       if (result.bannear == false) {
         swal({
-          title: "no existe el usuario",
+          title: "No existe el usuario",
           icon: "warning",
           button: "Ok!",
         });
       } 
       else if (result.bannear == true) {
         swal({
-          title: "usuario banneado correctamente",
+          title: "Usuario banneado correctamente",
           icon: "success",
           button: "Ok!",
         });
@@ -109,4 +109,17 @@ function bannearUser() {
       button: "Ok!",
     });
   }
+}
+
+
+function iralogin(){
+  location.href ='/login';
+}
+
+function iraregistro(){
+  location.href ='/register';
+}
+
+function iraAnotador(){
+  location.href ='/anotador';
 }
