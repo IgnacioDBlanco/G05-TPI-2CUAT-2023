@@ -165,5 +165,9 @@ app.put('/bannear', async function(req, res){
 
 /*  TRUCOO
 https://github.com/p4bl1t0/truco-argento/blob/master/js/truco.js
- */
+idea de nico: si vos escribius en el chat palabras clave como truco envido, que se cante automaticamente. 
+llamar a la funcion con un par de if 
+fijarse bien lo de  bannear, por ahi se puede hacer lo que dijo tolo.
+
+*/
 
