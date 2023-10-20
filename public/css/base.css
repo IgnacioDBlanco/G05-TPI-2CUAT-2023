@@ -663,6 +663,14 @@ ul li {
 	position:relative;
     text-align: center;
 }
+
+.elfooty{
+    position:relative;
+    text-align: center;
+    width: 100%;
+    height: 15%;
+}
+
 .player-voice {
 	position:absolute;
 	background-color:transparent;
@@ -781,6 +789,7 @@ ul li {
 .game-deck {
 	height:180px; 
 	position:relative;
+    margin-top: 10%;
 	margin-left:10%;
 }
 .game-deck .card {

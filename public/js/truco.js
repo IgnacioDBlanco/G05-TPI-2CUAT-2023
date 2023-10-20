@@ -1,4 +1,4 @@
-	//
+
 	var _log = document.getElementById('log');
 	var _rondaActual = null;
 	var _partidaActual = null;
@@ -6,8 +6,6 @@
 	var limitePuntaje = 15;
 	var Debug = false;
 	
-	
-	//Funciones Primitivas
 	function getRandomInt (min, max) {
 		return Math.floor(Math.random() * (max - min + 1)) + min;
 	}
@@ -140,10 +138,13 @@
 	//------------------------------------------------------------------
 	// Genera codigo HTML para las cartas en mano
 	//------------------------------------------------------------------
-	
+
+	//.PROTOTYPE metodo donde los objetos heredan caracteristicas entre si
+	//El método hasOwnProperty() devuelve un booleano indicando si el objeto tiene la propiedad especificada.
+	//El método sort() ordena los elementos de un arreglo (array) localmente y devuelve el arreglo ordenado
+	//El metodo splice() permite cambiar el contenido del arreglo eliminando o sustituyendo los elementos existentes por otros nuevos.
 	Jugador.prototype.sayCartasEnMano = function () {
 		var html = '';
-		//var html = '<br /><strong>' + this.nombre + ':</strong><ul>';
 		for (var i = 0; i < this.cartasEnMano.length; i++) {
 			if(this.cartasEnMano[i] !== undefined) {
 				if(!this.esHumano) {
@@ -159,8 +160,6 @@
 		} else {
 			$('#player-two').find('.player-cards').html(html);
 		}
-		//html += '</ul>';
-		//_log.innerHTML += html;
 	}
 	//------------------------------------------------------------------
 	//  Determina los puntos de envido en la mano del jugador
@@ -173,7 +172,6 @@
 			Oro: new Array(),
 			Copa: new Array()
 		};
-		//for (var i = 0; i < this.cartas.length; i++) {
         for(var i = 0; i < cartas.length; i++){
 			var carta = cartas[i];
 			if(carta !== undefined) {
@@ -185,17 +183,16 @@
 		for (prop in pares) {
 			if(pares.hasOwnProperty(prop)) {
 				if(pares[prop].length >= 2) {
-					if(pares[prop].length === 3) {
+					/*if(pares[prop].length === 3) {
 						//Tres cartas
 						pares[prop].sort(function(a,b){return b-a});
-					}
+					}*/
 					puntos = 20 + pares[prop][0] + pares[prop][1];
 					break;
 				} 
 			} 
 		}
 		if(puntos === 0) {
-			//Tengo tres distintas elijo la de puntaje más alto
 			var maximo = 0;
 			for (prop in pares) {
 				if(pares[prop].length > 0 && maximo < pares[prop][0]) {
@@ -206,25 +203,18 @@
 		}
 		return puntos;
 	}
-	//------------------------------------------------------------------
-	// El humano juega una carta
-	//------------------------------------------------------------------
-	
-	Jugador.prototype.jugarCarta =  function (indice) {
-		if(indice !== null && indice !== undefined && this.cartasEnMano.length > indice) {
-			var carta = this.cartasEnMano[indice];
+	// carta tirada por persona
+
+	Jugador.prototype.jugarCarta =  function (index) {
+		if(index !== null && index !== undefined && this.cartasEnMano.length > index) {
+			var carta = this.cartasEnMano[index];
 			_log.innerHTML = '<b>' + this.nombre + ' juega un :</b> ' + carta.getNombre() + '<br /> ' + _log.innerHTML ;
 			this.cartasJugadas.push(carta);
-			this.cartasEnMano.splice(indice,1);
+			this.cartasEnMano.splice(index,1);
 			return carta;
 		}
 	}
-	/*******************************************************************
-	 * 
-	 * Clase Probabilidad
-	 * 
-	 *******************************************************************
-	*/ 
+
 	function Probabilidad()  {
 		// Parametros para calcular la probabilidad de los puntos
 		this.m1 = 0.15;
@@ -234,7 +224,7 @@
 		this.cv2 = 20;
 	}
 	//------------------------------------------------------------------
-	//  Pondera los puntos de envido de la maquina
+	//  considera los puntos de envido de la maquina
 	//------------------------------------------------------------------
 	
 	Probabilidad.prototype.ponderarPuntos = function(puntos) {
@@ -247,7 +237,7 @@
 		
 	}
 	//------------------------------------------------------------------
-	//  Pondera la carta jugada del humano (para envido)
+	//  considera la carta jugada del humano para envido
 	//------------------------------------------------------------------
 	
 	Probabilidad.prototype.CartaVista = function(carta) {
@@ -264,18 +254,7 @@
 	//------------------------------------------------------------------
 	
 	Probabilidad.prototype.promedioPuntos = function(pcc) {
-		var i = 0;
-		var suma = 0;
-		
 		if (pcc.length === 0) return null;
-		
-		/*     MEDIA   */ 
-		/*for(i = 0 ; i < pcc.length ; i++) {
-			suma = suma +   (  (pcc[i] <= 7 ) ? pcc[i] + 10 : pcc[i] ) ;
-		}
-		return (suma / pcc.length);*/
-		
-		/*     MEDIANA   */ 
 		var t = pcc.sort(function(a,b){return a-b});
 		if (t.length % 2 == 0 )  return   ( t[t.length  / 2]  + t[t.length/2 - 1 ]    ) / 2;
 		else return t[(t.length - 1) / 2] ;
@@ -344,38 +323,6 @@
                 }
 			
 		} else {
-			if (jugadas.length === 2 && jugadas[0].palo === jugadas[1].palo) {
-				var e1 = jugadas[0].puntosEnvido ;
-				var e2 = jugadas[1].puntosEnvido ;
-				if ( e1 + e2 + 20  !== puntos){//si tiene flor trato de deducir que carta le queda
-                    var p = ((e1 > e2) ? (puntos - e1 - 20) : (puntos - e2 - 20)) ;
-                    switch (p){
-                        case 0:
-                            posibles.push(new Naipe(7, 0, 12, palo));
-                            posibles.push(new Naipe(6, 0, 11, palo));
-                            posibles.push(new Naipe(5, 0, 10, palo));
-                            break;
-                        case 1:
-                            var v = palo === 'Espada' ? 14 : (palo === 'Basto' ? 13 : 8) ; 
-							posibles.push(new Naipe(v, 1, 1, palo));
-							break;
-                        case 2:
-                            posibles.push(new Naipe(9, 2, 2, palo));
-                            break;
-                        case 3:
-                            posibles.push(new Naipe(10, 3, 3, palo));
-                        case 7:
-							var v = palo === 'Espada' ? 12 : (palo === 'Oro' ? 11 : 4) ; 
-							posibles.push(new Naipe(v, 7, 7, palo));
-							break;
-						default:
-							posibles.push(new Naipe(p - 3 , p , p , palo));
-							break;
-                    }
-                }
-                else return null;  // Nada por deducir ya jugo los puntos
-			}
-			// No jugo los puntos, voy a ver como puedo formar los puntos
 			for (i = 0; i < jugadas.length ; i ++) {
 				var palo   = jugadas[i].palo;
 				var numero = puntos - jugadas[i].puntosEnvido - 20;
@@ -406,8 +353,6 @@
 					}
 			}
 		}
-		
-		//saco las cartas que ya jugo
 		for (j = 0 ; j < jugadas.length ; j ++) 
 				for (i = posibles.length - 1; i >= 0 ; i--){
 					if (posibles[i] != undefined && jugadas[j].numero === posibles[i].numero && jugadas[j].palo === posibles[i].palo){
@@ -415,8 +360,7 @@
 						break;
 					}
 				}
-		return posibles; // Faltaria sacar las cartas que ya jugo !!!  
-			             // si canto 7 y ya jugo uno puede tener otros 7 
+		return posibles;     
 	}
 	
     Probabilidad.prototype.promedioTruco = function (cartas){
@@ -425,8 +369,6 @@
             suma = suma + cartas[i].probGanar();
         return (suma / cartas.length);
     }
-		
-
 		
 	/*******************************************************************
 	 * 
@@ -456,7 +398,7 @@
         this.truco = new Array();
 	}
 	//------------------------------------------------------------------
-	
+	// puede servir para socket
 	//------------------------------------------------------------------
 	
 	Ronda.prototype.equipoEnEspera = function (e) {
@@ -503,9 +445,6 @@
 			this.equipoSegundo.esSuTurno = true;
 			this.equipoEnTurno = this.equipoSegundo;
 		}
-		//#LOG
-		
-		//_log.innerHTML = '<strong>Número de cartas en el mazo:</strong> ' + c +' naipes. <br />' + _log.innerHTML ;
 		this.equipoPrimero.jugador.sayCartasEnMano();
 		if (Debug) 
 			_log.innerHTML = this.equipoPrimero.jugador.nombre + ' puntos para el envido: ' + this.equipoPrimero.jugador.getPuntosDeEnvido(this.equipoPrimero.jugador.cartas) + '<br />' + _log.innerHTML ;
@@ -517,6 +456,7 @@
 		this.continuarRonda();
 		
 	}
+
 	//------------------------------------------------------------------
 	// En este momento se puede jugar una carta o hacer un canto
 	//------------------------------------------------------------------
@@ -604,7 +544,6 @@
 						var delay = function () { 
 							$elementoPosicionador.css('background-image', $naipe.css('background-image'));
 							$elementoPosicionador.css('background-position', $naipe.css('background-position'));
-							//$naipe.attr('style', 'display:none!important;');
 							$naipe.parent().addClass('naipe-animated');
 							setTimeout(function() {
 								$naipe.parent().addClass('naipe-remove');
@@ -625,13 +564,11 @@
 					    _rondaActual.pasarTurno();
 					    _rondaActual.continuarRonda();
 					});
-				} else {   // DECIDE LA MAQUINAAAAAAAAAAAAAAAAA
+				} else { 
 					_rondaActual = this;
-					
 					// La maquina decide si cantar ENVIDO
                     if (_rondaActual.puedeEnvido === true){
-						//var ultimo = this.cantos.getLast();
-						var carta  = this.equipoPrimero.jugador.cartasJugadas.getLast();   // Convertir en relativos 
+						var carta  = this.equipoPrimero.jugador.cartasJugadas.getLast();  
 						var accion = this.equipoSegundo.jugador.envido( this.cantos.getLast() ,this.calcularPuntosEnvido().ganador,carta);
 						if (accion !== '') {
 							audio.play(accion);
@@ -643,8 +580,7 @@
 							return ;
 						}
                     }
-                    
-                    // La maquina decide si cantar el truco
+
                     if (this.puedeTruco === null || this.puedeTruco === this.equipoEnTurno ){
 						var cantoMaquina = this.equipoSegundo.jugador.truco(false , _rondaActual.truco.getLast());
 						if (cantoMaquina !== '') {
@@ -657,19 +593,14 @@
 								audio.play(cantoMaquina);
 								_rondaActual.logCantar(_rondaActual.equipoEnTurno.jugador, cantoMaquina);
 
-							}, delay);
-							//audio.play(c);	
+							}, delay);	
 							_rondaActual.truco.push(cantoMaquina);
 							_rondaActual.equipoTruco = _rondaActual.equipoEnEspera(_rondaActual.equipoEnTurno);
                             _rondaActual.puedeTruco = _rondaActual.equipoEnEspera(_rondaActual.equipoEnTurno);
-							//_rondaActual.logCantar(_rondaActual.equipoEnTurno.jugador, c);
 							return ;
 						}
                     }
-                    
-                    //  Juega una carta
 					var carta = this.equipoEnTurno.jugador.jugarCarta();
-					
 					var $elementoPosicionador = $('.card-' + (this.numeroDeMano + 1) * 2);
 					var $card = $('#player-two').find('li:eq(' + (this.equipoEnTurno.jugador.cartasJugadas.length - 1).toString() +')');
 					$card.css('background-position', carta.getCSS())
@@ -678,15 +609,12 @@
 						 .css("-webkit-transform", "translate(" + ($elementoPosicionador.offset().left - $card.offset().left) + "px, " + ($elementoPosicionador.offset().top - $card.offset().top)  + "px )")
 						 .css("-moz-transform", "translate(" + ($elementoPosicionador.offset().left - $card.offset().left) + "px, " + ($elementoPosicionador.offset().top - $card.offset().top)  + "px )")
 						 .css("transform", "translate(" + ($elementoPosicionador.offset().left - $card.offset().left) + "px, " + ($elementoPosicionador.offset().top - $card.offset().top)  + "px )");
-						 
-					var delay = function () { 
+					var delay = function () {
 						$elementoPosicionador.css('background-image', $card.css('background-image'));
 						$elementoPosicionador.css('background-position', $card.css('background-position'));
 						$card.attr('style', 'display:none!important;');
 					}
-					
 					setTimeout(delay, 1000);
-					
 					this.pasarTurno();
 				}
 			}
