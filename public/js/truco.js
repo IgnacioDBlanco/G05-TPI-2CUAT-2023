@@ -1,5 +1,4 @@
-//(function(window, undefined) {
-//	'use strict';
+	//
 	var _log = document.getElementById('log');
 	var _rondaActual = null;
 	var _partidaActual = null;
@@ -79,6 +78,7 @@
 	}
 	
 	Naipe.prototype.getCSS = function () {
+		
 		var x = 97.5;
 		var y = 150;
 		switch (this.palo) {
@@ -1071,7 +1071,7 @@
 		
 		var maso = this.generarBaraja();
 		for (var i = 1; i <= 6; i++) {
-			var _log = document.getElementById('log');
+			var _log = document.getElementById("log");
 			var index = getRandomInt(0, (maso.length - 1));
 			if(i % 2 === 0) {
 				j2.cartas.push(maso[index]);
@@ -1301,7 +1301,7 @@
 			_log.innerHTML =  "";
 			_$tbl.find('.player-one-points').html(this.equipoPrimero.puntos);
 			_$tbl.find('.player-two-points').html(this.equipoSegundo.puntos);
-			//_log.innerHTML = '<hr />' + '<br /> Puntaje parcial : ' + this.equipoPrimero.jugador.nombre + ' ' + this.equipoPrimero.puntos + ' - '+ this.equipoSegundo.jugador.nombre + ' ' + this.equipoSegundo.puntos + '<br /> ' + '<hr />' + _log.innerHTML ;
+			_log.innerHTML = '<hr />' + '<br /> Puntaje parcial : ' + this.equipoPrimero.jugador.nombre + ' ' + this.equipoPrimero.puntos + ' - '+ this.equipoSegundo.jugador.nombre + ' ' + this.equipoSegundo.puntos + '<br /> ' + '<hr />' + _log.innerHTML ;
 			if(this.equipoSegundo.esMano) {
 				this.equipoSegundo.esMano = false;
 				this.equipoPrimero.esMano = true;
