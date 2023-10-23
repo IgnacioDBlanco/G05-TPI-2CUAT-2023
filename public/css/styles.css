@@ -73,7 +73,7 @@
 
   .login-form {
     width: 500px;
-    height: 520px;
+    height: 500px;
     margin: 65px auto;
     display: -webkit-box;
     display: flex;
@@ -227,6 +227,7 @@
   font-weight: bold;
   font-size: 100px;
   color:cornsilk;
+  margin-top: 0px;
   text-shadow: 0 1px 0 darkgoldenrod, 0 2px 0 darkgoldenrod, 0 3px 0 #bbb, 0 4px 0 #aaa, 0 5px 0 #acacac, 0 6px 1px rgba(0,0,0,0.1), 0 0 5px rgba(0,0,0,0.1), 0 1px 3px rgba(0,0,0,0.3), 0 3px 5px rgba(0,0,0,0.2), 0 5px 10px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.2), 0 20px 20px rgba(0,0,0,0.15);
 }
 .menu{
@@ -262,6 +263,7 @@
 }
 .pi{
   color: #fff;
+  margin-top: 0px;
 }
 h1 {
   text-align: center;
@@ -362,7 +364,7 @@ table {
   position: relative;
 }
 .ps {
-  overflow: hidden!important;
+  overflow: hidden!important;body
   overflow-anchor: none;
   touch-action: auto;
 }
@@ -432,14 +434,15 @@ td {
 
 .jugadorContainer {
 	width: 40vw;
-	min-height: 70vh;
+	min-height: 60vh;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: flex-start;
 	background-color: rgb(234, 233, 213);
 	border-radius: 5px;
-	margin: 10px;
+	margin-top: 0px;
+  margin-left: 10px;
 }
 
 .divh2{
@@ -502,7 +505,7 @@ img{
 .botonesJugador{
 	position:fixed;
 	margin-top: auto;
-	top:85px;
+	top:155px;
 }
 
 #reset {

@@ -88,9 +88,7 @@ textarea {
  * Address margins handled incorrectly in IE 6/7.
  */
 
-body {
-    margin: 0;
-}
+
 
 /* ==========================================================================
    Links
@@ -123,10 +121,7 @@ a:hover {
  * and Chrome.
  */
 
-h1 {
-    font-size: 2em;
-    margin: 0.67em 0;
-}
+
 
 h2 {
     font-size: 1.5em;
@@ -530,11 +525,7 @@ html, body, .game-wrapper, .game-main {
 	height:100%;
 	overflow: hidden;
 }
-h1, h3 {
-	font-family:Kavoon, Helvetica;
-}
-h1 {
-}
+
 .game {
 	background: #3C1E13 url('../images/bg.jpg');
 	color:white;
