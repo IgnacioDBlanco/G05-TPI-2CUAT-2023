@@ -1,9 +1,4 @@
-	/*******************************************************************
-	 * 
-	 * Clase Distribucion Normal
-	 * 
-	 *******************************************************************
-	*/ 
+
 	function DistribucionNormal ( m , d) {
 		this.media = m;
 		this.desvio  = d;
@@ -38,23 +33,9 @@
 	
 	var tt = new DistribucionNormal(0,0.44);
 	var t = createMemberInNormalDistribution(100,30)  ;
-	//alert(  t > 100 ?  100 - (t - 100 ) + "  *"  : t );
-	
-	
-	/*
-	 * Returns member of set with a given mean and standard deviation
-	 * mean: mean
-	 * standard deviation: std_dev 
-	 */
-	 
 	function createMemberInNormalDistribution(mean,std_dev){
 		return mean + (gaussRandom()*std_dev);
 	}
-
-	/*
-	 * Returns random number in normal distribution centering on 0.
-	 * ~95% of numbers returned should fall between -2 and 2
-	 */
 	function gaussRandom() {
 		var u = 2*Math.random()-1;
 		var v = 2*Math.random()-1;
@@ -64,8 +45,4 @@
 
 		var c = Math.sqrt(-2*Math.log(r)/r);
 		return u*c;
-
-		/* todo: optimize this algorithm by caching (v*c) 
-		 * and returning next time gaussRandom() is called.
-		 * left out for simplicity */
 	}

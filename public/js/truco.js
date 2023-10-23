@@ -673,16 +673,13 @@
 			_rondaActual.logCantar(_rondaActual.equipoTruco.jugador, cantoRespuesta);
 			switch (cantoRespuesta) {
 				case 'S': // Si quiero
-					//Saqué el logCantar afuera
 					_rondaActual.puedeTruco = _rondaActual.equipoSegundo;
                     _rondaActual.equipoTruco = null;
                     break;
 				case 'N': // No quiero
-					//_rondaActual.logCantar(_rondaActual.equipoTruco.jugador,"N");
 					_rondaActual.noQuiso = _rondaActual.equipoTruco;
                     break;
 				default:  // Re Truco
-					//_rondaActual.logCantar(_rondaActual.equipoTruco.jugador, cantoRespuesta);
                     _rondaActual.truco.push(cantoRespuesta);
 					_rondaActual.equipoTruco = _rondaActual.equipoEnEspera(_rondaActual.equipoTruco);
 					break;
@@ -694,11 +691,11 @@
 	//------------------------------------------------------------------
 	
 	Ronda.prototype.decidirEnvido = function () {
-		if (this.equipoEnvido.jugador.esHumano) {   // Creo los bind para que el jugador decida
+		if (this.equipoEnvido.jugador.esHumano) {   
 			var ultimoCanto = this.cantos.getLast();
-			var _canto      = $('.canto').hide();
-			var _quiero     = $("#Quiero").show();
-			var _noQuiero   = $("#NoQuiero").show();
+			var _canto = $('.canto').hide();
+			var _quiero  = $("#Quiero").show();
+			var _noQuiero = $("#NoQuiero").show();
 			$('.label-cantos--SN').show();
 			switch (ultimoCanto) {
 				case 'E':
@@ -710,7 +707,7 @@
 			}
 			this.enEspera = true;
 			_rondaActual = this;
-			
+			// que es el . unbind y porque esta tachado
 			_canto.unbind('click').click(function (event){ 
 				var c = $(this).attr('data-envido');
 				if (ultimoCanto === "E" && c === "E") c = "EE";
@@ -722,9 +719,6 @@
 				$(this).unbind('click');
 				_rondaActual.continuarRonda();
 			} );
-			
-			
-			
 			_quiero.unbind('click').click(function (event){
 				_rondaActual.logCantar(_rondaActual.equipoEnvido.jugador,"S");
 				_rondaActual.jugarEnvido(true);
@@ -741,8 +735,7 @@
 				_rondaActual.continuarRonda();
 			});
 			
-		} else {// La maquina debe generar una respuesta
-            //var ultimenvidoo = this.cantos.getLast();
+		} else {
             _rondaActual = this;
             var carta  = this.equipoPrimero.jugador.cartasJugadas.getLast();
             var accion = this.equipoSegundo.jugador.envido(this.cantos.getLast(),  this.calcularPuntosEnvido().ganador,carta);
@@ -767,10 +760,10 @@
 	// Flujo central de la ronda
 	//------------------------------------------------------------------
 	
-	Ronda.prototype.continuarRonda = function (argWinner) {
+	Ronda.prototype.continuarRonda = function (gano) {
 		var ganador = null;
-		if(argWinner !== null && argWinner !== undefined) {
-			ganador = argWinner;
+		if(gano !== null && gano !== undefined) {
+			ganador = gano;
 		}
 		while (ganador === null) {
 			if(this.jugadasEnMano === 2 || this.noQuiso != null) {
@@ -792,7 +785,6 @@
                 this.decidirEnvido();
             else
                 this.decidirTruco();
-
 			if (this.enEspera === true)  break; 	
 		}
 		if(ganador !== null) {
@@ -819,9 +811,9 @@
 	// Determina quien gana el envido 
 	//------------------------------------------------------------------
 	
-	Ronda.prototype.jugarEnvido = function (d) {
+	Ronda.prototype.jugarEnvido = function (quiere_envido) {
 		var puntos = this.calcularPuntosEnvido();
-		if (d) { // Dijo Quiero
+		if (quiere_envido) { 
 			if (this.equipoPrimero.esMano) {
 				var primero = this.equipoPrimero; var p1 = primero.jugador.getPuntosDeEnvido(primero.jugador.cartas);
 				var segundo = this.equipoSegundo; var p2 = segundo.jugador.getPuntosDeEnvido(segundo.jugador.cartas);
@@ -831,7 +823,7 @@
 			}
 		
 			this.logCantar(primero.jugador , p1);
-			if (this.envidoStatsFlag && primero === this.equipoPrimero){ // Humano Canta primero, Registro los puntos
+			if (this.envidoStatsFlag && primero === this.equipoPrimero){ // persona Canta primero, Registro los puntos
                     this.equipoSegundo.jugador.statsEnvido(this.cantos, this.quienCanto, p1);
                     this.puntosGuardados = p1;
                     this.envidoStatsFlag = false;
@@ -847,7 +839,7 @@
                 segundo.jugador.puntosGanadosEnvido = puntos.ganador;
                 segundo.puntos += puntos.ganador;
                 
-			}else{ // Humano NO CANTA, NO REGISTRO NADA
+			}else{ // NO CANTA
 				primero.puntos += puntos.ganador;
                 primero.jugador.puntosGanadosEnvido = puntos.ganador;
 			}
@@ -860,7 +852,7 @@
 		
 		this.puedeEnvido = false;
 		this.equipoEnvido = null;
-        //this.cantos = [];
+
 	}
 	//------------------------------------------------------------------
 	// Calcula los puntos de Envido para le ganador y el perdedor
@@ -970,7 +962,7 @@
 				}
 			}, 500);
 		}, 1300);
-		_log.innerHTML = "<b>" + jugador.nombre + " canto: " + "</b> " + mensaje + '<br /> ' + _log.innerHTML ;
+		
 		
 	}
 	//------------------------------------------------------------------
@@ -1014,7 +1006,6 @@
 			maso.splice(index, 1);
 			
 		}
-        //_log.innerHTML = '<b> Promedio para el truco: ' + j2.prob.promedioTruco(j2.cartasEnMano) + '<br/>' + _log.innerHTML;
 		return maso.length;
 		
 	}
@@ -1076,14 +1067,11 @@
 		}
 		var j1 = this.equipoPrimero.jugador;
 		var j2 = this.equipoSegundo.jugador;
-        
-        //_log.innerHTML = '<b> Promedio para el truco: ' + j2.prob.promedioTruco(j2.cartasEnMano) + '<br/>' + _log.innerHTML;
 		if (j1.cartasJugadas[indice].valor > j2.cartasJugadas[indice].valor) {
 			if(acumularPuntos) {
 				this.equipoPrimero.manos = this.equipoPrimero.manos + 1;
 			}
 			_log.innerHTML = '<i> GANA ' + this.equipoPrimero.jugador.nombre + '</i><br />'  + _log.innerHTML ;
-			// Deberíamos buscar una forma mas elegante
 			$('.game-deck').find('.card-' + (this.numeroDeMano * 2 + 1).toString() ).css('z-index', 100);
 			$('.game-deck').find('.card-' + (this.numeroDeMano * 2 + 2).toString() ).css('z-index', 0);
 			return this.equipoPrimero;
@@ -1092,7 +1080,7 @@
 				if(acumularPuntos) {
 					this.equipoSegundo.manos = this.equipoSegundo.manos + 1;
 				}
-				// Deberíamos buscar una forma mas elegante
+				
 				
 				$('.game-deck').find('.card-' + ((this.numeroDeMano + 1) * 2).toString() ).css('z-index', 100);
 				$('.game-deck').find('.card-' + ((this.numeroDeMano + 1) * 2 - 1).toString() ).css('z-index', 0);
@@ -1126,7 +1114,6 @@
             return equipoGanador.jugador;
 		} else if(e1.manos === e2.manos && (e1.manos === 3 || e1.manos === 2)) {
 			if(e1.manos ===  3) {
-				//PARDAMOS las tres, gana el mano
 				if(e1.esMano) {
 					//e1.puntos = e1.puntos + 1;
                     e1.puntos = e1.puntos + puntosTruco.querido;
@@ -1136,7 +1123,6 @@
 					return e2.jugador;
 				}
 			} else {
-				//Repartimos 1ra y 2da, PARDAMOS tercer, gana el que ganó primera
 				if(e1 === this.determinarGanadorMano(0, false)) {
 					e1.puntos = e1.puntos + puntosTruco.querido;
 					return e1.jugador;
@@ -1154,7 +1140,6 @@
 					e2.puntos = e2.puntos + puntosTruco.querido;
 					return e2.jugador;
 				} else {
-					//Sin ganador
 					console.log("j1: " + e1.manos + "j2: " + e2.manos);
 					return null;
 				}
@@ -1256,11 +1241,6 @@
 		}
 	}
 	
-	
-	
-	//******************************************************************
-	//******************************************************************
-	
 	$(document).ready(function () {
 		audio = new Sonido($('#cbxAudio').get(0));
 		//Cargo recursos
@@ -1300,7 +1280,6 @@
 		_partidaActual = new Partida();
 		_partidaActual.iniciar('Jugador 1', 'Computadora');
 
-		//Events Bindings
 		var _inputsName = $('.human-name');
 		var _nAnterior = '';
 		var _nNuevo = '';
@@ -1348,9 +1327,3 @@
 			});
 		}
 	});
-	
-	
-
-
-		
-//})(window);
