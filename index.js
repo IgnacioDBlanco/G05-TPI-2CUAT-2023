@@ -165,5 +165,9 @@ app.put('/bannear', async function(req, res){
 
 /*  TRUCOO
 https://github.com/p4bl1t0/truco-argento/blob/master/js/truco.js
+
+https://github.com/migueljimenop/trucosocket
+
+
  */
 
