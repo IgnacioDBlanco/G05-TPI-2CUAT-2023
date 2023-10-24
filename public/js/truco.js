@@ -764,6 +764,7 @@
 		var ganador = null;
 		if(gano !== null && gano !== undefined) {
 			ganador = gano;
+			
 		}
 		while (ganador === null) {
 			if(this.jugadasEnMano === 2 || this.noQuiso != null) {
@@ -1224,10 +1225,10 @@
 			}
 			if (Debug)
 				$('#player-one').find('.player-name').html("Envido: " + this.equipoSegundo.jugador.prob.promedioPuntos(this.equipoSegundo.jugador.envidoS) +  " - " +
- 			                                           "EE: " + this.equipoSegundo.jugador.prob.promedioPuntos(this.equipoSegundo.jugador.revire) +  " - "  + 
-			                                           "RE: " + this.equipoSegundo.jugador.prob.promedioPuntos(this.equipoSegundo.jugador.realEnvido) +  " - " +
-			                                           "TODO: " + this.equipoSegundo.jugador.prob.promedioPuntos(this.equipoSegundo.jugador.realEnvido.concat(this.equipoSegundo.jugador.revire,this.equipoSegundo.jugador.envidoS))  
-			                                          );
+ 			    "EE: " + this.equipoSegundo.jugador.prob.promedioPuntos(this.equipoSegundo.jugador.revire) +  " - "  + 
+		    	"RE: " + this.equipoSegundo.jugador.prob.promedioPuntos(this.equipoSegundo.jugador.realEnvido) +  " - " +
+	            "TODO: " + this.equipoSegundo.jugador.prob.promedioPuntos(this.equipoSegundo.jugador.realEnvido.concat(this.equipoSegundo.jugador.revire,this.equipoSegundo.jugador.envidoS))  
+			  );
 				
             var ronda = new Ronda(this.equipoPrimero, this.equipoSegundo);
 			ronda.iniciar();
@@ -1236,7 +1237,12 @@
 			}
 			
 		}
-		if(!(this.equipoPrimero.puntos < limitePuntaje && this.equipoSegundo.puntos < limitePuntaje)) {
+		if((this.equipoPrimero.puntos >= limitePuntaje || this.equipoSegundo.puntos >= limitePuntaje)) {
+			swal({
+				title: "ganaste",
+				icon: "success",
+				button: "Ok!",
+			  });
 		    _log.innerHTML = '<hr />' + '<br /> PUNTAJE FINAL : ' + this.equipoPrimero.jugador.nombre + ' ' + this.equipoPrimero.puntos + ' - '+ this.equipoSegundo.jugador.nombre + ' ' + this.equipoSegundo.puntos + _log.innerHTML ;
 		}
 	}
