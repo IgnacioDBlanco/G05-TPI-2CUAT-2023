@@ -88,6 +88,8 @@ app.post('/register', async function(req, res){
     try {
         await authService.registerUser(auth, { email, password });
         await MySQL.realizarQuery (`insert into usersProyect (mail,pass) values ("${req.body.email}","${req.body.password}")`)
+        response = await MySQL.realizarQuery (`select id from usersProyect where mail = "${req.body.email}"`)
+        req.session.id1 = response[0].id 
         res.render("home");
     } catch (error) {
         console.error("Error en el registro:", error);
@@ -106,16 +108,17 @@ app.put('/login', async function(req, res){
     try {
       authService.loginUser(auth, { email, password });
       verifica = true
+      req.session.id1 = response[0].id
     } catch (error) {
       verifica = false
       console.log(error)
     }
 
     if (response.length > 0 && verifica) {
-        if(req.body.user =="n"){
+        if(req.body.user =="idblanco@pioix.edu.ar"){
             res.send({success:true, admin:true})            
         }
-        else if (req.body.usuario!="n"){
+        else if (req.body.usuario!="idblanco@pioix.edu.ar"){
         res.send({success: true, admin:false})    
     }}
     else{
@@ -130,7 +133,10 @@ app.get('/admin', function(req, res){
     console.log(req.query); 
     res.render('admin', null);
    });
-
+app.get('/salas', function(req, res){
+    console.log(req.query); 
+    res.render('salas', null);
+});
 app.get('/home', function(req, res){
     res.render('home', null);
    });
@@ -152,16 +158,36 @@ app.put('/bannear', async function(req, res){
     console.log(user_exists)
     if (user_exists.length > 0) {
         await MySQL.realizarQuery(`delete from usersProyect where mail = "${req.body.mail}"`)
-        console.log("true")
         res.send({bannear:true});    
     }
     else{
-        console.log("falseee")
         res.send({bannear:false});
     }
     
 });
 
+app.get('/inicio', function(req, res){
+    res.render('inicio', null);
+});
+
+
+/*
+io.on("connection", (socket) => {
+    const req = socket.request;
+    socket.on('incoming-message', data => {
+        console.log(req.session.chat)  
+        io.to(req.session.chat.contacto).emit("server-message", { mensaje: data.mensaje });
+    });
+    socket.on('unirme-room', data => {
+        console.log(req.session.chat)
+        req.session.chat = data  
+        if (req.session.chat.contacto != "") {
+            socket.leave(req.session.chat)
+        }
+        socket.join(req.session.chat.contacto)
+    });
+});
+*/
 
 /*  TRUCOO
 https://github.com/p4bl1t0/truco-argento/blob/master/js/truco.js
