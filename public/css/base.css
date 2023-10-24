@@ -739,9 +739,9 @@ ul li {
 	margin:.3em 0;
 }
 #game-score {
-	height:10%;
+	height:100%;
 	border:1px solid white;
-	width:80%;
+	width:40%;
 	margin:auto;
 }
 #game-score td,
