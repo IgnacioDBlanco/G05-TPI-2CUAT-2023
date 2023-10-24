@@ -306,6 +306,14 @@ h1 {
   height: 90%;
 }
 
+#reglastruco{
+  text-align: center;
+}
+
+.textomodal {
+  letter-spacing: 0.3px;
+}
+
 #mc{
 background-color: #000000;
 }
@@ -313,13 +321,29 @@ background-color: #000000;
 /* The Close Button */
 .close {
   color: #aaa;
-  float: right;
+  float: left;
   font-size: 28px;
   font-weight: bold;
 }
 
 .close:hover,
 .close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* The Continue Button */
+
+.continuar {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.continuar:hover,
+.continuar:focus {
   color: black;
   text-decoration: none;
   cursor: pointer;

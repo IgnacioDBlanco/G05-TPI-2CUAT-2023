@@ -50,56 +50,74 @@
         </div>
 <!-- The Modal -->
 <div id="myModal" class="modal">
-
   <div id="mc" class="modalcontent">
-    <span class="close">&times;</span>
-    <p>Some text in the Modal..
-    </p>
-    <p>Some text in the Modal..
-    </p>
-    <p>Some text in the Modal..
-    </p>
-    <p>Some text in the Modal..
-    </p>
-    <p>Some text in the Modal..
-    </p>
-    <p>Some text in the Modal..
-    </p>
-    <p>Some text in the Modal..
-    </p>
-    <p>Some text in the Modal..
-    </p>
-    <p>Some text in the Modal..
-    </p>
-    <p>Some text in the Modal..
-    </p>
-    <p>Some text in the Modal..
-    </p>
-    <p>Some text in the Modal..
-    </p>
-    <p>Some text in the Modal..
-    </p>
-    <p>Some text in the Modal..
-    </p>
-    <p>Some text in the Modal..
-    </p>
-    <p>Some text in the Modal..
-    </p>
-    <p>Some text in the Modal..
-    </p>
-    <p>Some text in the Modal..
-    </p>
-    <p>Some text in the Modal..
-    </p>
-    <p>Some text in the Modal..
-    </p>
-    <p>Some text in the Modal..
-    </p>
-    <p>Some text in the Modal..
-    </p>
-    <p>Some text in the Modal..
-    </p>
+    <span class="close">&times;</span> <span class="continuar">&times;</span>
+    <h2 id="reglastruco" class="yellowtext">REGLAS DEL TRUCO</h2>
+    <p class="textomodal">En cada mano se reparten 3 cartas a cada jugador y todos tiran una carta por turnos siendo el ganador de la ronda el jugador con la carta de mayor valor y comenzando éste la siguiente ronda. El primer jugador que gane 2 rondas, ganará la mano. Si los dos tienen carta de igual valor para ganar la ronda: </p>
     
+    <h3 class="yellowtext">EMPATE</h3>
+        <ul>
+            <li class="textomodal">- Si un jugador gana la primera ronda y empata la segunda o la tercera se proclamará ganador de la mano. Ganar la primera ronda por tanto será muy importante.</li>
+            <p></p>
+            <li class="textomodal">- Si se empata la primera ronda y un jugador gana la segunda, se proclamará ganador de la mano.</li>  
+            <p></p>
+            <li class="textomodal">- Si la primera y la segunda ronda se empatan, el ganador será el que gane la tercera y última ronda.</li>
+            <p></p>
+            <li class="textomodal">- Si las 3 rondas se empatan ganará el jugador “mano” que será el jugador que inicie la primera ronda de la mano.</li>
+        </ul>
+    <!-- CAMBIO DE PÁGINA -->
+    <h3 class="yellowtext">ENVIDO</h3>
+
+    <p class="textomodal">El envido es una apuesta que debe realizarse al principio de la mano. Ganará el Envido el jugador que tenga dos cartas del mismo palo con mayor valor.</p>
+
+        <ul>       
+            <li class="textomodal">- Si se tienen 2 cartas del mismo palo, se suma su valor + 20. La puntuación más alta del envido es 33 (7+6+20=33).</li>
+            <p></p>
+            <li class="textomodal">- Cartas de figuras (sota, caballo y rey) valen 0 puntos para el envido. Si se tienen 2 figuras del mismo palo la puntuación de envido es 20 pues se tiene envido pero las cartas con las que se juega éste no tienen valor.</li>       
+            <p></p>
+            <li class="textomodal">- Si nadie tiene 2 cartas del mismo palo, ya que se puede lanzar envido siendo una mentira, se cuenta la carta más alta siendo 7 el número mayor</li>
+            <p></p>
+            <li class="textomodal">- En caso de que haya un empate entre jugadores, ganará el envido el jugador que sea mano.</li>
+        </ul>
+
+    <p class="textomodal">Cuando un jugador o pareja lanza un envido, los contrincantes podrán responder con una de las opciones a continuación:</p>
+
+        <ul>
+            <li class="textomodal">- Quiero. Acepta la apuesta que se resolverá al momento contando los puntos de cada jugador.</li>
+            <p></p>
+            <li class="textomodal">- Envido. Sube la apuesta (ésta se dobla) y el jugador contraria deciden sobre la misma.</li>
+            <p></p>
+            <li class="textomodal">- Real envido, sube la apuesta. Si el contrincante acepta ésta será de 3 puntos, en caso de rechazarla el jugador que lanza el Real envido se llevará 1 punto.</li>
+            <p></p>
+            <li class="textomodal">- Falta envido. Para el Falta Envido se deberá de tener en cuenta si se está en “buenas” (uno de los dos jugadores ha llegado a la mitad de puntos) o en “malas” (ninguno de los jugadores dispone de la mitad de puntos)</li>
+            <p></p>
+            <li class="textomodal">Si se está en “buenas”, el jugador ganador se lleva los puntos que le faltan al jugador con más puntos para conseguir la partida.</li>
+            <p></p>
+            <li class="textomodal">Si se está en “malas”, el jugador ganador de la apuesta del envido ganará directamente la partida.</li>
+            <p></p>
+            <li class="textomodal">En caso de rechazo el jugador que ha lanzado el Falta Envido se llevará 1 punto.</li>
+            <p></p>
+            <li class="textomodal">- No quiero. Rechaza la apuesta. Los puntos irán en función de la apuesta que ya había en la mesa.</li>
+        </ul>
+
+         <!-- CAMBIO DE PÁGINA -->
+
+    <h3 class="yellowtext">TRUCO</h3>
+        <p class="textomodal">El truco es una apuesta que se puede realizar en cualquier momento en el turno del jugador y los puntos se otorgarán al ganador de la misma en función del valor de las cartas del Truco.</p>
+        <p></p>
+        <p class="textomodal">Los contrincantes podrán rechazar, aceptar o superar la apuesta:</p>
+            <ul>
+                <li class="textomodal">- Quiero. Acepta la apuesta del Truco que se resolverá al final de la mano.</li>
+                <p></p>   
+                <li class="textomodal">- Retruco. Sube la apuesta del Truco y pasa el turno a los contrincantes para que decidan rechazar, aceptar o superar la apuesta.</li>
+                <p></p>
+                <li class="textomodal">- Vale cuatro. Sube la apuesta del Retruco y pasa el turno a los contrincantes para que decidan aceptar o rechazar la apuesta.</li>
+                <p></p>
+                <li class="textomodal">- No quiero. Rechaza la apuesta y los contrincantes ganan la mano por el valor de la apuesta previa al rechazo.</li>
+            </ul>
+
+        <!-- CAMBIO DE PÁGINA -->
+</p>
   </div>
 </div>
 <script>
@@ -112,6 +130,10 @@ var btn = document.getElementById("myBtn");
 // Get the <span> element that closes the modal
 var span = document.getElementsByClassName("close")[0];
 
+// HAY QUE VER ESTOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
+
+var span2 = document.getElementsByClassName("continuar")[0];
+
 // When the user clicks on the button, open the modal
 btn.onclick = function() {
   modal.style.display = "block";
@@ -119,6 +141,11 @@ btn.onclick = function() {
 
 // When the user clicks on <span> (x), close the modal
 span.onclick = function() {
+  modal.style.display = "none";
+}
+
+// HAY QUE VER ESTOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
+span2.onclick = function() {
   modal.style.display = "none";
 }
 
