@@ -627,6 +627,7 @@ html, body, .game-wrapper, .game-main {
 	width:62%;
     min-width:450px;
 	vertical-align:top;
+    margin-left: 0px;
 }
 ul li {
     display:inline-block!important;
