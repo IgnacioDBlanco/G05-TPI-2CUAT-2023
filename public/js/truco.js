@@ -1,4 +1,9 @@
-
+/*cosas mal
+ parde primera, parde segund y termino
+ para salas: hacer el boton que cree la sala y despues con un each mostrarlo como si fuesen botones en la pagina
+ para crear y unirse usar socketjoin 
+ por ahora eso 
+ */
 	var _log = document.getElementById('log');
 	var _rondaActual = null;
 	var _partidaActual = null;
@@ -183,10 +188,6 @@
 		for (prop in pares) {
 			if(pares.hasOwnProperty(prop)) {
 				if(pares[prop].length >= 2) {
-					/*if(pares[prop].length === 3) {
-						//Tres cartas
-						pares[prop].sort(function(a,b){return b-a});
-					}*/
 					puntos = 20 + pares[prop][0] + pares[prop][1];
 					break;
 				} 
