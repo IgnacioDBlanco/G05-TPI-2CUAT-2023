@@ -158,6 +158,10 @@ app.get('/anotador', function(req, res){
 app.get('/inicio', function(req, res){
     res.render('inicio', null);
 });
+app.get('/truco_online', function(req, res){
+    console.log(req.query); 
+    res.render('truco_online', null); 
+});
 
 app.put('/bannear', async function(req, res){
     user_exists = await MySQL.realizarQuery(`select mail from usersProyect where mail = "${req.body.mail}"`)
@@ -198,6 +202,7 @@ socket.on('create room', function(room) {
     console.log('User has joined the room called ' + room);
  });
 */
+
 io.of('/nacho').to('sala1').emit('evento-en-sala', 'Hola desde la sala');
 io.on("connection", (socket) => {
     const req = socket.request;
