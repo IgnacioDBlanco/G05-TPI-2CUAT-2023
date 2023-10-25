@@ -33,6 +33,7 @@
 }
 .iconcitos{
   display:flex;
+  justify-content: space-between;
   width: 100%;
   height: 40px;
 }
@@ -48,17 +49,15 @@
 
 .iconizquierda{
   margin: 10px;
-  width: 95%;
+  width: 70px;
 }
 
 .iconderecha{
-  align-items: right;
   margin: 10px;
 }
 
 .botonesarribaizq{
   cursor: pointer;
-  position: absolute;
   left: 0px;
   margin: 10px;
   transition: 250ms;
@@ -70,8 +69,6 @@
 
 .botonesarribader{
   cursor: pointer;
-  position: absolute;
-  right: 0px;
   margin: 10px;
   transition: 250ms;
 }
@@ -79,6 +76,21 @@
  transform: scale(1.2);
 }
 
+.elfooty{
+  display:flex;
+  justify-content: center;
+  width: 100%;
+  height: auto;
+  background-color: #262626;
+  border: 2px solid #D4AF37;
+  margin-bottom: 0px;
+}
+
+.maina{
+  display:flex;
+  justify-content: space-between;
+  width: 100%;
+}
 
   .login-form {
     width: 500px;
