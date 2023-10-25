@@ -8,7 +8,7 @@
 	--dimensiones-grupo:70px;
 }
 
-/*
+
 * {
     margin: 0;
     padding: 0;
@@ -16,7 +16,7 @@
     -webkit-font-smoothing: antialiased;
     
   }
-  */
+  
   
 #b {
   background-image: url("/images/fondolog.jpg");
@@ -41,24 +41,29 @@
   display:flex;
   justify-content: space-between;
   width: 100%;
-  height: auto;
+  height: 6%;
   background-color: #262626;
   border: 2px solid #D4AF37;
+  margin-top: 0px;
 }
 
 
 .iconizquierda{
-  margin: 10px;
+  display: flex;
+  height: 100%;
   width: 70px;
+  align-items: center;
 }
 
 .iconderecha{
-  margin: 10px;
+  display: flex;
+  height: 100%;
+  width: 150px;
+  align-items: center;
 }
 
 .botonesarribaizq{
   cursor: pointer;
-  left: 0px;
   margin: 10px;
   transition: 250ms;
 }
@@ -76,11 +81,32 @@
  transform: scale(1.2);
 }
 
+.bodyjuego{
+display: flex;
+flex-direction: column;
+}
+
+.botonesjuegoizq{
+  cursor: pointer;
+  margin-left: 10px;
+  transition: 250ms;
+}
+.botonesjuegoizq:hover {
+ transform: scale(1.2);
+}
+.botonesjuegoder{
+  cursor: pointer;
+  margin-right: 20px;
+  transition: 250ms;
+}
+.botonesjuegoder:hover {
+ transform: scale(1.2);
+}
 .elfooty{
   display:flex;
   justify-content: center;
   width: 100%;
-  height: auto;
+  height: 5%;
   background-color: #262626;
   border: 2px solid #D4AF37;
   margin-bottom: 0px;
@@ -90,6 +116,7 @@
   display:flex;
   justify-content: space-between;
   width: 100%;
+  height: 80%;
 }
 
   .login-form {
