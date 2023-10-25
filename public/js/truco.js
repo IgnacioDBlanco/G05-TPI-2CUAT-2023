@@ -1,8 +1,5 @@
 /*cosas mal
  parde primera, parde segund y termino
- para salas: hacer el boton que cree la sala y despues con un each mostrarlo como si fuesen botones en la pagina
- para crear y unirse usar socketjoin 
- por ahora eso 
  */
 	var _log = document.getElementById('log');
 	var _rondaActual = null;

@@ -190,6 +190,10 @@ function crearSala(){
   }
 }
 
+function goToRoom(){
+  location.href = '/truco_online';
+}
+
 function iralogin(){
   location.href ='/login';
 }
