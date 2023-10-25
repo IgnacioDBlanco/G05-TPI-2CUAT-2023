@@ -524,6 +524,7 @@ table {
 html, body, .game-wrapper, .game-main {
 	height:100%;
 	overflow: hidden;
+    width: 100%;
 }
 
 .game {
@@ -554,9 +555,8 @@ html, body, .game-wrapper, .game-main {
     border: 1px solid #999;
 }
 .game-action {
-    position: absolute;
     bottom: 0;
-    width: 35%;
+    width: 100%;
     left:0;
 }
 .game-action .cantos-panel {
@@ -627,7 +627,7 @@ html, body, .game-wrapper, .game-main {
 	width:62%;
     min-width:450px;
 	vertical-align:top;
-    margin-left: 0px;
+    margin-left: 200px;
 }
 ul li {
     display:inline-block!important;
@@ -743,6 +743,7 @@ ul li {
 	border:1px solid white;
 	width:40%;
 	margin:auto;
+    color: #fff;
 }
 #game-score td,
 #game-score th {

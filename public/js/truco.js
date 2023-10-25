@@ -1198,8 +1198,8 @@
 		var _$tbl = $('#game-score');
 		_$tbl.find('.player-one-name').html(jugador1.nombre);
 		_$tbl.find('.player-two-name').html(maquina.nombre);
-		_$tbl.find('.player-one-points').html('0');
-		_$tbl.find('.player-two-points').html('0');
+		_$tbl.find('.player-one-points').html('');
+		_$tbl.find('.player-two-points').html('');
 		$('#player-two').find('.player-name').html(maquina.nombre);
 		$('#player-one').find('.player-name').html(jugador1.nombre);
 		
