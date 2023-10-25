@@ -22,7 +22,7 @@ async function fetchLogin(data){
           location.href ='/admin';
         }
         else {
-          location.href ='/home';
+          location.href ='/salas';
       }}
 
   } catch (error) {
@@ -110,7 +110,7 @@ function bannearUser() {
     });
   }
 }
-
+/*
 async function sendMessageJson(data){
   try {
     const response = await fetch("/sendMessage", {
@@ -152,7 +152,43 @@ if(data.message != ""){
   sendMessageJson(data)
 }
 }
+*/
+async function fetchCrearSala(data){
+  try {
+    const response = await fetch("/crear_sala", {
+      method: "POST", 
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    const result = await response.json();
+    if(result.sala.length>0){
+      document.getElementById("salas").innerHTML = `
+      <div onclick="goToRoom()" class="menu" id="sala">
+        <div class="lateralizquierdo">
+      </div>
+      <div>
+          <h2 class="yellowtext">Sala de "${data.sala}"</h2>
+      </div>
+  </div>
+      `
+    }
+    console.log("Success:", result)
+  } catch (error) {
+    console.error("Error:", error);
+  }
+}
 
+function crearSala(){
+  let sala = document.getElementById("nombre_sala").value
+  let data = {
+    sala:sala
+  }
+  if (data.sala != "") {
+    fetchCrearSala(data)
+  }
+}
 
 function iralogin(){
   location.href ='/login';

@@ -30,14 +30,25 @@ const {
       );
   
       if (!userCredential.user.emailVerified) {
+        swal({
+          title: "Datos incorrectos",
+          icon: "warning",
+          button: "Ok!",
+        });
         throw new Error(
           "Por favor, verifica tu correo electrónico para iniciar sesión."
+
         );
       }
   
       console.log("Inicio de sesión exitoso para el usuario:", email);
       return userCredential;
     } catch (error) {
+      swal({
+        title: "Datos incorrectos",
+        icon: "warning",
+        button: "Ok!",
+      });
       console.error("Error en el inicio de sesión:", error);
       throw error;
     }

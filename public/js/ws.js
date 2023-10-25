@@ -15,8 +15,11 @@ function sumarmeAChat(contacto) {
     socket.emit("unirme-room", { contacto: contacto });
 }
 
+socket.emit('join', 'mi-sala'); // Envía un evento para unirse a la sala
 
-
+socket.on('evento-en-sala', (mensaje) => {
+    console.log(`Mensaje en la sala: ${mensaje}`);
+  });
 
 socket.on("server-message", data => {
     console.log("Me llego del servidor", data);
