@@ -8,20 +8,6 @@
  * Correct `block` display not defined in IE 6/7/8/9 and Firefox 3.
  */
 
-article,
-aside,
-details,
-figcaption,
-figure,
-footer,
-header,
-hgroup,
-main,
-nav,
-section,
-summary {
-    display: block;
-}
 
 /**
  * Correct `inline-block` display not defined in IE 6/7/8/9 and Firefox 3.
@@ -521,7 +507,7 @@ table {
     border-spacing: 0;
 }
 /*CSS*/
-html, body, .game-wrapper, .game-main {
+html, body, .game-main {
 	height:100%;
 	overflow: hidden;
     width: 100%;
