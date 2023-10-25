@@ -1,15 +1,4 @@
 
-/*  Paquetes instalados: -g nodemon, express, express-handlebars, body-parser, mysql2
-    Agregado al archivo "package.json" la línea --> "start": "nodemon index"
-    
-    Proyecto "Node_base"
-    Desarrollo de Aplicaciones Informáticas - 5to Informática
-    
-    Docentes: Nicolás Facón, Martín Rivas
-    
-    Revisión 1 - Año 2021
-*/
-//Cargo librerías instaladas y necesarias
 const express = require('express'); //Para el manejo del servidor Web
 const exphbs  = require('express-handlebars'); //Para el manejo de los HTML
 const bodyParser = require('body-parser'); //Para el manejo de los strings JSON
@@ -41,10 +30,9 @@ const firebaseConfig = {
   
   // Importar AuthService
   const authService = require("./authService");
-
+;
 
 const session = require('express-session');
-
 const app = express(); //Inicializo express para el manejo de las peticiones
 
 app.use(express.static('public')); //Expongo al lado cliente la carpeta "public"
@@ -57,9 +45,24 @@ app.set('view engine', 'handlebars'); //Inicializo Handlebars
 
 const Listen_Port = 3000; //Puerto por el que estoy ejecutando la página Web
 
-app.listen(Listen_Port, function() {
+const server = app.listen(Listen_Port, function() {
     console.log('Servidor NodeJS corriendo en http://localhost:' + Listen_Port + '/');
 });
+
+const io = require('socket.io')(server);
+
+const sessionMiddleware = session({
+    secret: 'sararasthastka',
+    resave: true,
+    saveUninitialized: false,
+});
+
+app.use(sessionMiddleware);
+
+io.use(function(socket, next) {
+    sessionMiddleware(socket.request, socket.request.res, next);
+});
+
 
 app.use(session({secret: '123456', resave: true, saveUninitialized: true}));
 
@@ -76,11 +79,9 @@ app.use(session({secret: '123456', resave: true, saveUninitialized: true}));
 */
 
 
-app.get('/', function(req, res)
-{
-    //Petición GET con URL = "/", lease, página principal
-    console.log(req.query); //En req.query vamos a obtener el objeto con los parámetros enviados desde el frontend por método GET
-    res.render('inicio', null); //Renderizo página "login" sin pasar ningún objeto a Handlebars
+app.get('/', function(req, res){
+    console.log(req.query); 
+    res.render('inicio', null); 
 });
 
 app.post('/register', async function(req, res){
@@ -90,6 +91,8 @@ app.post('/register', async function(req, res){
         await MySQL.realizarQuery (`insert into usersProyect (mail,pass) values ("${req.body.email}","${req.body.password}")`)
         response = await MySQL.realizarQuery (`select id from usersProyect where mail = "${req.body.email}"`)
         req.session.id1 = response[0].id 
+        req.session.mail = req.body.email
+        console.log(req.session.id1)
         res.render("home");
     } catch (error) {
         console.error("Error en el registro:", error);
@@ -109,6 +112,9 @@ app.put('/login', async function(req, res){
       authService.loginUser(auth, { email, password });
       verifica = true
       req.session.id1 = response[0].id
+      req.session.mail = response[0].mail
+      console.log(req.session.id1)
+      console.log(req.session.mail)
     } catch (error) {
       verifica = false
       console.log(error)
@@ -157,7 +163,7 @@ app.put('/bannear', async function(req, res){
     user_exists = await MySQL.realizarQuery(`select mail from usersProyect where mail = "${req.body.mail}"`)
     console.log(user_exists)
     if (user_exists.length > 0) {
-        await MySQL.realizarQuery(`delete from usersProyect where mail = "${req.body.mail}"`)
+        await MySQL.realizarQuery(`delete from usersProyect where mail = "${req.session.mail}"`)
         res.send({bannear:true});    
     }
     else{
@@ -171,23 +177,41 @@ app.get('/inicio', function(req, res){
 });
 
 
+app.post('/crear_sala', async function(req, res){
+    await MySQL.realizarQuery(`insert into salas (name_sala) values ("${req.session.mail }")`)
+    select_sala = await MySQL.realizarQuery(`select name_sala from salas where name_sala = "${req.session.mail }"`)
+    res.send({sala:select_sala[0].name_sala})    
+});
 /*
 io.on("connection", (socket) => {
     const req = socket.request;
     socket.on('incoming-message', data => {
-        console.log(req.session.chat)  
-        io.to(req.session.chat.contacto).emit("server-message", { mensaje: data.mensaje });
+        io.to(req.session.mail).emit("server-message", { mensaje: data.sala });
+    });
+})
+socket.on('create room', function(room) {
+    socket.join(room);
+    console.log('User has created a new room called ' + room);
+ });
+ socket.on('join room', function(room) {
+    socket.join(room);
+    console.log('User has joined the room called ' + room);
+ });
+*/
+io.of('/nacho').to('sala1').emit('evento-en-sala', 'Hola desde la sala');
+io.on("connection", (socket) => {
+    const req = socket.request;
+    socket.on('incoming-message', data => { 
+        socket.emit("incoming-message",)
+        io.to(req.session.mail).emit("server-message", { mensaje: data });
     });
     socket.on('unirme-room', data => {
-        console.log(req.session.chat)
-        req.session.chat = data  
-        if (req.session.chat.contacto != "") {
-            socket.leave(req.session.chat)
-        }
-        socket.join(req.session.chat.contacto)
+        req.session.sala = data.sala 
+        socket.join(req.session.mail)
     });
 });
-*/
+
+   
 
 /*  TRUCOO
 https://github.com/p4bl1t0/truco-argento/blob/master/js/truco.js
