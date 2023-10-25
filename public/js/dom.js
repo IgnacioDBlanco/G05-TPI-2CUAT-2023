@@ -110,7 +110,7 @@ function bannearUser() {
     });
   }
 }
-/*
+
 async function sendMessageJson(data){
   try {
     const response = await fetch("/sendMessage", {
@@ -132,7 +132,7 @@ async function sendMessageJson(data){
       } 
       else if (result.success == true) {
         console.log("enviado")
-        document.getElementById("input_message").innerHTML += `
+        document.getElementById("chat").innerHTML += `
         <div class="chat2">
           <h1 class="chat">${data.message}</h1>
       </div>
@@ -143,8 +143,8 @@ async function sendMessageJson(data){
   }
 }
 function sendMessage(){
-  let message = document.getElementById("message").value
-  FuncionPrueba(message)
+  let message = document.getElementById("mensaje").value
+  mandarMensaje(message)
   let data = {
     message:message
 }
@@ -152,7 +152,7 @@ if(data.message != ""){
   sendMessageJson(data)
 }
 }
-*/
+
 async function fetchCrearSala(data){
   try {
     const response = await fetch("/crear_sala", {
