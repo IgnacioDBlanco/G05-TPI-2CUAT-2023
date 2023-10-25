@@ -8,7 +8,7 @@
 	--dimensiones-grupo:70px;
 }
 
-/*
+
 * {
     margin: 0;
     padding: 0;
@@ -16,7 +16,7 @@
     -webkit-font-smoothing: antialiased;
     
   }
-  */
+  
   
 #b {
   background-image: url("/images/fondolog.jpg");
@@ -41,7 +41,7 @@
   display:flex;
   justify-content: space-between;
   width: 100%;
-  height: 80px;
+  height: 6%;
   background-color: #262626;
   border: 2px solid #D4AF37;
   margin-top: 0px;
@@ -106,7 +106,7 @@ flex-direction: column;
   display:flex;
   justify-content: center;
   width: 100%;
-  height: 100%;
+  height: 5%;
   background-color: #262626;
   border: 2px solid #D4AF37;
   margin-bottom: 0px;
@@ -116,7 +116,7 @@ flex-direction: column;
   display:flex;
   justify-content: space-between;
   width: 100%;
-  height: 100%;
+  height: 80%;
 }
 
   .login-form {
