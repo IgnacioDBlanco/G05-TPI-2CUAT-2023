@@ -227,3 +227,11 @@ function iraAnotador(){
 function iraReglas() {
   location.href ='/reglas';
 }
+
+function iraReglas2() {
+  location.href ='/reglas2';
+}
+
+function iraReglas3() {
+  location.href ='/reglas3';
+}

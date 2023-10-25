@@ -317,6 +317,13 @@ flex-direction: column;
   margin-left: 20px;
 }
 
+.yellowtext3 {
+  color: goldenrod;
+  margin-top: 25px;
+  margin-bottom: 0px;
+  margin-left: 20px;
+}
+
 .pi{
   color: #fff;
   margin-top: 0px;
@@ -325,12 +332,23 @@ flex-direction: column;
 .pi2{
   color: #fff;
   justify-content: start;
-  margin: 20px;
+  margin-top: 20px;
+  margin-right: 20px;
+  margin-left: 20px;
+}
+
+.pi3 {
+  color: #fff;
+  justify-content: start;
+  margin-top: 20px;
+  margin-bottom: 0px;
+  margin-right: 20px;
+  margin-left: 20px;
 }
 
 .textoreglas {
   width: 700px;
-  height: 700px;
+  height: 600px;
   margin: 65px auto;
   margin-top: 0px;
   display: -webkit-box;
@@ -342,7 +360,22 @@ flex-direction: column;
   border-radius: 10px;
   box-shadow: 0 2px 25px rgba(0, 0, 0, 0.2);
   background-color: rgba(0, 0, 0, 0.8);
+}
 
+.textoEnvido {
+  width: 1200px;
+  height: 600px;
+  margin: 65px auto;
+  margin-top: 0px;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  flex-direction: column;
+  border: 2px solid #D4AF37; 
+  border-radius: 10px;
+  box-shadow: 0 2px 25px rgba(0, 0, 0, 0.2);
+  background-color: rgba(0, 0, 0, 0.8);
 }
 
 h1 {
@@ -614,6 +647,36 @@ dialog{
 #aceptar:hover{
   border: 2px solid #9e801d;
 }
+
+.siguiente{
+  display: flex;
+  width: 100%;
+  justify-content: right;
+  margin-top: 30px;
+}
+
+.siguiente2{
+  display: flex;
+  width: 100%;
+  justify-content: right;
+  margin-top: -20px;
+}
+
+.botonsiguiente{
+    border: 2px solid #D4AF37;
+    width: 80px;
+    height: 40px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    color: white;
+    background-color:rgba(0, 0, 0, 0.6);
+    margin-right: 40px;
+  }
+  
+  .botonsiguiente:hover{
+    border: 2px solid #9e801d;
+    background-color:rgba(0, 0, 0, 0.8);
+  }
 
 .separador{
 	border-top: 2px solid black;

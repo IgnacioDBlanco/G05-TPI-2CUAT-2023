@@ -271,8 +271,7 @@ sub {
 
 dl,
 menu,
-ol,
-ul {
+ol {
     margin: 1em 0;
 }
 
@@ -285,8 +284,7 @@ dd {
  */
 
 menu,
-ol,
-ul {
+ol {
     padding: 0 0 0 40px;
 }
 
