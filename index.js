@@ -139,10 +139,6 @@ app.get('/admin', function(req, res){
     console.log(req.query); 
     res.render('admin', null);
    });
-app.get('/salas', function(req, res){
-    console.log(req.query); 
-    res.render('salas', null);
-});
 app.get('/home', function(req, res){
     res.render('home', null);
    });
@@ -163,6 +159,7 @@ app.get('/truco_online', function(req, res){
     res.render('truco_online', null); 
 });
 
+
 app.put('/bannear', async function(req, res){
     user_exists = await MySQL.realizarQuery(`select mail from usersProyect where mail = "${req.body.mail}"`)
     console.log(user_exists)
@@ -182,10 +179,22 @@ app.get('/inicio', function(req, res){
 
 
 app.post('/crear_sala', async function(req, res){
-    await MySQL.realizarQuery(`insert into salas (name_sala) values ("${req.session.mail }")`)
+    await MySQL.realizarQuery(`insert into salas (name_sala) values ("${req.body.sala }")`)
     select_sala = await MySQL.realizarQuery(`select name_sala from salas where name_sala = "${req.session.mail }"`)
     res.send({sala:select_sala[0].name_sala})    
 });
+
+app.post('/sala_seleccionada', async function(req, res){
+    req.session.sala = req.body.sala
+    res.send({sala  : req.body.sala})    
+});
+
+app.get('/salas', async function(req, res){
+    salas = await MySQL.realizarQuery(`select name_sala from salas`)
+    console.log(salas)
+    res.render('salas', {salas: salas})    
+});
+
 /*
 io.on("connection", (socket) => {
     const req = socket.request;
@@ -203,7 +212,6 @@ socket.on('create room', function(room) {
  });
 */
 
-io.of('/nacho').to('sala1').emit('evento-en-sala', 'Hola desde la sala');
 io.on("connection", (socket) => {
     const req = socket.request;
     socket.on('incoming-message', data => { 
@@ -211,8 +219,8 @@ io.on("connection", (socket) => {
         io.to(req.session.mail).emit("server-message", { mensaje: data });
     });
     socket.on('unirme-room', data => {
-        req.session.sala = data.sala 
-        socket.join(req.session.mail)
+        console.log("Me uni a la sala: " , req.session.sala)
+        socket.join(req.session.sala)
     });
 });
 
