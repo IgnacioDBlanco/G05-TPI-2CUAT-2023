@@ -18,8 +18,8 @@
     </div>
     <div class="login-form" id="salas"> 
     {{#each salas}}
-         <div class="menu" id="sala">
-        <div class="lateralizquierdo">
+         <div class="menu" id="sala" onclick="goToRoom('{{this.name_sala}}')">
+        <div class="lateralizquierdo" >
       </div>
       <div>
           <h2 class="yellowtext">{{this.name_sala}}</h2>

@@ -6,7 +6,7 @@ socket.on("connect", () => {
     console.log("Me conecté a WS");
 });
 
-function FuncionPrueba(mensaje) {
+function mandarMensaje(mensaje) {
     envie = 1
     socket.emit("incoming-message", { mensaje: mensaje });
 }

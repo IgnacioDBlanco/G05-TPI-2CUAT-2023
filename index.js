@@ -190,7 +190,7 @@ app.get('/inicio', function(req, res){
 
 app.post('/crear_sala', async function(req, res){
     await MySQL.realizarQuery(`insert into salas (name_sala) values ("${req.body.sala }")`)
-    select_sala = await MySQL.realizarQuery(`select name_sala from salas where name_sala = "${req.session.mail }"`)
+    let select_sala = await MySQL.realizarQuery(`select name_sala from salas where name_sala = "${req.body.sala }"`)
     res.send({sala:select_sala[0].name_sala})    
 });
 
@@ -205,28 +205,27 @@ app.get('/salas', async function(req, res){
     res.render('salas', {salas: salas})    
 });
 
-/*
-io.on("connection", (socket) => {
-    const req = socket.request;
-    socket.on('incoming-message', data => {
-        io.to(req.session.mail).emit("server-message", { mensaje: data.sala });
-    });
-})
-socket.on('create room', function(room) {
-    socket.join(room);
-    console.log('User has created a new room called ' + room);
- });
- socket.on('join room', function(room) {
-    socket.join(room);
-    console.log('User has joined the room called ' + room);
- });
+/*app.post('/sendMessage', async function(req, res){
+    insert_message = await MySQL.realizarQuery(`insert into messages (id_chat, message, id_user) values (1,"${req.body.message}","${req.session.id1}")`)
+    preview_message1 = await MySQL.realizarQuery(`select message, id_user from messages where id_chat = 1 order by id asc`)
+    let vector2 = []
+     for (let i = 0; i < preview_message1.length; i++) {
+        if (preview_message1[i].id_user == req.session.id1){
+            vector2.push({mensaje: preview_message1[i].message, clase: "chat2"})
+        }
+        if (preview_message1[i].id_user != req.session.id1) {
+            vector2.push({mensaje: preview_message1[i].message, clase: "chat1"})
+        }
+    }
+    res.render('truco_online', {messagespreview1:vector2})    
+});
 */
 
 io.on("connection", (socket) => {
     const req = socket.request;
     socket.on('incoming-message', data => { 
         socket.emit("incoming-message",)
-        io.to(req.session.mail).emit("server-message", { mensaje: data });
+        io.to(req.session.sala).emit("server-message", { mensaje: data }); // mandar mensaje a sala de un jugador a otro
     });
     socket.on('unirme-room', data => {
         console.log("Me uni a la sala: " , req.session.sala)
@@ -241,6 +240,23 @@ https://github.com/p4bl1t0/truco-argento/blob/master/js/truco.js
 
 https://github.com/migueljimenop/trucosocket
 
-
- */
+el back elige a quien mandarlo el cliente siempre al servidor
+el "incoming-message es como un endpoint que diferencia quien manda ese mensaje, el mensaje lo tengo que traer por dom con el id del input
+y mandarlo del front al back con un socket emit, y en el back mandarlo a la sala que corresponde"
+ 
+para mandar el mensaje lo selecciono con dom, lo mando con socket emit del front al back y
+al mismo tiempo con el boton onclick de enviar imprime el mensaje del lado derecho. en el back con io.to lo 
+mando al servidor que esta conectado el mensaje y desde el front con una funcion como esta imprimo el mensaje del otro lado(no hace falta sql)
+socket.on("server-message", data => {
+    console.log("Me llego del servidor", data);
+    if (envie == -1) {
+        document.getElementById("input_message").innerHTML += `
+            <div class="chat1">
+              <h1 class="chat">${data.mensaje}</h1>
+          </div>
+          `
+    }
+    envie = -1
+});
+*/
 
