@@ -248,6 +248,7 @@
   font-weight: bold;
   font-size: 100px;
   color:cornsilk;
+  margin-bottom: 10px;
   margin-top: 0px;
   text-shadow: 0 1px 0 darkgoldenrod, 0 2px 0 darkgoldenrod, 0 3px 0 #bbb, 0 4px 0 #aaa, 0 5px 0 #acacac, 0 6px 1px rgba(0,0,0,0.1), 0 0 5px rgba(0,0,0,0.1), 0 1px 3px rgba(0,0,0,0.3), 0 3px 5px rgba(0,0,0,0.2), 0 5px 10px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.2), 0 20px 20px rgba(0,0,0,0.15);
 }
@@ -282,10 +283,41 @@
   color: goldenrod;
   margin-top: 25px;
 }
+
+.yellowtext2{
+  color: goldenrod;
+  margin-top: 25px;
+  margin-left: 20px;
+}
+
 .pi{
   color: #fff;
   margin-top: 0px;
 }
+
+.pi2{
+  color: #fff;
+  justify-content: start;
+  margin: 20px;
+}
+
+.textoreglas {
+  width: 700px;
+  height: 700px;
+  margin: 65px auto;
+  margin-top: 0px;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  flex-direction: column;
+  border: 2px solid #D4AF37; 
+  border-radius: 10px;
+  box-shadow: 0 2px 25px rgba(0, 0, 0, 0.2);
+  background-color: rgba(0, 0, 0, 0.8);
+
+}
+
 h1 {
   text-align: center;
  }
@@ -331,9 +363,6 @@ h1 {
   text-align: center;
 }
 
-.textomodal {
-  letter-spacing: 0.3px;
-}
 
 #mc{
 background-color: #000000;
