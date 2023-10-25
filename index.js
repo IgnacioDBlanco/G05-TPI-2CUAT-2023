@@ -158,6 +158,16 @@ app.get('/truco_online', function(req, res){
     console.log(req.query); 
     res.render('truco_online', null); 
 });
+app.get('/reglas2', function(req, res){
+    console.log(req.query); 
+    res.render('reglas2', null); 
+});
+app.get('/reglas3', function(req, res){
+    console.log(req.query); 
+    res.render('reglas3', null); 
+});
+
+
 
 
 app.put('/bannear', async function(req, res){
