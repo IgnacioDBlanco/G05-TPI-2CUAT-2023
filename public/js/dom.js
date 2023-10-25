@@ -223,3 +223,7 @@ function iraregistro(){
 function iraAnotador(){
   location.href ='/anotador';
 }
+
+function iraReglas() {
+  location.href ='/reglas';
+}
