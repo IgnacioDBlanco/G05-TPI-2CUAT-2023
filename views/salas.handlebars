@@ -11,14 +11,21 @@
 </svg>
 </div>
     </div>
-    <h1 class="titulo">TRUCO IX</h1>
+    <h1 class="titulo"  >TRUCO IX</h1>
     <div class="crearsala">
-    <input type="text" placeholder="nombre de la sala" id="nombre_sala">    
+    <input type="text" placeholder="nombre de la sala" id="nombre_sala" name="nombresala">    
     <input type="button" onclick="crearSala()" value="cree una sala">
     </div>
     <div class="login-form" id="salas"> 
-
-        </div>
+    {{#each salas}}
+         <div class="menu" id="sala">
+        <div class="lateralizquierdo">
+      </div>
+      <div>
+          <h2 class="yellowtext">{{this.name_sala}}</h2>
+      </div>
+  </div>
+      {{/each}}
     </div>
     
 </body>

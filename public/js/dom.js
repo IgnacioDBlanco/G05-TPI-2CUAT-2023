@@ -164,8 +164,8 @@ async function fetchCrearSala(data){
     });
     const result = await response.json();
     if(result.sala.length>0){
-      document.getElementById("salas").innerHTML = `
-      <div onclick="goToRoom()" class="menu" id="sala">
+      document.getElementById("salas").innerHTML += `
+      <div onclick="goToRoom('${data.sala}')" class="menu" id="sala">
         <div class="lateralizquierdo">
       </div>
       <div>
@@ -190,8 +190,26 @@ function crearSala(){
   }
 }
 
-function goToRoom(){
-  location.href = '/truco_online';
+function goToRoom(sala){
+  console.log(sala)
+  guardarSalaSeleccionada(sala)
+
+}
+
+async function guardarSalaSeleccionada(sala) {
+  try {
+    const response = await fetch("/sala_seleccionada", {
+      method: "POST", 
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({sala: sala}),
+    });
+    const result = await response.json();
+    location.href = '/truco_online';
+  } catch (error) {
+    console.error("Error:", error);
+  }
 }
 
 function iralogin(){

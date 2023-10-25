@@ -7,6 +7,8 @@
 	var audio = null;
 	var limitePuntaje = 15;
 	var Debug = false;
+
+	unirmeSala()
 	
 	function getRandomInt (min, max) {
 		return Math.floor(Math.random() * (max - min + 1)) + min;
