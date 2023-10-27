@@ -195,6 +195,7 @@ app.post('/crear_sala', async function(req, res){
 });
 
 app.post('/sala_seleccionada', async function(req, res){
+    console.log(req.body.sala)
     req.session.sala = req.body.sala
     res.send({sala  : req.body.sala})    
 });
@@ -224,7 +225,6 @@ app.get('/salas', async function(req, res){
 io.on("connection", (socket) => {
     const req = socket.request;
     socket.on('incoming-message', data => { 
-        socket.emit("incoming-message",)
         io.to(req.session.sala).emit("server-message", { mensaje: data }); // mandar mensaje a sala de un jugador a otro
     });
     socket.on('unirme-room', data => {
