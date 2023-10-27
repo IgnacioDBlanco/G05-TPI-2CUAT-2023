@@ -225,15 +225,14 @@ app.get('/salas', async function(req, res){
 io.on("connection", (socket) => {
     const req = socket.request;
     socket.on('incoming-message', data => { 
+        console.log(data)
         io.to(req.session.sala).emit("server-message", { mensaje: data }); // mandar mensaje a sala de un jugador a otro
     });
-    socket.on('unirme-room', data => {
+socket.on('unirme-room', data => {
         console.log("Me uni a la sala: " , req.session.sala)
         socket.join(req.session.sala)
     });
 });
-
-   
 
 /*  TRUCOO
 https://github.com/p4bl1t0/truco-argento/blob/master/js/truco.js
