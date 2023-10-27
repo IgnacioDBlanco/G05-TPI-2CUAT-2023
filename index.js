@@ -229,10 +229,28 @@ io.on("connection", (socket) => {
         io.to(req.session.sala).emit("server-message", { mensaje: data }); // mandar mensaje a sala de un jugador a otro
     });
 socket.on('unirme-room', data => {
-        console.log("Me uni a la sala: " , req.session.sala)
+        console.log("Me uni a la sala: " , req.session.sala, " soy " , data.user)
         socket.join(req.session.sala)
+        io.to(req.session.sala).emit("usuario-unido", { user: req.session.mail }); // mandar mensaje a sala de un jugador a otro
     });
 });
+
+/*socket.on("arrancar-truco", data=> {
+
+});
+*/
+
+
+
+
+
+
+
+
+
+
+
+
 
 /*  TRUCOO
 https://github.com/p4bl1t0/truco-argento/blob/master/js/truco.js

@@ -16,6 +16,11 @@
     <input type="text" placeholder="nombre de la sala" id="nombre_sala" name="nombresala">    
     <input type="button" onclick="crearSala()" value="cree una sala">
     </div>
+
+    <div class="unirsala">
+    <input type="button" onclick="recargarSala()" value="recargar">
+    </div>
+
     <div class="login-form" id="salas"> 
     {{#each salas}}
          <div class="menu" id="sala" onclick="goToRoom('{{this.name_sala}}')">
