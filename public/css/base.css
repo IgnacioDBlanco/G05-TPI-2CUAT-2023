@@ -750,6 +750,7 @@ ul li {
     min-width: 0;
     word-wrap: break-word;
     background-clip: border-box;
+    background-color: transparent;
 }
 .game-deck {
 	height:180px; 
