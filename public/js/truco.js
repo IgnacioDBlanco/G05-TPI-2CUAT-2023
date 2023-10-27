@@ -204,11 +204,12 @@
 		return puntos;
 	}
 	// carta tirada por persona
-
+	// tirar carta, lo saca de cartasEnMano
 	Jugador.prototype.jugarCarta =  function (index) {
 		if(index !== null && index !== undefined && this.cartasEnMano.length > index) {
 			var carta = this.cartasEnMano[index];
 			_log.innerHTML = '<b>' + this.nombre + ' juega un :</b> ' + carta.getNombre() + '<br /> ' + _log.innerHTML ;
+			//Aca creo q deberiamos emitir la carta jugada
 			this.cartasJugadas.push(carta);
 			this.cartasEnMano.splice(index,1);
 			return carta;

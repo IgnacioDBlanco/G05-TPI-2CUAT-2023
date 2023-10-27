@@ -10,6 +10,7 @@ async function fetchLogin(data){
     const result = await response.json();
     console.log("Success:", result)
     
+    
       if (result.success == false) {
         swal({
           title: "Datos incorrectos",
@@ -18,6 +19,7 @@ async function fetchLogin(data){
         });
       } 
       else if (result.success == true) {
+        localStorage.setItem("user", data.user); //Guardo el usuario en el localStorage
         if(result.admin == true){
           location.href ='/admin';
         }
@@ -234,4 +236,8 @@ function iraReglas2() {
 
 function iraReglas3() {
   location.href ='/reglas3';
+}
+
+function recargarSala(){
+  location.href ='/salas';
 }

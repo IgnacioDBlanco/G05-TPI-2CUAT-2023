@@ -815,7 +815,7 @@ IA.prototype.truco = function (resp , ultimo) {
 		if(this.estrategiaDeJuego === null)
 			this.estrategiaDeJuego = this.estrategiaClasica;
 		
-		var indice = this.estrategiaDeJuego();
+		var indice = this.estrategiaDeJuego(); //En lugar de este indice podrias recibirlo de ws
 
 		var carta = this.cartasEnMano[indice];
 		_log.innerHTML = '<b>' + this.nombre + ' juega un :</b> ' + carta.getNombre() + '<br /> ' + _log.innerHTML ;

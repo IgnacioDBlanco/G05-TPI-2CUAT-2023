@@ -17,10 +17,6 @@ function mandarMensaje(mensaje) {
     `    
     envie = 1
     }};
-function unirmeSala() {
-     
-    socket.emit('unirme-room', ); // Envía un evento para unirse a la sala
-}
 socket.on("server-message", data => {
     console.log("tengo que mandar", data);
     if (envie == -1) {
@@ -31,7 +27,43 @@ socket.on("server-message", data => {
           `
           envie = 1
     }
+    envie=-1
 });
+
+function unirmeSala() {
+    
+    socket.emit('unirme-room', {user: localStorage.getItem("user")}); 
+}
+
+socket.on("usuario-unido", data => {
+    console.log("Se unio", data);
+    if (data.user =! localStorage.getItem("user")) {
+        console.log("arrancaaaa")
+    }
+});
+
+
+
+
+
+
+
+/*
+
+******TRUCO*****
+
+*/
+
+
+
+
+
+
+
+
+
+
+
 
 
 /*
