@@ -1,44 +1,36 @@
 const IP = "ws://localhost:3000";
 const socket = io(IP);
 let envie = -1
-
 socket.on("connect", () => {
     console.log("Me conecté a WS");
 });
 
 function mandarMensaje(mensaje) {
-    let mensaje = document.getElementById("mensaje").value
-    envie = 1
-    socket.emit("incoming-message", { mensaje: mensaje });
-    enviarMensaje(mensaje)
-}
-function enviarMensaje(mensaje){
-    let mensaje = document.getElementById("mensaje").value
+    mensaje = document.getElementById("mensaje").value
+    if (envie == -1) {
+    socket.emit("incoming-message", { data: mensaje });
+    console.log("envie", mensaje);
     document.getElementById("chat").innerHTML += `
     <div class="chat2">
-      <h1 class="chat">${mensaje}</h1>
+      <h1 class="chat"> ${mensaje}</h1>
     </div>
     `    
-}
-
+    envie = 1
+    }};
 function unirmeSala() {
-    socket.emit('unirme-room', {data: 'mi-sala'} ); // Envía un evento para unirse a la sala
+     
+    socket.emit('unirme-room', ); // Envía un evento para unirse a la sala
 }
-
-socket.on('evento-en-sala', (mensaje) => {
-    console.log(`Mensaje en la sala: ${mensaje}`);
-  });
-
 socket.on("server-message", data => {
-    console.log("Me llego del servidor", data);
+    console.log("tengo que mandar", data);
     if (envie == -1) {
-        document.getElementById("input_message").innerHTML += `
+        document.getElementById("chat").innerHTML += `
             <div class="chat1">
-              <h1 class="chat">${data.mensaje}</h1>
+              <h1 class="chat">${data.mensaje.data}</h1>
           </div>
           `
+          envie = 1
     }
-    envie = -1
 });
 
 
