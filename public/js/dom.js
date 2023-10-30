@@ -113,47 +113,7 @@ function bannearUser() {
   }
 }
 
-async function sendMessageJson(data){
-  try {
-    const response = await fetch("/sendMessage", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
-    const result = await response.json();
-    console.log("Success:", result)
-    
-      if (result.success == false) {
-        swal({
-          title: "Ingrese algo",
-          icon: "warning",
-          button: "Ok!",
-        });
-      } 
-      else if (result.success == true) {
-        console.log("enviado")
-        document.getElementById("chat").innerHTML += `
-        <div class="chat2">
-          <h1 class="chat">${data.message}</h1>
-      </div>
-      `
-      }
-      } catch (error) {
-    console.error("Error:", error);
-  }
-}
-function sendMessage(){
-  let message = document.getElementById("mensaje").value
-  mandarMensaje(message)
-  let data = {
-    message:message
-}
-if(data.message != ""){
-  sendMessageJson(data)
-}
-}
+
 
 async function fetchCrearSala(data){
   try {
