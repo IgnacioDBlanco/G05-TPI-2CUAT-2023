@@ -230,6 +230,8 @@ socket.on("arrancar-truco", data=> {
 
 
 
+
+
 /*  TRUCOO
 https://github.com/p4bl1t0/truco-argento/blob/master/js/truco.js
 
