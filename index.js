@@ -231,6 +231,13 @@ socket.on('unirme-room', data => {
         socket.join(req.session.sala)
         io.to(req.session.sala).emit("usuario-unido", { user: req.session.mail }); // mandar mensaje a sala de un jugador a otro
     });
+    socket.on('movimiento', data => {
+        console.log(data)
+    })
+    
+    socket.on('arranca-partida', data => {
+        io.to(req.session.sala).emit("arranco-partida", { user: req.session.mail })
+    });
 });
 
 
