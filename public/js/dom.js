@@ -113,7 +113,56 @@ function bannearUser() {
   }
 }
 
+async function eliminarSalaJson(data){
+  try {
+    const response = await fetch("/eliminar_sala", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    const result = await response.json();
+    console.log("Success:", result)
+    
+      if (result.bannear == false) {
+        swal({
+          title: "No existe la sala",
+          icon: "warning",
+          button: "Ok!",
+        });
+      } 
+      else if (result.bannear == true) {
+        swal({
+          title: "Sala eliminada correctamente",
+          icon: "success",
+          button: "Ok!",
+        });
 
+  }}
+  catch (error) {
+    console.error("Error:", error);
+  }
+}
+
+
+function eliminarSala() {
+  let sala = document.getElementById("idsala").value
+
+  let data = {
+     sala:sala
+  }
+
+  if(data.sala != ""){
+    eliminarSalaJson(data) 
+  }
+  else{
+    swal({
+      title: "No ingreso ninguna sala",
+      button: "Ok!",
+    });
+  }
+}
 
 async function fetchCrearSala(data){
   try {

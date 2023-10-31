@@ -13,12 +13,12 @@ socket.on("usuario-unido", data => {
     //if (data.user != "") {
         socket.emit('arranca-partida', data)
         console.log("arrancaaaa")
-        Naipe ()
+        /*Naipe ()
         Naipe.prototype.getCSS
         Naipe.prototype.getNombre
         maso = _rondaActual.generarBaraja();
         Ronda.prototype.iniciar
-        
+     */   
     }
 });
 

@@ -183,6 +183,20 @@ app.put('/bannear', async function(req, res){
     
 });
 
+app.put('/eliminar_sala', async function(req, res){
+    salas = await MySQL.realizarQuery(`select * from salas where id = "${req.body.sala}"`)
+    console.log(salas)
+    if (salas.length > 0) {
+        await MySQL.realizarQuery(`delete from salas where id = "${req.body.sala}"`)
+        res.send({bannear:true});    
+    }
+    else{
+        res.send({bannear:false});
+    }
+    
+});
+
+
 app.get('/inicio', function(req, res){
     res.render('inicio', null);
 });
