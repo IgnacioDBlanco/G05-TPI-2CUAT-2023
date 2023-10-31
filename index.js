@@ -183,6 +183,20 @@ app.put('/bannear', async function(req, res){
     
 });
 
+app.put('/eliminar_sala', async function(req, res){
+    salas = await MySQL.realizarQuery(`select * from salas where id = "${req.body.sala}"`)
+    console.log(salas)
+    if (salas.length > 0) {
+        await MySQL.realizarQuery(`delete from salas where id = "${req.body.sala}"`)
+        res.send({bannear:true});    
+    }
+    else{
+        res.send({bannear:false});
+    }
+    
+});
+
+
 app.get('/inicio', function(req, res){
     res.render('inicio', null);
 });
@@ -206,22 +220,6 @@ app.get('/salas', async function(req, res){
     res.render('salas', {salas: salas})    
 });
 
-/*app.post('/sendMessage', async function(req, res){
-    insert_message = await MySQL.realizarQuery(`insert into messages (id_chat, message, id_user) values (1,"${req.body.message}","${req.session.id1}")`)
-    preview_message1 = await MySQL.realizarQuery(`select message, id_user from messages where id_chat = 1 order by id asc`)
-    let vector2 = []
-     for (let i = 0; i < preview_message1.length; i++) {
-        if (preview_message1[i].id_user == req.session.id1){
-            vector2.push({mensaje: preview_message1[i].message, clase: "chat2"})
-        }
-        if (preview_message1[i].id_user != req.session.id1) {
-            vector2.push({mensaje: preview_message1[i].message, clase: "chat1"})
-        }
-    }
-    res.render('truco_online', {messagespreview1:vector2})    
-});
-*/
-
 io.on("connection", (socket) => {
     const req = socket.request;
     socket.on('incoming-message', data => { 
@@ -235,9 +233,7 @@ socket.on('unirme-room', data => {
     });
 });
 
-/*socket.on("arrancar-truco", data=> {
 
-});
 */
 
 /* OPCION 
@@ -257,8 +253,12 @@ app.get('https://api.weatherstack.com/current', {params})
 
 
 
+/*
+socket.on("arrancar-truco", data=> {
+    io.to(req.session.sala).emit("usuario-unido", { user: req.session.mail }); 
+});
 
-
+*/
 
 
 

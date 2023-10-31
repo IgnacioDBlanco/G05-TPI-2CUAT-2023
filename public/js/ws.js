@@ -31,16 +31,10 @@ socket.on("server-message", data => {
 });
 
 function unirmeSala() {
-    
     socket.emit('unirme-room', {user: localStorage.getItem("user")}); 
 }
 
-socket.on("usuario-unido", data => {
-    console.log("Se unio", data);
-    if (data.user =! localStorage.getItem("user")) {
-        console.log("arrancaaaa")
-    }
-});
+
 
 
 

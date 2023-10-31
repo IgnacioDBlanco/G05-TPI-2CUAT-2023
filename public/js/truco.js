@@ -8,7 +8,6 @@
 	var limitePuntaje = 15;
 	var Debug = false;
 
-	unirmeSala()
 	
 	function getRandomInt (min, max) {
 		return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -377,7 +376,7 @@
 	 * 
 	 *******************************************************************
 	*/	
-		
+	// aca puede haber algo de que equipo es cada uno
 	function Ronda (equipo1, equipo2) {
 		this.equipoPrimero = equipo1;
 		this.equipoSegundo = equipo2;

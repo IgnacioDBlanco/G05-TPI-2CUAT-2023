@@ -5,19 +5,21 @@
  * 
  */
 
+unirmeSala()
 
-/*const axios = require('axios');
-const params = {
-  access_key: '17e37d155baf026cabad4d2fe2ab0912',
-  query: 'Buenos Aires'
-}
+socket.on("usuario-unido", data => {
+    console.log("Se unio anashe", data.user);
+    if (data.user != localStorage.getItem("user")) {
+    //if (data.user != "") {
+        socket.emit('arranca-partida', data)
+        console.log("arrancaaaa")
+        /*Naipe ()
+        Naipe.prototype.getCSS
+        Naipe.prototype.getNombre
+        maso = _rondaActual.generarBaraja();
+        Ronda.prototype.iniciar
+     */   
+    }
+});
 
-axios.get('https://api.weatherstack.com/current', {params})
-  .then(response => {
-    const apiResponse = response.data;
-    console.log(`Current temperature in ${apiResponse.location.name} is ${apiResponse.current.temperature}℃`);
-  }).catch(error => {
-    console.log(error);
-  });
 
-*/

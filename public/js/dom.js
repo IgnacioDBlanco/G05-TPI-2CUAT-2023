@@ -113,10 +113,10 @@ function bannearUser() {
   }
 }
 
-async function sendMessageJson(data){
+async function eliminarSalaJson(data){
   try {
-    const response = await fetch("/sendMessage", {
-      method: "POST",
+    const response = await fetch("/eliminar_sala", {
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
@@ -125,34 +125,43 @@ async function sendMessageJson(data){
     const result = await response.json();
     console.log("Success:", result)
     
-      if (result.success == false) {
+      if (result.bannear == false) {
         swal({
-          title: "Ingrese algo",
+          title: "No existe la sala",
           icon: "warning",
           button: "Ok!",
         });
       } 
-      else if (result.success == true) {
-        console.log("enviado")
-        document.getElementById("chat").innerHTML += `
-        <div class="chat2">
-          <h1 class="chat">${data.message}</h1>
-      </div>
-      `
-      }
-      } catch (error) {
+      else if (result.bannear == true) {
+        swal({
+          title: "Sala eliminada correctamente",
+          icon: "success",
+          button: "Ok!",
+        });
+
+  }}
+  catch (error) {
     console.error("Error:", error);
   }
 }
-function sendMessage(){
-  let message = document.getElementById("mensaje").value
-  mandarMensaje(message)
+
+
+function eliminarSala() {
+  let sala = document.getElementById("idsala").value
+
   let data = {
-    message:message
-}
-if(data.message != ""){
-  sendMessageJson(data)
-}
+     sala:sala
+  }
+
+  if(data.sala != ""){
+    eliminarSalaJson(data) 
+  }
+  else{
+    swal({
+      title: "No ingreso ninguna sala",
+      button: "Ok!",
+    });
+  }
 }
 
 async function fetchCrearSala(data){
