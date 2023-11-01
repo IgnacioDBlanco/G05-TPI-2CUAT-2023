@@ -10,35 +10,32 @@
   <path d="M9 4a.5.5 0 0 0-.812-.39L5.825 5.5H3.5A.5.5 0 0 0 3 6v4a.5.5 0 0 0 .5.5h2.325l2.363 1.89A.5.5 0 0 0 9 12V4zM6.312 6.39 8 5.04v5.92L6.312 9.61A.5.5 0 0 0 6 9.5H4v-3h2a.5.5 0 0 0 .312-.11zM12.025 8a4.486 4.486 0 0 1-1.318 3.182L10 10.475A3.489 3.489 0 0 0 11.025 8 3.49 3.49 0 0 0 10 5.525l.707-.707A4.486 4.486 0 0 1 12.025 8z"/>
 </svg>
 </div>
+    </div>
     
     <form action="/admin2" method="PUT" id="form69" class="container-sm"> 
-        <div class="login-form">
-            
-                <svg onclick="goToHome()" type="submit" id="botonirjuego" class="irajuego" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-houses-fill" viewBox="0 0 16 16">
+
+    <div class="cuadroadmin">
+        <svg onclick="goToHome()" type="submit" id="botonirjuego" class="irajuego" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-houses-fill" viewBox="0 0 16 16">
                 <path d="M7.207 1a1 1 0 0 0-1.414 0L.146 6.646a.5.5 0 0 0 .708.708L1 7.207V12.5A1.5 1.5 0 0 0 2.5 14h.55a2.51 2.51 0 0 1-.05-.5V9.415a1.5 1.5 0 0 1-.56-2.475l5.353-5.354L7.207 1Z"/>
                 <path d="M8.793 2a1 1 0 0 1 1.414 0L12 3.793V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v3.293l1.854 1.853a.5.5 0 0 1-.708.708L15 8.207V13.5a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 4 13.5V8.207l-.146.147a.5.5 0 1 1-.708-.708L8.793 2Z"/>
                 </svg>
-            
-            <h1>ADMINISTRADOR</h1>
-        <div class="content" >
-        <div class="form__group field">
+
+
+            <h1 class="yellowtext4">ADMINISTRADOR</h1>
             <label for="mail" class="form__label"></label>
             <input type="text" class="form__field" id="mail_ban" name="mail" placeholder="Ingrese un usuario a eliminar">
-        </div>
         <br></br>
-        <div class="outer">
-            <input type="button" class="button_slide slide_right" onclick="bannearUser()" id="ban" value="bannear">
+        <div class="divbotonesadmin">
+            <input type="button" class="botonadmin" onclick="bannearUser()" id="ban" value="Bannear">
         </div>
           <div class="form__group field">
             <label for="sala" class="form__label"></label>
             <input type="text" class="form__field" id="idsala" name="sala" placeholder="Elimine una sala por ID">
         </div>
         <br></br>
-        <div class="outer">
-            <input type="button" class="button_slide slide_right" onclick="eliminarSala()" id="ban_sala" value="Eliminar">
+        <div class="divbotonesadmin">
+            <input type="button" class="botonadmin" onclick="eliminarSala()" id="ban_sala" value="Eliminar">
         </div>
-       
     </form>
-    </div>
     </div>
 </body>

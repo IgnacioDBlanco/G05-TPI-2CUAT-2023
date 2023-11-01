@@ -17,7 +17,7 @@ function mandarMensaje(mensaje) {
     `    
     envie = 1
     }};
-socket.on("server-message", data => {
+socket.on("server-message", data => { // Llega el parametro NO el objeto
     console.log("tengo que mandar", data);
     if (envie == -1) {
         document.getElementById("chat").innerHTML += `
