@@ -2,14 +2,12 @@ const IP = "ws://localhost:3000";
 const socket = io(IP);
 let envie = -1
 socket.on("connect", () => {
-    console.log("Me conecté a WS");
 });
 
 function mandarMensaje(mensaje) {
     mensaje = document.getElementById("mensaje").value
     if (envie == -1) {
     socket.emit("incoming-message", { data: mensaje });
-    console.log("envie", mensaje);
     document.getElementById("chat").innerHTML += `
     <div class="chat2">
       <h1 class="chat"> ${mensaje}</h1>
@@ -17,8 +15,7 @@ function mandarMensaje(mensaje) {
     `    
     envie = 1
     }};
-socket.on("server-message", data => { // Llega el parametro NO el objeto
-    console.log("tengo que mandar", data);
+socket.on("server-message", data => { 
     if (envie == -1) {
         document.getElementById("chat").innerHTML += `
             <div class="chat1">
@@ -30,8 +27,22 @@ socket.on("server-message", data => { // Llega el parametro NO el objeto
     envie=-1
 });
 
+let indiceJugador2 = -1
+
+socket.on("movimiento-oponente", data => {
+    console.log(data)
+    if (data.user != localStorage.getItem("user")) {
+        //Jugar la carta
+    }
+ });
+
 function unirmeSala() {
     socket.emit('unirme-room', {user: localStorage.getItem("user")}); 
+}
+
+
+function enviarMovimiento(indice) {
+    socket.emit('movimiento',{user: localStorage.getItem("user"), carta:indice})
 }
 
 

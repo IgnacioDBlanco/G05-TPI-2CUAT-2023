@@ -1,0 +1,12 @@
+new Ronda() -> Crea la ronda
+equipoPrimero soy yo
+equipoSegundo tiene que ser el otro no la ia
+Partida -> define los equipos	
+new Partida -> arranca la partida
+
+problema por ahora -> jugador 1 y dos solo tienen dos cartas
+otro -> cuando juego las cartas estan juntas las deljugador 1 con las del jugador 2
+(fijarse los console.log)
+
+como puedo hacer para mostrar las cartas dadas vuelta del segundo jnugador primero,
+y despues como repartir las cartas al segundo jugador, ya que estan como en el mismo mazo

@@ -235,6 +235,7 @@ socket.on('unirme-room', data => {
     });
     socket.on('movimiento', data => {
         console.log(data)
+        io.to(req.session.sala).emit("movimiento-oponente", data)
     })
     
     socket.on('arranca-partida', data => {

@@ -8,11 +8,9 @@
 unirmeSala()
 
 socket.on("usuario-unido", data => {
-    console.log("Se unio anashe", data.user);
     if (data.user != localStorage.getItem("user")) {
         //if (data.user != "") {
         socket.emit('arranca-partida', data)
-        console.log("arrancaaaa")
 
     }
 });
@@ -172,7 +170,8 @@ Jugador.prototype.sayCartasEnMano = function () { // poruqe le pone prototype?
     var html = '';
     for (var i = 0; i < this.cartasEnMano.length; i++) {
         if (this.cartasEnMano[i] !== undefined) {
-            if (!this.esHumano) {
+            //html += '<li class="naipe naipe-boca-abajo"></li>'; que lo mire tolo
+            if (!this.esHumano) { // mostras las cartas boca abajo?
                 html += '<li class="naipe naipe-boca-abajo"></li>';
             } else {
                 var estilo = ' style="background-position: ' + this.cartasEnMano[i].getCSS() + ';"';
@@ -227,12 +226,13 @@ Jugador.prototype.getPuntosDeEnvido = function (cartas) {
 // carta tirada por persona
 // tirar carta, lo saca de cartasEnMano
 Jugador.prototype.jugarCarta = function (index) {
-    enviarMovimiento(index)
     if (index !== null && index !== undefined && this.cartasEnMano.length > index) {
         var carta = this.cartasEnMano[index];
+        enviarMovimiento(carta)
         _log.innerHTML = '<b>' + this.nombre + ' juega un :</b> ' + carta.getNombre() + '<br /> ' + _log.innerHTML;
         //Aca creo q deberiamos emitir la carta jugada
         this.cartasJugadas.push(carta);
+        console.log(this.cartasJugadas)
         this.cartasEnMano.splice(index, 1);
         return carta;
     }
@@ -623,9 +623,10 @@ Ronda.prototype.decidirCarta = function () {
                     return;
                 }
             }
-            var carta = this.equipoEnTurno.jugador.jugarCarta();
+            var carta = this.equipoEnTurno.jugador.jugarCarta(); //ACA JUEGA LA CARTA LA IA
             var $elementoPosicionador = $('.card-' + (this.numeroDeMano + 1) * 2);
             var $card = $('#player-two').find('li:eq(' + (this.equipoEnTurno.jugador.cartasJugadas.length - 1).toString() + ')');
+            console.log("$card ", $card)
             $card.css('background-position', carta.getCSS())
                 .css("-o-transform", "translate(" + ($elementoPosicionador.offset().left - $card.offset().left) + "px, " + ($elementoPosicionador.offset().top - $card.offset().top) + "px )")
                 .css("-ms-transform", "translate(" + ($elementoPosicionador.offset().left - $card.offset().left) + "px, " + ($elementoPosicionador.offset().top - $card.offset().top) + "px )")
@@ -1005,14 +1006,17 @@ Ronda.prototype.repartirCartas = function (j1, j2) {
         j1 = j2;
         j2 = swap;
         swap = null;
+        // si j2 es mano j2 pasa a ser j1 y al reves
     }
     j1.cartas = new Array();
     j1.cartasEnMano = new Array();
     j1.cartasJugadas = new Array();
     j2.cartas = new Array();
+    console.log("cartas jugador 2",j2.cartas)
     j2.cartasEnMano = new Array();
+    console.log("cartas en mano del jugador 2", j2.cartasEnMano)
     j2.cartasJugadas = new Array();
-
+    console.log("largo de las cartas jugadas", j2.cartasJugadas)
     var maso = this.generarBaraja();
     for (var i = 1; i <= 6; i++) {
         var _log = document.getElementById("log");
@@ -1092,6 +1096,7 @@ Ronda.prototype.determinarGanadorMano = function (indice, acumularPuntos) {
     var j1 = this.equipoPrimero.jugador;
     var j2 = this.equipoSegundo.jugador;
     if (j1.cartasJugadas[indice].valor > j2.cartasJugadas[indice].valor) {
+        console.log(indice)
         if (acumularPuntos) {
             this.equipoPrimero.manos = this.equipoPrimero.manos + 1;
         }
@@ -1101,6 +1106,7 @@ Ronda.prototype.determinarGanadorMano = function (indice, acumularPuntos) {
         return this.equipoPrimero;
     } else {
         if (j1.cartasJugadas[indice].valor < j2.cartasJugadas[indice].valor) {
+            console.log(indice)
             if (acumularPuntos) {
                 this.equipoSegundo.manos = this.equipoSegundo.manos + 1;
             }
@@ -1207,22 +1213,23 @@ Partida.prototype.iniciar = function (nombreJugadorUno, nombreJugadorDos) {
         jugador1.nombre = 'Jugador 1';
     }
     this.equipoPrimero.jugador = jugador1;
-    var maquina = new IA();
-    maquina.prob = new Probabilidad();
+    var jugador2 = new Jugador();
+    //var maquina = new IA();
+    //maquina.prob = new Probabilidad();
     //maquina.esHumano = false;
     if (nombreJugadorDos !== null && nombreJugadorDos !== undefined && nombreJugadorDos !== '') {
-        maquina.nombre = nombreJugadorDos;
+        jugador2.nombre = nombreJugadorDos;
     } else {
-        maquina.nombre = 'Maquina';
+        jugador2.nombre = 'jugador 2';
     }
-    this.equipoSegundo.jugador = maquina;
+    this.equipoSegundo.jugador = jugador2;
 
     var _$tbl = $('#game-score');
     _$tbl.find('.player-one-name').html(jugador1.nombre);
-    _$tbl.find('.player-two-name').html(maquina.nombre);
+    _$tbl.find('.player-two-name').html(jugador2.nombre);
     _$tbl.find('.player-one-points').html('');
     _$tbl.find('.player-two-points').html('');
-    $('#player-two').find('.player-name').html(maquina.nombre);
+    $('#player-two').find('.player-name').html(jugador2.nombre);
     $('#player-one').find('.player-name').html(jugador1.nombre);
 
     this.continuar();
