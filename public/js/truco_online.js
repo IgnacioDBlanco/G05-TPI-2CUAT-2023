@@ -120,6 +120,7 @@ Naipe.prototype.getCSS = function () {
 Naipe.prototype.getNombre = function () {
     return this.numero + ' de ' + this.palo;
 };
+// devuelve el valor y palo de la carta
 
 //calcula la probabilidad de ganar con el naipe actual
 Naipe.prototype.probGanar = function () {
@@ -155,6 +156,9 @@ function Jugador() {
     this.revire = new Array();
     this.faltaEnvido = new Array();
 }
+
+// si aca hago una clase jugador 2? 
+
 //------------------------------------------------------------------
 // Genera codigo HTML para las cartas en mano
 //------------------------------------------------------------------
@@ -163,7 +167,8 @@ function Jugador() {
 //El método hasOwnProperty() devuelve un booleano indicando si el objeto tiene la propiedad especificada.
 //El método sort() ordena los elementos de un arreglo (array) localmente y devuelve el arreglo ordenado
 //El metodo splice() permite cambiar el contenido del arreglo eliminando o sustituyendo los elementos existentes por otros nuevos.
-Jugador.prototype.sayCartasEnMano = function () {
+
+Jugador.prototype.sayCartasEnMano = function () { // poruqe le pone prototype?
     var html = '';
     for (var i = 0; i < this.cartasEnMano.length; i++) {
         if (this.cartasEnMano[i] !== undefined) {

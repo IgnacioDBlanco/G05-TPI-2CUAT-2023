@@ -34,35 +34,6 @@ function unirmeSala() {
     socket.emit('unirme-room', {user: localStorage.getItem("user")}); 
 }
 
-function enviarMovimiento(indice) {
-    socket.emit('movimiento',{user: localStorage.getItem("user"), indice:indice})
-}
-
-
-
-
-
-
-
-
-
-/*
-
-******TRUCO*****
-
-*/
-
-
-
-
-
-
-
-
-
-
-
-
 
 /*
 socket con fede

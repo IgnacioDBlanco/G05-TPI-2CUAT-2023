@@ -5,7 +5,7 @@
  * 
  *******************************************************************
 */ 
-IA.prototype = new Jugador();
+IA.prototype = new Jugador(); //aca no puedo declarar al segundo jugador?
 
 IA.prototype.constructor = IA;
 
