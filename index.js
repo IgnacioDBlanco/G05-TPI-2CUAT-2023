@@ -186,6 +186,7 @@ app.put('/bannear', async function(req, res){
 app.put('/eliminar_sala', async function(req, res){
     salas = await MySQL.realizarQuery(`select * from salas where id = "${req.body.sala}"`)
     console.log(salas)
+    
     if (salas.length > 0) {
         await MySQL.realizarQuery(`delete from salas where id = "${req.body.sala}"`)
         res.send({bannear:true});    
@@ -204,6 +205,7 @@ app.get('/inicio', function(req, res){
 
 app.post('/crear_sala', async function(req, res){
     await MySQL.realizarQuery(`insert into salas (name_sala) values ("${req.body.sala }")`)
+    
     let select_sala = await MySQL.realizarQuery(`select name_sala from salas where name_sala = "${req.body.sala }"`)
     res.send({sala:select_sala[0].name_sala})    
 });
@@ -241,7 +243,6 @@ socket.on('unirme-room', data => {
 });
 
 
-*/
 
 /* OPCION 
 
@@ -294,5 +295,37 @@ socket.on("server-message", data => {
     }
     envie = -1
 });
+
+CASOS DE USO: 
+Diagramas de casos de uso:funcionalidades de software
+
+Símbolos del diagrama:
+ACTORES (se dibuja una persona), realiza distintas acciones
+CASOS DE USO(CU y un Id dentro de un elipsis) y una funcionalidad del software (mercadolibre: Buscar Producto)
+
+Flujo Principal: (buscar el producto y encontrarlo)
+Flujo Alternativo: Buscar producto que no existe(ocurre un error)
+
+
+<<Include>>
+- - - - - - ->
+es un caso de uso que si o si necesita otro caso de uso
+
+<<Extend>>
+- - - - - - - - - >
+caso de uso que puede o no ser necesario, por ej caso de uso MP, Efectivo, tarjeta. Puedo usar cualquiera no necesito todo
+
+
+   --------->
+Herencia. Heredar funciones y agregar otras (Debito y Credito hereda de una clase TARJETA ) la flecha va hacia el genérico, TARJETA
+
+
+
+Rectángulo grande se llama Dominio.
+Actores por fuera del rectángulo
+Verbos en INFINITIVO y luego la acción
+
+DRAW.IO (lugar para hacer los diagramas)
+
 */
 
