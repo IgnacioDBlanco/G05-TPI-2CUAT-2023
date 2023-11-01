@@ -324,6 +324,13 @@ flex-direction: column;
   margin-left: 20px;
 }
 
+.yellowtext4 {
+  color: goldenrod;
+  margin-top: 2px;
+  margin-bottom: 0px;
+  margin-left: 20px;
+}
+
 .pi{
   color: #fff;
   margin-top: 0px;
@@ -353,6 +360,20 @@ flex-direction: column;
   margin-top: 0px;
   display: -webkit-box;
   display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  flex-direction: column;
+  border: 2px solid #D4AF37; 
+  border-radius: 10px;
+  box-shadow: 0 2px 25px rgba(0, 0, 0, 0.2);
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.cuadroadmin {
+  width: 700px;
+  height: 500px;
+  margin: 75px auto;
+  margin-right: 300px;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
   flex-direction: column;
@@ -687,6 +708,27 @@ dialog{
     background-color:rgba(0, 0, 0, 0.8);
   }
 
+  .botonadmin{
+    border: 2px solid #D4AF37;
+    width: 80px;
+    height: 40px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    color: white;
+    background-color:rgba(0, 0, 0, 0.6);
+    margin-right: 40px;
+  }
+
+  .botonadmin:hover{
+    border: 2px solid #9e801d;
+    background-color:rgba(0, 0, 0, 0.8);
+  }
+
+  .divbotonesadmin{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
 .separador{
 	border-top: 2px solid black;
 	width: var(--dimensiones-grupo);

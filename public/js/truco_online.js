@@ -1262,7 +1262,7 @@ Partida.prototype.continuar = function () {
     }
     if ((this.equipoPrimero.puntos >= limitePuntaje || this.equipoSegundo.puntos >= limitePuntaje)) {
         swal({
-            title: "ganaste",
+            title: "Ganaste",
             icon: "success",
             button: "Ok!",
         });
