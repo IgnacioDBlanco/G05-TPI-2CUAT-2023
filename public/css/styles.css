@@ -112,6 +112,41 @@ flex-direction: column;
   margin-bottom: 0px;
 }
 
+.inputado{
+  width: 95%;
+  background-color: #26210c;
+  color: #fff;
+  border: 2px solid #D4AF37;
+  border-radius: 10px;
+  margin-top: 40px;
+  margin-left: 13px;
+}
+
+.inputado::placeholder {
+  color: #ff9;
+}
+
+.inputadochat{
+  width: 75%;
+  background-color: #26210c;
+  color: #fff;
+  border: 2px solid #D4AF37;
+  border-radius: 10px;
+  margin-left: 10px;
+}
+.inputadochat::placeholder{
+  color: #ff9;
+}
+
+.enviarmensaje{
+  background-color: #ccbc54;
+  border-radius: 15px;
+  margin-right: 10px;
+  cursor: pointer;
+  width: 50px;
+  height: 30px;
+}
+
 .maina{
   display:flex;
   justify-content: space-between;
@@ -465,8 +500,10 @@ background-color: #000000;
 }
 
 .inputmensaje{
+  display: flex;
+  justify-content: space-between;
   width: 100%;
-  margin-bottom: 0px;
+  margin-bottom: 10px;
 }
 
 .chatcito{
