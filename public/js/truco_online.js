@@ -6,14 +6,23 @@
  */
 
 unirmeSala()
-
+arranca = -1
 socket.on("usuario-unido", data => {
     if (data.user != localStorage.getItem("user")) {
-        //if (data.user != "") {
         socket.emit('arranca-partida', data)
+        arranca = 1
+        console.log("oponente: ", data.user, "arranca")
 
     }
 });
+
+socket.on("arranco-partida", data => {
+    console.log(data)
+    if (arranca == -1) {
+        console.log("arranca, oponente: ", data.data)
+        arranca = 1
+    }
+ });
 
 
 var _log = document.getElementById('log');
@@ -1012,6 +1021,7 @@ Ronda.prototype.repartirCartas = function (j1, j2) {
     j1.cartasEnMano = new Array();
     j1.cartasJugadas = new Array();
     j2.cartas = new Array();
+    console.log("cartas jugador 1",j1.cartas)
     console.log("cartas jugador 2",j2.cartas)
     j2.cartasEnMano = new Array();
     console.log("cartas en mano del jugador 2", j2.cartasEnMano)
@@ -1095,6 +1105,7 @@ Ronda.prototype.determinarGanadorMano = function (indice, acumularPuntos) {
     }
     var j1 = this.equipoPrimero.jugador;
     var j2 = this.equipoSegundo.jugador;
+    console.log(this.equipoSegundo.jugador)
     if (j1.cartasJugadas[indice].valor > j2.cartasJugadas[indice].valor) {
         console.log(indice)
         if (acumularPuntos) {
@@ -1110,7 +1121,6 @@ Ronda.prototype.determinarGanadorMano = function (indice, acumularPuntos) {
             if (acumularPuntos) {
                 this.equipoSegundo.manos = this.equipoSegundo.manos + 1;
             }
-
 
             $('.game-deck').find('.card-' + ((this.numeroDeMano + 1) * 2).toString()).css('z-index', 100);
             $('.game-deck').find('.card-' + ((this.numeroDeMano + 1) * 2 - 1).toString()).css('z-index', 0);
@@ -1137,6 +1147,7 @@ Ronda.prototype.determinarGanadorMano = function (indice, acumularPuntos) {
 Ronda.prototype.determinarGanadorRonda = function () {
     var e1 = this.equipoPrimero;
     var e2 = this.equipoSegundo;
+    console.log(this.equipoSegundo)
     var puntosTruco = this.calcularPuntosTruco();
     if (this.noQuiso !== null) {
         var equipoGanador = this.equipoEnEspera(this.noQuiso);

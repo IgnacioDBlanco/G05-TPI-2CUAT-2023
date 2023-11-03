@@ -36,7 +36,10 @@ socket.on("movimiento-oponente", data => {
     }
  });
 
+
+
 function unirmeSala() {
+    console.log("ME UNI")
     socket.emit('unirme-room', {user: localStorage.getItem("user")}); 
 }
 
