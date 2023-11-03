@@ -8,7 +8,7 @@ problema por ahora -> jugador 1 y dos solo tienen dos cartas
 otro -> cuando juego las cartas estan juntas las deljugador 1 con las del jugador 2
 (fijarse los console.log)
 
-como puedo hacer para mostrar las cartas dadas vuelta del segundo jnugador primero,
+como puedo hacer para mostrar las cartas dadas vuelta del segundo jugador primero,
 y despues como repartir las cartas al segundo jugador, ya que estan como en el mismo mazo
 
 en mi compu siempre arranco como j2, j1 recibe otras cartas que las puedo usar yo tmb, nose porque, pero las cartas que veo son del j2
@@ -17,3 +17,5 @@ llega que tire una carta desde un front al otro front y al reves
 
 YA LE LLEGA A LOS DOS EL CONSOLE.LOG(ARRANCA LA PARTIDA)
 LOS DOS YA SABEN QUE EL OTRO ESTA UNIDO
+
+linea 1097 baraja

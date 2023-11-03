@@ -130,7 +130,7 @@ Naipe.prototype.getNombre = function () {
 // devuelve el valor y palo de la carta
 
 //calcula la probabilidad de ganar con el naipe actual
-Naipe.prototype.probGanar = function () {
+/*Naipe.prototype.probGanar = function () {
     var maso = _rondaActual.generarBaraja();
     var cuantas = maso.length;
 
@@ -140,7 +140,7 @@ Naipe.prototype.probGanar = function () {
         }
     }
     return (cuantas / maso.length);
-}
+}*/
 
 /*******************************************************************
  * 
@@ -296,7 +296,7 @@ Probabilidad.prototype.promedioPuntos = function (pcc) {
 // Deduce las posibles cartas segun los puntos de envido
 //------------------------------------------------------------------
 
-Probabilidad.prototype.deducirCarta = function (puntos, jugadas) {
+/*Probabilidad.prototype.deducirCarta = function (puntos, jugadas) {
     var posibles = new Array();
     var i = 0;
     var j;
@@ -393,7 +393,7 @@ Probabilidad.prototype.deducirCarta = function (puntos, jugadas) {
             }
         }
     return posibles;
-}
+}*/
 
 Probabilidad.prototype.promedioTruco = function (cartas) {
     var suma = 0;
@@ -470,6 +470,7 @@ Ronda.prototype.iniciar = function () {
     this.equipoPrimero.jugador.puntosGanadosEnvido = 0;
     this.equipoSegundo.jugador.puntosGanadosEnvido = 0;
     var c = this.repartirCartas(this.equipoPrimero.jugador, this.equipoSegundo.jugador);
+    // c devuelve 34 tmb; valor del largo del mazo sin las 6 en juego
     if (this.equipoPrimero.esMano) {
         this.equipoPrimero.esSuTurno = true;
         this.equipoEnTurno = this.equipoPrimero;
@@ -479,10 +480,10 @@ Ronda.prototype.iniciar = function () {
     }
     this.equipoPrimero.jugador.sayCartasEnMano();
     if (Debug)
-        _log.innerHTML = this.equipoPrimero.jugador.nombre + ' puntos para el envido: ' + this.equipoPrimero.jugador.getPuntosDeEnvido(this.equipoPrimero.jugador.cartas) + '<br />' + _log.innerHTML;
+        //_log.innerHTML = this.equipoPrimero.jugador.nombre + ' puntos para el envido: ' + this.equipoPrimero.jugador.getPuntosDeEnvido(this.equipoPrimero.jugador.cartas) + '<br />' + _log.innerHTML;
     this.equipoSegundo.jugador.sayCartasEnMano();
     if (Debug)
-        _log.innerHTML = this.equipoSegundo.jugador.nombre + ' puntos para el envido: ' + this.equipoSegundo.jugador.getPuntosDeEnvido(this.equipoSegundo.jugador.cartas) + '<br />' + _log.innerHTML;
+        //_log.innerHTML = this.equipoSegundo.jugador.nombre + ' puntos para el envido: ' + this.equipoSegundo.jugador.getPuntosDeEnvido(this.equipoSegundo.jugador.cartas) + '<br />' + _log.innerHTML;
     //---------------------------------
     $('.game-deck').find('.card').css('background-image', 'none');
     this.continuarRonda();
@@ -996,8 +997,6 @@ Ronda.prototype.logCantar = function (jugador, canto) {
             }
         }, 500);
     }, 1300);
-
-
 }
 //------------------------------------------------------------------
 // Reparte las cartas para una nueva ronda
@@ -1028,6 +1027,7 @@ Ronda.prototype.repartirCartas = function (j1, j2) {
     j2.cartasJugadas = new Array();
     console.log("largo de las cartas jugadas", j2.cartasJugadas)
     var maso = this.generarBaraja();
+    console.log("maso", maso) // devuelve lo mismo que baraja
     for (var i = 1; i <= 6; i++) {
         var _log = document.getElementById("log");
         var index = getRandomInt(0, (maso.length - 1));
@@ -1039,9 +1039,17 @@ Ronda.prototype.repartirCartas = function (j1, j2) {
                 _log.innerHTML = '<b>' + j2.nombre + ' tiene un :</b> ' + maso[index].getNombre() + '(' + maso[index].probGanar() + ') <br /> ' + _log.innerHTML;
         } else {
             j1.cartas.push(maso[index]);
+            
             j1.cartasEnMano.push(maso[index]);
         }
         maso.splice(index, 1);
+        socket.emit("cartas-rival", { data: (maso[index]) })
+        console.log({data: (maso[index])})
+        //console.log((maso[index]), "cartas") devuelve algo raro
+        // lo pushea 6 veces y en cada una saca la carta que le da a un jugador
+        // aca puedo hacer un emit a las 3 cartas pusheadas, para que al otro le lleguen las otras 3
+        // nevesito encontrar donde se meten esas 3 cartas
+
 
     }
     return maso.length;
@@ -1093,7 +1101,11 @@ Ronda.prototype.generarBaraja = function () {
     baraja.push(new Naipe(1, 4, 4, 'Basto'));
     baraja.push(new Naipe(1, 4, 4, 'Oro'));
     baraja.push(new Naipe(1, 4, 4, 'Copa'));
+    console.log(baraja)
+    // baraja devuelve todas las cartas que no son usadas en esta mano, tanto mias como del j2
+    // baraja agarra 3 push y los mete en un array (esa son tus cartas en mano)
     return baraja;
+    
 }
 //------------------------------------------------------------------
 // Determina el ganador de una mano

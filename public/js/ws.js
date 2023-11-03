@@ -36,6 +36,9 @@ socket.on("movimiento-oponente", data => {
     }
  });
 
+ socket.on("cartas-mias", data => {
+    console.log(data.data.data, "cartas mias") 
+ });
 
 
 function unirmeSala() {
