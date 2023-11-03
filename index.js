@@ -242,6 +242,10 @@ io.on("connection", (socket) => {
         user = req.session.mail
         io.to(req.session.sala).emit("arranco-partida", { data : user})
     });
+    socket.on('cartas-rival', data => {
+        console.log("cartas mias", data)
+        io.to(req.session.sala).emit("cartas-mias", {data : data})
+        })
 });
 
 
