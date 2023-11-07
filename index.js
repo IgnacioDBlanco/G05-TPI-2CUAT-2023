@@ -80,10 +80,11 @@ app.use(session({secret: '123456', resave: true, saveUninitialized: true}));
 
 
 app.get('/', function(req, res){
-    console.log(req.query); 
-    res.render('inicio', null); 
-});
-
+    url = "http://api.weatherstack.com/current?access_key=17e37d155baf026cabad4d2fe2ab0912&query=Buenos%20Aires";
+    console.log(url[0])
+    res.render('inicio', {url:url})
+}); 
+// fijarse el dom para ver lo del CORB
 app.post('/register', async function(req, res){
     const { email, password } = req.body;
     try {
@@ -199,8 +200,7 @@ app.put('/eliminar_sala', async function(req, res){
 
 
 app.get('/inicio', function(req, res){
-    res.render('inicio', null);
-});
+    res.render('inicio')});
 
 
 app.post('/crear_sala', async function(req, res){
@@ -250,20 +250,7 @@ io.on("connection", (socket) => {
 
 
 
-/* OPCION 
 
-const params = {
-  access_key: '17e37d155baf026cabad4d2fe2ab0912',
-  query: 'Buenos Aires'
-}
-app.get('https://api.weatherstack.com/current', {params})
-  .then(response => {
-    const apiResponse = response.data;
-    console.log(`Current temperature in ${apiResponse.location.name} is ${apiResponse.current.temperature}℃`);
-  }).catch(error => {
-    console.log(error);
-  });
-*/
 
 
 
