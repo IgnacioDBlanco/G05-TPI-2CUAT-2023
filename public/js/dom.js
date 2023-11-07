@@ -256,27 +256,28 @@ function recargarSala(){
   location.href ='/salas';
 }
 
-async function clima()
-{fetchClima()}
 
-  
-  async function fetchClima(){
-    try {
-      const response = await fetch("http://api.weatherstack.com/current?access_key=17e37d155baf026cabad4d2fe2ab0912&query=Buenos%20Aires", {
-        method: "GET", 
-        credentials: "same-origin",
-        mode: "no-cors",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        
-      )};
-      const result = await response.json();
-      console.log("Success:", result)
-    
-      
-    catch (error) {
-      console.error("Error:", error);
-    }
-  }
+/*     try {
+        const response = await fetch("http://api.weatherstack.com/current?access_key=17e37d155baf026cabad4d2fe2ab0912&query=Buenos%20Aires",{
+          method: "GET", 
+          credentials: "same-origin",
+          mode: "no-cors",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          
+        });
+        const result = await response.json();
+        console.log("Success:", result);
+        console.log(response)
+      } 
+      catch (error) {
+        console.error("Error:", error);
+      }
+    });
+
+//si aparece cross origin o no cors hay que hacerlo en el back */
+
+
+
   

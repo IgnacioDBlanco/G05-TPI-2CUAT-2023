@@ -10,6 +10,11 @@
 </div>
     </div>
     <h1 class="titulo">TRUCO IX</h1>
+        <tr>
+            {{#each url}}
+                <td> {{this.url}}  </td>
+            {{/each}}
+    </tr>
     <div class="login-form">
         <div onclick="iralogin()" class="menu">
             <div class="lateralizquierdo">
@@ -60,5 +65,4 @@
             </div>
         </div>
     </div>
-    <button onclick="clima()" >clima</button>
 </body>
