@@ -250,7 +250,7 @@ io.on("connection", (socket) => {
 
 
 
-/* OPCION 
+/*  
 
 const params = {
   access_key: '17e37d155baf026cabad4d2fe2ab0912',
