@@ -1,6 +1,7 @@
 const IP = "ws://localhost:3000";
 const socket = io(IP);
 let envie = -1
+let envieCartas = -1
 socket.on("connect", () => {
 });
 
@@ -37,12 +38,18 @@ socket.on("movimiento-oponente", data => {
  });
 
  socket.on("cartas-mias", data => {
-    console.log(data.data.data, "cartas mias") 
+    if (envieCartas == -1) {
+        console.log("cartas mias", data.data.data) // le tiene que llegar solo a el rival
+    }
+    envieCartas = -1
+
+    jugador1.cartas = data.data.data
+    
+    jugador1.cartasEnMano = data.data.data
  });
 
 
 function unirmeSala() {
-    console.log("ME UNI")
     socket.emit('unirme-room', {user: localStorage.getItem("user")}); 
 }
 
@@ -51,6 +58,10 @@ function enviarMovimiento(indice) {
     socket.emit('movimiento',{user: localStorage.getItem("user"), carta:indice})
 }
 
+function enviarCartas(cartas) {
+    socket.emit("cartas-rival", { data: cartas});
+    envieCartas = 1
+}
 
 /*
 socket con fede
