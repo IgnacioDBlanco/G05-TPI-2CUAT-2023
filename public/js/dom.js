@@ -53,7 +53,9 @@ function login() {
   }
 }
 
-
+function goToRooms() {
+  location.href='/salas'
+}
 function goToHome() {
   location.href ='/home';
 }
@@ -256,6 +258,15 @@ function recargarSala(){
   location.href ='/salas';
 }
 
+/*const idbotontexto = document.getElementById("botontexto");
+const input = document.querySelector("input");
+
+input.addEventListener("keypress", logKey);
+
+function logKey(e) {
+  idbotontexto.textContent += ` ${e.code}`;
+}
+*/
 
 /*     try {
         const response = await fetch("http://api.weatherstack.com/current?access_key=17e37d155baf026cabad4d2fe2ab0912&query=Buenos%20Aires",{

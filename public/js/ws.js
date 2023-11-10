@@ -10,7 +10,7 @@ function mandarMensaje(mensaje) {
     socket.emit("incoming-message", { data: mensaje });
     document.getElementById("chat").innerHTML += `
     <div class="chat2">
-      <h1 class="chat"> ${mensaje}</h1>
+      <h1 class="chatderecha"> ${mensaje}</h1>
     </div>
     `    
     envie = 1
@@ -19,7 +19,7 @@ socket.on("server-message", data => {
     if (envie == -1) {
         document.getElementById("chat").innerHTML += `
             <div class="chat1">
-              <h1 class="chat">${data.mensaje.data}</h1>
+              <h1 class="chatizquierda">${data.mensaje.data}</h1>
           </div>
           `
           envie = 1
