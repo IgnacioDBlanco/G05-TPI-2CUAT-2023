@@ -40,13 +40,15 @@ socket.on("movimiento-oponente", data => {
  socket.on("cartas-mias", data => {
     if (envieCartas == -1) {
         console.log("cartas mias", data.data.data) // le tiene que llegar solo a el rival
+        document.getElementsByClassName("player-cards")[1].hidden = false
     }
     envieCartas = -1
 
-    jugador1.cartas = data.data.data
-    
-    jugador1.cartasEnMano = data.data.data
- });
+    jugador2.cartas = data.data.data
+    console.log(jugador1.cartas, "j1")
+    console.log(jugador2.cartas, "j2 nashe")
+    // estan mezcladas las cartas de j1 con j2. Las cartas de j2 en los dos juegos es la misma pero no  
+});
 
 
 function unirmeSala() {
