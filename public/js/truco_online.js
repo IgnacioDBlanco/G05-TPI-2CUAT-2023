@@ -245,7 +245,7 @@ Jugador.prototype.jugarCarta = function (index) {
     if (index !== null && index !== undefined && this.cartasEnMano.length > index) {
         var carta = this.cartasEnMano[index];
         enviarMovimiento(carta)
-        _log.innerHTML = '<b>' + this.nombre + ' juega un :</b> ' + carta.getNombre() + '<br /> ' + _log.innerHTML;
+        _log.innerHTML = '<b>' + this.nombre + ' juega un :</b> ' + carta.getNombre + '<br /> ' + _log.innerHTML;
         //Aca creo q deberiamos emitir la carta jugada
         this.cartasJugadas.push(carta);
         //console.log(this.cartasJugadas)
@@ -1023,7 +1023,7 @@ Ronda.prototype.repartirCartas = function (j1, j2) {
         swap = null;
         // si j2 es mano j2 pasa a ser j1 y al reves
     }
-    j1.cartas = new Array();
+    
     j1.cartasEnMano = new Array();
     j1.cartasJugadas = new Array();
     j2.cartas = new Array();
