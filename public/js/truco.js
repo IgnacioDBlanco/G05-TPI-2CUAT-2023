@@ -1239,7 +1239,7 @@
 		}
 		if((this.equipoPrimero.puntos >= limitePuntaje || this.equipoSegundo.puntos >= limitePuntaje)) {
 			swal({
-				title: "ganaste",
+				title: "Juego terminado",
 				icon: "success",
 				button: "Ok!",
 			  });
