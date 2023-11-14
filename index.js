@@ -238,21 +238,130 @@ io.on("connection", (socket) => {
         io.to(req.session.sala).emit("movimiento-oponente", data)
     })
     
-    socket.on('arranca-partida', data => {
+    socket.on('arranca-partida', c => {
         user = req.session.mail
-        io.to(req.session.sala).emit("arranco-partida", { data : user})
+        repartirCartas()
+        io.to(req.session.sala).emit("arranco-partida", { data : user,})
+        
     });
-    socket.on('cartas-rival', data => {
+    
+    /*socket.on('cartas-rival', data => {
         console.log("cartas mias", data)
         io.to(req.session.sala).emit("cartas-mias", {data : data})
-        })
+        })*/
 });
 
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 
+function Naipe(v, p, n, t) {
+    this.valor = 0;
+    this.puntosEnvido = 0;
+    this.numero = 0;
+    this.palo = '';
+    if (v !== null && v !== undefined) {
+        this.valor = v;
+    }
+    if (p !== null && p !== undefined) {
+        this.puntosEnvido = p;
+    }
+    if (n !== null && n !== undefined) {
+        this.numero = n;
+    }
+    if (t !== null && t !== undefined) {
+        this.palo = t;
+    }
 
+}
 
+function generarBaraja() {
+    let baraja = new Array();
+    baraja.push(new Naipe(14, 1, 1, 'Espada'));
+    baraja.push(new Naipe(13, 1, 1, 'Basto'));
+    baraja.push(new Naipe(12, 7, 7, 'Espada'));
+    baraja.push(new Naipe(11, 7, 7, 'Oro'));
+    baraja.push(new Naipe(10, 3, 3, 'Espada'));
+    baraja.push(new Naipe(10, 3, 3, 'Basto'));
+    baraja.push(new Naipe(10, 3, 3, 'Oro'));
+    baraja.push(new Naipe(10, 3, 3, 'Copa'));
+    baraja.push(new Naipe(9, 2, 2, 'Espada'));
+    baraja.push(new Naipe(9, 2, 2, 'Basto'));
+    baraja.push(new Naipe(9, 2, 2, 'Oro'));
+    baraja.push(new Naipe(9, 2, 2, 'Copa'));
+    baraja.push(new Naipe(8, 1, 1, 'Oro'));
+    baraja.push(new Naipe(8, 1, 1, 'Copa'));
+    baraja.push(new Naipe(7, 0, 12, 'Espada'));
+    baraja.push(new Naipe(7, 0, 12, 'Basto'));
+    baraja.push(new Naipe(7, 0, 12, 'Oro'));
+    baraja.push(new Naipe(7, 0, 12, 'Copa'));
+    baraja.push(new Naipe(6, 0, 11, 'Espada'));
+    baraja.push(new Naipe(6, 0, 11, 'Basto'));
+    baraja.push(new Naipe(6, 0, 11, 'Oro'));
+    baraja.push(new Naipe(6, 0, 11, 'Copa'));
+    baraja.push(new Naipe(5, 0, 10, 'Espada'));
+    baraja.push(new Naipe(5, 0, 10, 'Basto'));
+    baraja.push(new Naipe(5, 0, 10, 'Oro'));
+    baraja.push(new Naipe(5, 0, 10, 'Copa'));
+    baraja.push(new Naipe(4, 7, 7, 'Basto'));
+    baraja.push(new Naipe(4, 7, 7, 'Copa'));
+    baraja.push(new Naipe(3, 6, 6, 'Espada'));
+    baraja.push(new Naipe(3, 6, 6, 'Basto'));
+    baraja.push(new Naipe(3, 6, 6, 'Oro'));
+    baraja.push(new Naipe(3, 6, 6, 'Copa'));
+    baraja.push(new Naipe(2, 5, 5, 'Espada'));
+    baraja.push(new Naipe(2, 5, 5, 'Basto'));
+    baraja.push(new Naipe(2, 5, 5, 'Oro'));
+    baraja.push(new Naipe(2, 5, 5, 'Copa'));
+    baraja.push(new Naipe(1, 4, 4, 'Espada'));
+    baraja.push(new Naipe(1, 4, 4, 'Basto'));
+    baraja.push(new Naipe(1, 4, 4, 'Oro'));
+    baraja.push(new Naipe(1, 4, 4, 'Copa'));
+    //console.log(baraja)
+    // baraja devuelve todas las cartas que no son usadas en esta mano, tanto mias como del j2
+    // baraja agarra 3 push y los mete en un array (esa son tus cartas en mano)
+    return baraja;
+    
+}
 
+function repartirCartas() {
+    let repartir = { j1: {}, j2: {}};
 
+    repartir.j1.cartas = new Array();
+    repartir.j1.cartasEnMano = new Array();
+    repartir.j1.cartasJugadas = new Array();
+
+    repartir.j2.cartas = new Array();
+    repartir.j2.cartasEnMano = new Array();
+    repartir.j2.cartasJugadas = new Array();
+
+    var maso = generarBaraja();
+    //console.log("maso", maso) // devuelve lo mismo que baraja
+    //enviarCartas(j2.cartas)
+    
+    //console.log("mande a rival sus cartas", j2.cartas) // mando las cartas que le deberian aparecer
+    
+    for (var i = 1; i <= 6; i++) {
+        var index = getRandomInt(0, (maso.length - 1));
+        if (i % 2 === 0) {
+            repartir.j2.cartas.push(maso[index]);
+            repartir.j2.cartasEnMano.push(maso[index]);
+            _rondaActual = this;
+        } else {
+            repartir.j1.cartas.push(maso[index]);
+            
+            repartir.j1.cartasEnMano.push(maso[index]);
+        }
+        maso.splice(index, 1);
+        //console.log({data: (maso[index])})
+        //console.log((maso[index]), "cartas") devuelve algo raro
+        // lo pushea 6 veces y en cada una saca la carta que le da a un jugador
+        // aca puedo hacer un emit a las 3 cartas pusheadas, para que al otro le lleguen las otras 3
+        // nevesito encontrar donde se meten esas 3 cartas
+    }
+    console.log("CARTAS", repartir);
+    return repartir;
+}
 
 /*
 socket.on("arrancar-truco", data=> {

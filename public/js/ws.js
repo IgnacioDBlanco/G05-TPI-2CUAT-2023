@@ -38,20 +38,21 @@ socket.on("movimiento-oponente", data => {
     }
  });
 
- socket.on("cartas-mias", data => {
+ /*socket.on("cartas-mias", data => {
     if (envieCartas == -1) {
-        console.log("cartas mias", data.data.data) // le tiene que llegar solo a el rival
+       // console.log("cartas mias", data.data.data) // le tiene que llegar solo a el rival
         document.getElementsByClassName("player-cards")[1].hidden = false
     }
     envieCartas = -1
 
-    jugador2.cartas = data.data.data
+    /*jugador2.cartas = data.data.data
     jugador2.cartasEnMano = data.data.data
     console.log(jugador1.cartas, "j1")
     console.log(jugador2.cartas, "j2 nashe")
     // estan mezcladas las cartas de j1 con j2. Las cartas de j2 en los dos juegos es la misma pero no  
-});
 
+});
+*/
 
 function unirmeSala() {
     socket.emit('unirme-room', {user: localStorage.getItem("user")}); 
@@ -62,13 +63,13 @@ function enviarMovimiento(indice) {
     socket.emit('movimiento',{user: localStorage.getItem("user"), carta:indice})
 }
 
-function enviarCartas(cartas) {
+/*function enviarCartas(cartas) {
     socket.emit("cartas-rival", { data: cartas});
     envieCartas = 1
     
 }
 
-/*
+
 socket con fede
 api: pedido http haces un pedido y el servidor te responde termina ahi la conexion
 socket esta todo el tiempo conectado esperando recibir info 
