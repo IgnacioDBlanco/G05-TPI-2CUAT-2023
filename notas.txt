@@ -19,3 +19,9 @@ YA LE LLEGA A LOS DOS EL CONSOLE.LOG(ARRANCA LA PARTIDA)
 LOS DOS YA SABEN QUE EL OTRO ESTA UNIDO
 
 linea 1097 baraja
+
+el j2 debe ser el primero en unirse a la sala, el segundo en unirse es el j1, que manda las cartas al j2. Al j2 le llegan sus cartas,
+ aparece las cartas que mandan, pero no son las que tira el j2. 
+
+ el j2 tiene sus cartas que le mando, pero tmb tiene las cartas de arranque 
+ DEBERIA NO TENER LAS CARTAS DE ARRANQUE COMO HAGO?

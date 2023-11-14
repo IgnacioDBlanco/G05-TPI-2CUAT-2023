@@ -5,12 +5,20 @@
  * 
  */
 
+var jugador1
+var jugador2
+
+jugador2 = new Jugador();
+jugador1 = new Jugador();
 unirmeSala()
 arranca = -1
 socket.on("usuario-unido", data => {
     if (data.user != localStorage.getItem("user")) {
         socket.emit('arranca-partida', data)
         arranca = 1
+        this.equipoPrimero = data.user
+        console.log(jugador2)
+        console.log(jugador1)
         console.log("oponente: ", data.user, "arranca")
 
     }
@@ -299,108 +307,6 @@ Probabilidad.prototype.promedioPuntos = function (pcc) {
     else return t[(t.length - 1) / 2];
 }
 
-//------------------------------------------------------------------
-// Deduce las posibles cartas segun los puntos de envido
-//------------------------------------------------------------------
-
-/*Probabilidad.prototype.deducirCarta = function (puntos, jugadas) {
-    var posibles = new Array();
-    var i = 0;
-    var j;
-    if (puntos <= 7) {
-        switch (puntos) {
-            case 0:
-                posibles.push(new Naipe(7, 0, 12, 'Espada'));
-                posibles.push(new Naipe(7, 0, 12, 'Basto'));
-                posibles.push(new Naipe(7, 0, 12, 'Oro'));
-                posibles.push(new Naipe(7, 0, 12, 'Copa'));
-                posibles.push(new Naipe(6, 0, 11, 'Espada'));
-                posibles.push(new Naipe(6, 0, 11, 'Basto'));
-                posibles.push(new Naipe(6, 0, 11, 'Oro'));
-                posibles.push(new Naipe(6, 0, 11, 'Copa'));
-                posibles.push(new Naipe(5, 0, 10, 'Espada'));
-                posibles.push(new Naipe(5, 0, 10, 'Basto'));
-                posibles.push(new Naipe(5, 0, 10, 'Oro'));
-                posibles.push(new Naipe(5, 0, 10, 'Copa'));
-                break;
-            case 1:
-                posibles.push(new Naipe(14, 1, 1, 'Espada'));
-                posibles.push(new Naipe(13, 1, 1, 'Basto'));
-                posibles.push(new Naipe(8, 1, 1, 'Oro'));
-                posibles.push(new Naipe(8, 1, 1, 'Copa'));
-                break;
-            case 2:
-                posibles.push(new Naipe(9, 2, 2, 'Espada'));
-                posibles.push(new Naipe(9, 2, 2, 'Basto'));
-                posibles.push(new Naipe(9, 2, 2, 'Oro'));
-                posibles.push(new Naipe(9, 2, 2, 'Copa'));
-                break;
-            case 3:
-                posibles.push(new Naipe(10, 3, 3, 'Espada'));
-                posibles.push(new Naipe(10, 3, 3, 'Basto'));
-                posibles.push(new Naipe(10, 3, 3, 'Oro'));
-                posibles.push(new Naipe(10, 3, 3, 'Copa'));
-                break;
-            case 7:
-                posibles.push(new Naipe(12, 7, 7, 'Espada'));
-                posibles.push(new Naipe(11, 7, 7, 'Oro'));
-                posibles.push(new Naipe(4, 7, 7, 'Basto'));
-                posibles.push(new Naipe(4, 7, 7, 'Copa'));
-                break;
-            default:
-                posibles.push(new Naipe(puntos - 3, puntos, puntos, 'Espada'));
-                posibles.push(new Naipe(puntos - 3, puntos, puntos, 'Oro'));
-                posibles.push(new Naipe(puntos - 3, puntos, puntos, 'Basto'));
-                posibles.push(new Naipe(puntos - 3, puntos, puntos, 'Copa'));
-                break;
-        }
-        for (j = 0; j < jugadas.length; j++)
-            for (i = posibles.length - 1; i >= 0; i--) {
-                if (posibles[i] !== undefined && jugadas[j].palo === posibles[i].palo) {
-                    posibles[i] = undefined;
-                }
-            }
-
-    } else {
-        for (i = 0; i < jugadas.length; i++) {
-            var palo = jugadas[i].palo;
-            var numero = puntos - jugadas[i].puntosEnvido - 20;
-            if (0 <= numero && numero <= 7)
-                switch (numero) {
-                    case 0:
-                        posibles.push(new Naipe(7, 0, 12, palo));
-                        posibles.push(new Naipe(6, 0, 11, palo));
-                        posibles.push(new Naipe(5, 0, 10, palo));
-                        break;
-                    case 1:
-                        var v = palo === 'Espada' ? 14 : (palo === 'Basto' ? 13 : 8);
-                        posibles.push(new Naipe(v, 1, 1, palo));
-                        break;
-                    case 2:
-                        posibles.push(new Naipe(9, 2, 2, palo));
-                        break;
-                    case 3:
-                        posibles.push(new Naipe(10, 3, 3, palo));
-                        break;
-                    case 7:
-                        var v = palo === 'Espada' ? 12 : (palo === 'Oro' ? 11 : 4);
-                        posibles.push(new Naipe(v, 7, 7, palo));
-                        break;
-                    default:
-                        posibles.push(new Naipe(numero - 3, numero, numero, palo));
-                        break;
-                }
-        }
-    }
-    for (j = 0; j < jugadas.length; j++)
-        for (i = posibles.length - 1; i >= 0; i--) {
-            if (posibles[i] != undefined && jugadas[j].numero === posibles[i].numero && jugadas[j].palo === posibles[i].palo) {
-                posibles.splice(i);
-                break;
-            }
-        }
-    return posibles;
-}*/
 
 Probabilidad.prototype.promedioTruco = function (cartas) {
     var suma = 0;
@@ -476,7 +382,9 @@ Ronda.prototype.iniciar = function () {
     this.equipoSegundo.jugador.estrategiaDeJuego = null;
     this.equipoPrimero.jugador.puntosGanadosEnvido = 0;
     this.equipoSegundo.jugador.puntosGanadosEnvido = 0;
-    var c = this.repartirCartas(this.equipoPrimero.jugador, this.equipoSegundo.jugador);
+    var c = this.repartirCartas(this.equipoSegundo.jugador);
+    // Y si aca en este codigo cuando reparte cartas, dejo que le reparta cartas solo al 1 j2?
+
     // c devuelve 34 tmb; valor del largo del mazo sin las 6 en juego
     if (this.equipoPrimero.esMano) {
         this.equipoPrimero.esSuTurno = true;
@@ -1009,6 +917,7 @@ Ronda.prototype.logCantar = function (jugador, canto) {
 // Reparte las cartas para una nueva ronda
 //------------------------------------------------------------------
 
+// ojo aca tmb algo de repartir cartas con j1 y j2
 Ronda.prototype.repartirCartas = function (j1, j2) {
     if (j1 === null || j1 === undefined) {
         j1 = this.equipoPrimero.jugador;
@@ -1037,7 +946,7 @@ Ronda.prototype.repartirCartas = function (j1, j2) {
     //console.log("maso", maso) // devuelve lo mismo que baraja
     enviarCartas(j2.cartas)
     
-    console.log("mande a rival sus cartas", j2.cartas) // mando las cartas que le deberian aparecer
+    //console.log("mande a rival sus cartas", j2.cartas) // mando las cartas que le deberian aparecer
     
     for (var i = 1; i <= 6; i++) {
         var _log = document.getElementById("log");
@@ -1125,6 +1034,8 @@ Ronda.prototype.determinarGanadorMano = function (indice, acumularPuntos) {
     if (acumularPuntos == undefined || acumularPuntos == null) {
         acumularPuntos = true;
     }
+
+    // aca declara quien es quien podria hacer esto yo 
     var j1 = this.equipoPrimero.jugador;
     var j2 = this.equipoSegundo.jugador;
     //console.log(this.equipoSegundo.jugador)
@@ -1237,17 +1148,14 @@ function Partida() {
 //------------------------------------------------------------------
 // Inicia la partidajugador
 //------------------------------------------------------------------
-var jugador1
-var jugador2
+
 Partida.prototype.iniciar = function (nombreJugadorUno, nombreJugadorDos) {
-    jugador1 = new Jugador();
     if (nombreJugadorUno !== null && nombreJugadorUno !== undefined && nombreJugadorUno !== '') {
         jugador1.nombre = nombreJugadorUno;
     } else {
         jugador1.nombre = 'Jugador 1';
     }
     this.equipoPrimero.jugador = jugador1;
-    jugador2 = new Jugador();
     //var maquina = new IA();
     //maquina.prob = new Probabilidad();
     //maquina.esHumano = false;

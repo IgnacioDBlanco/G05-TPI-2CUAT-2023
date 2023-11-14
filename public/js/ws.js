@@ -45,6 +45,7 @@ socket.on("movimiento-oponente", data => {
     envieCartas = -1
 
     jugador2.cartas = data.data.data
+    jugador2.cartasEnMano = data.data.data
     console.log(jugador1.cartas, "j1")
     console.log(jugador2.cartas, "j2 nashe")
     // estan mezcladas las cartas de j1 con j2. Las cartas de j2 en los dos juegos es la misma pero no  
@@ -63,6 +64,7 @@ function enviarMovimiento(indice) {
 function enviarCartas(cartas) {
     socket.emit("cartas-rival", { data: cartas});
     envieCartas = 1
+    
 }
 
 /*
