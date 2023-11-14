@@ -12,31 +12,6 @@ jugador2 = new Jugador();
 jugador1 = new Jugador();
 unirmeSala()
 arranca = -1
-socket.on("usuario-unido", data => {
-    if (data.user != localStorage.getItem("user")) {
-        socket.emit('arranca-partida', data)
-        arranca = 1
-        this.equipoPrimero = data.user
-        console.log(jugador2)
-        console.log(jugador1)
-        console.log("oponente: ", data.user, "arranca")
-
-    }
-});
-
-socket.on("arranco-partida", data => {
-    if (arranca == -1) {
-        console.log("arranco yo, oponente: ", data.data)
-        arranca = 1
-        //Tengo q mostrar las cartas
-       /* let naipes = document.getElementsByClassName("naipe-humano")
-        for (let i = 0; i < naipes.length; i++) {
-            const element = naipes[i];
-            element.style = "display:"
-        }*/
-        document.getElementsByClassName("player-cards")[1].hidden = false
-    }
- });
 
 
 var _log = document.getElementById('log');
@@ -143,19 +118,6 @@ Naipe.prototype.getNombre = function () {
 };
 // devuelve el valor y palo de la carta
 
-//calcula la probabilidad de ganar con el naipe actual
-/*Naipe.prototype.probGanar = function () {
-    var maso = _rondaActual.generarBaraja();
-    var cuantas = maso.length;
-
-    for (var i = 0; i < maso.length; i++) {
-        if (maso[i].valor >= this.valor && !(maso[i].palo === this.palo && maso[i].numero === this.numero)) {
-            cuantas -= 1;
-        }
-    }
-    return (cuantas / maso.length);
-}*/
-
 /*******************************************************************
  * 
  * Clase Jugador
@@ -177,7 +139,6 @@ function Jugador() {
     this.revire = new Array();
     this.faltaEnvido = new Array();
 }
-
 // si aca hago una clase jugador 2? 
 
 //------------------------------------------------------------------
@@ -346,6 +307,7 @@ function Ronda(equipo1, equipo2) {
 // puede servir para socket
 //------------------------------------------------------------------
 
+
 Ronda.prototype.equipoEnEspera = function (e) {
 
     if (e === this.equipoPrimero) {
@@ -382,7 +344,31 @@ Ronda.prototype.iniciar = function () {
     this.equipoSegundo.jugador.estrategiaDeJuego = null;
     this.equipoPrimero.jugador.puntosGanadosEnvido = 0;
     this.equipoSegundo.jugador.puntosGanadosEnvido = 0;
-    var c = this.repartirCartas(this.equipoSegundo.jugador);
+    socket.on("usuario-unido", data => {
+        if (data.user != localStorage.getItem("user")) {
+            arranca = 1
+            equipo1 = localStorage.getItem("user")
+            console.log(equipo1)
+            //console.log("j1", jugador1)
+           // console.log("j2", jugador2)
+            socket.emit('arranca-partida', data )
+
+        }
+    });
+    
+    socket.on("arranco-partida", data => {
+        if (arranca == -1) {
+            equipo2=data.data
+            
+            console.log(data.data)
+
+            arranca = 1
+            document.getElementsByClassName("player-cards")[1].hidden = false
+            jugador.j1.cartas = [...data.j1.cartas];
+        }
+     });
+    
+    //var c = this.repartirCartas(this.equipoSegundo.jugador);
     // Y si aca en este codigo cuando reparte cartas, dejo que le reparta cartas solo al 1 j2?
 
     // c devuelve 34 tmb; valor del largo del mazo sin las 6 en juego
@@ -917,63 +903,6 @@ Ronda.prototype.logCantar = function (jugador, canto) {
 // Reparte las cartas para una nueva ronda
 //------------------------------------------------------------------
 
-// ojo aca tmb algo de repartir cartas con j1 y j2
-Ronda.prototype.repartirCartas = function (j1, j2) {
-    if (j1 === null || j1 === undefined) {
-        j1 = this.equipoPrimero.jugador;
-    }
-    if (j2 === null || j2 === undefined) {
-        j2 = this.equipoSegundo.jugador;
-    }
-    if (j2.esMano) {
-        var swap = j1;
-        j1 = j2;
-        j2 = swap;
-        swap = null;
-        // si j2 es mano j2 pasa a ser j1 y al reves
-    }
-    
-    j1.cartasEnMano = new Array();
-    j1.cartasJugadas = new Array();
-    j2.cartas = new Array();
-    //console.log("cartas jugador 1",j1.cartas) estas cartas son las que yo veo
-    //console.log("cartas jugador 2",j2.cartas) estas son las del jugador rival
-    j2.cartasEnMano = new Array();
-    //console.log("cartas en mano del jugador 2", j2.cartasEnMano)
-    j2.cartasJugadas = new Array();
-    //console.log("largo de las cartas jugadas", j2.cartasJugadas)
-    var maso = this.generarBaraja();
-    //console.log("maso", maso) // devuelve lo mismo que baraja
-    enviarCartas(j2.cartas)
-    
-    //console.log("mande a rival sus cartas", j2.cartas) // mando las cartas que le deberian aparecer
-    
-    for (var i = 1; i <= 6; i++) {
-        var _log = document.getElementById("log");
-        var index = getRandomInt(0, (maso.length - 1));
-        if (i % 2 === 0) {
-            j2.cartas.push(maso[index]);
-            j2.cartasEnMano.push(maso[index]);
-            _rondaActual = this;
-            if (Debug)
-                _log.innerHTML = '<b>' + j2.nombre + ' tiene un :</b> ' + maso[index].getNombre() + '(' + maso[index].probGanar() + ') <br /> ' + _log.innerHTML;
-        } else {
-            j1.cartas.push(maso[index]);
-            
-            j1.cartasEnMano.push(maso[index]);
-        }
-        maso.splice(index, 1);
-        //console.log({data: (maso[index])})
-        //console.log((maso[index]), "cartas") devuelve algo raro
-        // lo pushea 6 veces y en cada una saca la carta que le da a un jugador
-        // aca puedo hacer un emit a las 3 cartas pusheadas, para que al otro le lleguen las otras 3
-        // nevesito encontrar donde se meten esas 3 cartas
-
-
-    }
-    return maso.length;
-
-}
 //------------------------------------------------------------------
 // Genera una baraja
 //------------------------------------------------------------------
