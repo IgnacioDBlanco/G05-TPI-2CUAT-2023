@@ -80,9 +80,9 @@ app.use(session({secret: '123456', resave: true, saveUninitialized: true}));
 
 
 app.get('/',async function(req, res){
-    data =await fetchClima();
-    console.log(data) 
-    res.render('inicio' ,{place:place,temp:temp})
+    /*data = await fetchClima();
+    console.log(data)*/ 
+    res.render('inicio' , /*{place:place,temp:temp}*/)
 }); 
 // fijarse el dom para ver lo del CORB
 app.post('/register', async function(req, res){
@@ -152,10 +152,10 @@ app.get('/reglas', function(req, res){
 app.get('/anotador', function(req, res){
     res.render('anotador', null);
 });
-app.get('/inicio', async function(req, res){
-    data =await fetchClima();
-    console.log(data)
-    res.render('inicio', {place:place,temp:temp});
+app.get('/inicio', function(req, res){
+   /* data =await fetchClima();
+    console.log(data)*/
+    res.render('inicio'/*, {place:place, temp:temp}*/);
 });
 app.get('/truco_online', function(req, res){
     console.log(req.query); 
@@ -201,10 +201,6 @@ app.put('/eliminar_sala', async function(req, res){
 });
 
 
-app.get('/inicio', function(req, res){
-    res.render('inicio')});
-
-
 app.post('/crear_sala', async function(req, res){
     await MySQL.realizarQuery(`insert into salas (name_sala) values ("${req.body.sala }")`)
     
@@ -225,7 +221,7 @@ app.get('/salas', async function(req, res){
 });
 
 
-async function fetchClima()
+/*async function fetchClima()
     {
      try {
         const response = await fetch("http://api.weatherstack.com/current?access_key=17e37d155baf026cabad4d2fe2ab0912&query=Buenos%20Aires",{
@@ -240,10 +236,23 @@ async function fetchClima()
       catch (error) {
         console.error("Error:", error);
       }
+    };*/
+
+/*async function fetchClima()
+    {
+    try {
+        const response = ("http://api.weatherstack.com/current?access_key=17e37d155baf026cabad4d2fe2ab0912&query=Buenos%20Aires",{
+        });
+        temp="Temperatura = "+ response.current.temperature+"°C"
+        place=response.location.name
+        data = {place:place , temp:temp};
+        return data
+      } 
+      catch (error) {
+        console.error("Error:", error);
+      }
     };
-
-
-
+*/
 io.on("connection", (socket) => {
     const req = socket.request;
     socket.on('incoming-message', data => { 
@@ -263,7 +272,7 @@ io.on("connection", (socket) => {
     socket.on('arranca-partida', c => {
         user = req.session.mail
         repartirCartas()
-        io.to(req.session.sala).emit("arranco-partida", { data : user,})
+        io.to(req.session.sala).emit("arranco-partida", { data : user, repartir})
         
     });
     
@@ -372,6 +381,7 @@ function repartirCartas() {
         } else {
             repartir.j1.cartas.push(maso[index]);
             
+            
             repartir.j1.cartasEnMano.push(maso[index]);
         }
         maso.splice(index, 1);
@@ -381,7 +391,7 @@ function repartirCartas() {
         // aca puedo hacer un emit a las 3 cartas pusheadas, para que al otro le lleguen las otras 3
         // nevesito encontrar donde se meten esas 3 cartas
     }
-    console.log("CARTAS", repartir);
+    console.log("CARTAS1", repartir);
     return repartir;
 }
 

@@ -162,7 +162,7 @@ flex-direction: column;
     width: 500px;
     height: 500px;
     margin: 65px auto;
-    margin-right: 230px;
+    /*margin-right: 230px;*/
     display: -webkit-box;
     display: flex;
     -webkit-box-orient: vertical;
