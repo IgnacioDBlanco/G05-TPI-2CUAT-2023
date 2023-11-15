@@ -10,11 +10,7 @@
 </div>
     </div>
     <h1 class="titulo">TRUCO IX</h1>
-        <tr>
-            {{#each url}}
-                <td> {{this.url}}  </td>
-            {{/each}}
-    </tr>
+    <div class="container-inicio">
     <div class="login-form">
         <div onclick="iralogin()" class="menu">
             <div class="lateralizquierdo">
@@ -63,6 +59,17 @@
                 <h2 class="yellowtext">Anotador</h2>
                 <p class="pi">Contabilizá los puntos de partidas reales.</p>
             </div>
-        </div>
+        </div> 
+    </div>
+    <div class="div-api">
+        <table class="api">
+        <tr>
+            <td class="temperatura">{{place}}</td>
+        </tr>
+        <tr>
+            <td class="temperatura">{{temp}}</td>
+        </tr>
+        </table>
+    </div>
     </div>
 </body>
