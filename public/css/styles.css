@@ -506,6 +506,9 @@ background-color: #000000;
 
 .header-chat {
   height: 10%;
+  background-image: url("/images/fondo-header.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 
