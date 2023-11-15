@@ -91,11 +91,11 @@ function Naipe(v, p, n, t) {
 
 }
 
-Naipe.prototype.getCSS = function () {
+getCSS = function (carta) {
 
     var x = 97.5;
     var y = 150;
-    switch (this.palo) {
+    switch (carta.palo) {
         case 'Oro':
             y = y * 0;
             break;
@@ -109,7 +109,7 @@ Naipe.prototype.getCSS = function () {
             y = y * -3;
             break;
     }
-    x = x * -1 * (this.numero - 1);
+    x = x * -1 * (carta.numero - 1);
     return x.toString() + 'px ' + y.toString() + 'px';
 }
 
@@ -152,20 +152,21 @@ function Jugador() {
 
 Jugador.prototype.sayCartasEnMano = function () { // poruqe le pone prototype?
     var html = '';
+    console.log(this.cartasEnMano)
     for (var i = 0; i < this.cartasEnMano.length; i++) {
         if (this.cartasEnMano[i] !== undefined) {
             //html += '<li class="naipe naipe-boca-abajo"></li>'; que lo mire tolo
             if (!this.esHumano) { // mostras las cartas boca abajo?
                 html += '<li class="naipe naipe-boca-abajo"></li>';
             } else {
-                var estilo = ' style="background-position: ' + this.cartasEnMano[i].getCSS() + ';"';
+                var estilo = ' style="background-position: ' + getCSS(this.cartasEnMano[i]) + ';"';
                 html += '<li><a href="#" class="naipe naipe-humano"  data-naipe-index="' + i + '" ' + estilo + '></a></li>';
             }
         }
     }
     if (this.esHumano) {
         $('#player-one').find('.player-cards').html(html);
-        document.getElementsByClassName("player-cards")[1].hidden = true
+        //document.getElementsByClassName("player-cards")[1].hidden = true
     } else {
         $('#player-two').find('.player-cards').html(html);
     }
@@ -357,17 +358,22 @@ Ronda.prototype.iniciar = function () {
     
     socket.on("arranco-partida", data => {
         if (arranca == -1) {
-            equipo2=data.data
-            console.log(data.data.user)
-
+            console.log(localStorage.getItem("user"))
             arranca = 1
-            document.getElementsByClassName("player-cards")[1].hidden = false
-            console.log(data.j1.cartas)
-            jugador1.this.cartas = [...data.j1.cartas];
-            jugador2.cartas = [...data.j2.cartas];
+            jugador1.cartas = [...data.repartir];
+            jugador2.cartas = [...data.repartir2];
+            jugador1.cartasEnMano = [...data.repartir];
+            jugador2.cartasEnMano = [...data.repartir2];
+
+            jugador1.sayCartasEnMano();
+            
             console.log(jugador1)
+            console.log(jugador2)
+            socket.emit('mando-cartas', {data : jugador2} )
+            //document.getElementsByClassName("player-cards")[1].hidden = false
         }
      });
+     
     
     //var c = this.repartirCartas(this.equipoSegundo.jugador);
     // Y si aca en este codigo cuando reparte cartas, dejo que le reparta cartas solo al 1 j2?

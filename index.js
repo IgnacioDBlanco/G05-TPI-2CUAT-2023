@@ -271,10 +271,14 @@ io.on("connection", (socket) => {
     
     socket.on('arranca-partida', c => {
         user = req.session.mail
-        repartirCartas()
-        io.to(req.session.sala).emit("arranco-partida", { data : user, repartir})
+        repartir = repartirCartas()
+        io.to(req.session.sala).emit("arranco-partida", {data : user, repartir: repartir.j1.cartas, repartir2: repartir.j2.cartas})
         
     });
+    socket.on("mando-cartas", data => {
+        console.log(data.data)
+        io.to(req.session.sala).emit("mandar-cartas", {jugador2:data.data, yo: req.session.mail})
+     })
     
     /*socket.on('cartas-rival', data => {
         console.log("cartas mias", data)
@@ -380,8 +384,6 @@ function repartirCartas() {
             _rondaActual = this;
         } else {
             repartir.j1.cartas.push(maso[index]);
-            
-            
             repartir.j1.cartasEnMano.push(maso[index]);
         }
         maso.splice(index, 1);
@@ -391,7 +393,7 @@ function repartirCartas() {
         // aca puedo hacer un emit a las 3 cartas pusheadas, para que al otro le lleguen las otras 3
         // nevesito encontrar donde se meten esas 3 cartas
     }
-    console.log("CARTAS1", repartir);
+    console.log("CARTAS1", repartir, repartir.j1.cartas);
     return repartir;
 }
 
