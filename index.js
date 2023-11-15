@@ -79,10 +79,10 @@ app.use(session({secret: '123456', resave: true, saveUninitialized: true}));
 */
 
 
-app.get('/', function(req, res){
-    url = "http://api.weatherstack.com/current?access_key=17e37d155baf026cabad4d2fe2ab0912&query=Buenos%20Aires";
-    console.log(url[0])
-    res.render('inicio', {url:url})
+app.get('/',async function(req, res){
+    data =await fetchClima();
+    console.log(data) 
+    res.render('inicio' ,{place:place,temp:temp})
 }); 
 // fijarse el dom para ver lo del CORB
 app.post('/register', async function(req, res){
@@ -152,8 +152,10 @@ app.get('/reglas', function(req, res){
 app.get('/anotador', function(req, res){
     res.render('anotador', null);
 });
-app.get('/inicio', function(req, res){
-    res.render('inicio', null);
+app.get('/inicio', async function(req, res){
+    data =await fetchClima();
+    console.log(data)
+    res.render('inicio', {place:place,temp:temp});
 });
 app.get('/truco_online', function(req, res){
     console.log(req.query); 
@@ -221,6 +223,26 @@ app.get('/salas', async function(req, res){
     console.log(salas)
     res.render('salas', {salas: salas})    
 });
+
+
+async function fetchClima()
+    {
+     try {
+        const response = await fetch("http://api.weatherstack.com/current?access_key=17e37d155baf026cabad4d2fe2ab0912&query=Buenos%20Aires",{
+         
+        });
+        const result = await response.json();
+        temp="Temperatura = "+ result.current.temperature+"°C"
+        place=result.location.name
+        data = {place:place , temp:temp};
+        return data
+      } 
+      catch (error) {
+        console.error("Error:", error);
+      }
+    };
+
+
 
 io.on("connection", (socket) => {
     const req = socket.request;

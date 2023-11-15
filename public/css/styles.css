@@ -162,6 +162,7 @@ flex-direction: column;
     width: 500px;
     height: 500px;
     margin: 65px auto;
+    margin-right: 230px;
     display: -webkit-box;
     display: flex;
     -webkit-box-orient: vertical;
@@ -853,7 +854,23 @@ dialog{
   border: 5px solid darkolivegreen;
 }
 
+.container-inicio{
+  display: flex;
+  width: 100%;
+}
 
-.envido {
-  background-color: crimson;
+.div-api{
+display: flex;
+align-items: end;
+}
+
+.api{
+margin-bottom: 100px;
+margin-right: 50px;
+}
+
+.temperatura{
+  color: #fff;
+  font-size: x-large;
+  font-weight: 800;
 }
