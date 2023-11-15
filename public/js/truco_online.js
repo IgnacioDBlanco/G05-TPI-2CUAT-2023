@@ -348,9 +348,8 @@ Ronda.prototype.iniciar = function () {
         if (data.user != localStorage.getItem("user")) {
             arranca = 1
             equipo1 = localStorage.getItem("user")
-            console.log(equipo1)
-            //console.log("j1", jugador1)
-           // console.log("j2", jugador2)
+            console.log(equipo1, "equipo1")
+
             socket.emit('arranca-partida', data )
 
         }
@@ -359,12 +358,14 @@ Ronda.prototype.iniciar = function () {
     socket.on("arranco-partida", data => {
         if (arranca == -1) {
             equipo2=data.data
-            
-            console.log(data.data)
+            console.log(data.data.user)
 
             arranca = 1
             document.getElementsByClassName("player-cards")[1].hidden = false
-            jugador.j1.cartas = [...data.j1.cartas];
+            console.log(data.j1.cartas)
+            jugador1.this.cartas = [...data.j1.cartas];
+            jugador2.cartas = [...data.j2.cartas];
+            console.log(jugador1)
         }
      });
     
