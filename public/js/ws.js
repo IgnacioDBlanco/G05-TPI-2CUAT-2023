@@ -38,6 +38,18 @@ socket.on("movimiento-oponente", data => {
     }
  });
 
+
+ socket.on("mandar-cartas", data => {
+    console.log(data)
+    if (localStorage.getItem("user") == data.yo) { //Soy el jugador1        
+    }
+    else{ //Soy el 2
+        console.log(data.jugador2)
+        sayCartasEnMano(data.jugador2)
+    }
+ });
+
+
  /*socket.on("cartas-mias", data => {
     if (envieCartas == -1) {
        // console.log("cartas mias", data.data.data) // le tiene que llegar solo a el rival
@@ -84,3 +96,25 @@ y interpreta el mensaje
 
 todos los eventos tienen que estar encerrados en el io.on que es de configuracion de conectarse a servidor
 */
+
+sayCartasEnMano = function (jugador) { // poruqe le pone prototype?
+    var html = '';
+    console.log(jugador.cartasEnMano)
+    for (var i = 0; i < jugador.cartasEnMano.length; i++) {
+        if (jugador.cartasEnMano[i] !== undefined) {
+            //html += '<li class="naipe naipe-boca-abajo"></li>'; que lo mire tolo
+            if (!jugador.esHumano) { // mostras las cartas boca abajo?
+                html += '<li class="naipe naipe-boca-abajo"></li>';
+            } else {
+                var estilo = ' style="background-position: ' + getCSS(jugador.cartasEnMano[i]) + ';"';
+                html += '<li><a href="#" class="naipe naipe-humano"  data-naipe-index="' + i + '" ' + estilo + '></a></li>';
+            }
+        }
+    }
+    if (jugador.esHumano) {
+        $('#player-one').find('.player-cards').html(html);
+        //document.getElementsByClassName("player-cards")[1].hidden = true
+    } else {
+        $('#player-two').find('.player-cards').html(html);
+    }
+}
