@@ -1,3 +1,5 @@
+const { get } = require("http");
+
 async function fetchLogin(data){
   try {
     const response = await fetch("/login", {
@@ -257,6 +259,35 @@ function iraReglas3() {
 function recargarSala(){
   location.href ='/salas';
 }
+
+async function clima() {
+  temp = "Temperatura: "+ await fetchClima()
+  console.log(temp)
+  divClima=document.getElementById("clima")
+  if (divClima){
+    divClima.innerHTML = temp
+  }
+}
+
+async function fetchClima(){
+  try {
+    const response = await fetch("http://ws.smn.gob.ar/map_items/weather", {
+      method: "get",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const result = await response.json();
+    let capi = result.find((ciudad)=> ciudad.name == "Capital Federal");
+    console.log(capi.weather.tempDesc);
+    return capi.weather.tempDesc
+  } catch (error) {
+    console.error("Error:", error);
+  }
+}
+
+
+
 
 /*const idbotontexto = document.getElementById("botontexto");
 const input = document.querySelector("input");

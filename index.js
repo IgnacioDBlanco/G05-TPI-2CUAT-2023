@@ -155,7 +155,8 @@ app.get('/anotador', function(req, res){
 app.get('/inicio', function(req, res){
    /* data =await fetchClima();
     console.log(data)*/
-    res.render('inicio'/*, {place:place, temp:temp}*/);
+    fetchClima()
+    res.render('inicio', {temp:temp}/*, {place:place, temp:temp}*/);
 });
 app.get('/truco_online', function(req, res){
     console.log(req.query); 
