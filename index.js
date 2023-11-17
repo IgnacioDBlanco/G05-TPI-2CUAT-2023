@@ -170,7 +170,9 @@ app.get('/reglas3', function(req, res){
     console.log(req.query); 
     res.render('reglas3', null); 
 });
-
+app.get('/clima', function(req, res){ 
+    res.render('clima', null); 
+});
 
 
 

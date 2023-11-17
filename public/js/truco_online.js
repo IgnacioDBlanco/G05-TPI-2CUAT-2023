@@ -218,7 +218,7 @@ Jugador.prototype.jugarCarta = function (index) {
         _log.innerHTML = '<b>' + this.nombre + ' juega un :</b> ' + carta.getNombre + '<br /> ' + _log.innerHTML;
         //Aca creo q deberiamos emitir la carta jugada
         this.cartasJugadas.push(carta);
-        //console.log(this.cartasJugadas)
+        console.log(this.cartasJugadas)
         this.cartasEnMano.splice(index, 1);
         return carta;
     }
@@ -285,8 +285,8 @@ Probabilidad.prototype.promedioTruco = function (cartas) {
 */
 // aca puede haber algo de que equipo es cada uno
 function Ronda(equipo1, equipo2) {
-    this.equipoPrimero = equipo1;
-    this.equipoSegundo = equipo2;
+    this.equipoPrimero1 = equipo1;
+    this.equipoSegundo2 = equipo2;
     this.numeroDeMano = 0;
     this.jugadasEnMano = 0;
     this.equipoEnTurno = null;
@@ -340,19 +340,25 @@ Ronda.prototype.pasarTurno = function () {
 //------------------------------------------------------------------
 
 Ronda.prototype.iniciar = function () {
-    this.equipoPrimero.manos = 0;
-    this.equipoSegundo.manos = 0;
-    this.equipoPrimero.jugador.puntosGanadosEnvido = 0;
-    this.equipoSegundo.jugador.puntosGanadosEnvido = 0;
+    //this.equipoPrimero.manos = 0;
+   // this.equipoSegundo.manos = 0;
+    //this.equipoPrimero.jugador.puntosGanadosEnvido = 0;
+    //this.equipoSegundo.jugador.puntosGanadosEnvido = 0;
     socket.on("usuario-unido", data => {
         if (data.user != localStorage.getItem("user")) {
             console.log("data",data.user) // data.user es con el que te unis
             console.log("local",localStorage.getItem("user")) // user es con el que se une la otr persona
+            equipo1 = data.user // EL QUE SE UNE SEGUNDO VA A SER J1
+            equipo2 = localStorage.getItem("user") // EL QUE SE UNE PRIMERO VA A SER J2
+            this.equipoSegundo2 = equipo2
+            this.equipoPrimero1 = equipo1
             arranca = 1
             socket.emit('arranca-partida', data )
 
         }
     });
+    /* EL SEGUNDO QUE SE UNE ARRANCA TIRANDO LA CARTA DEL JUGADOR QUE PRIMERO SE UNIO, CUANDO EL DEBERIA SER MANO Y TIRAR SU CARTA PRIMERO
+    (ERROR AL DECLARAR ORDEN DE EQUIPO PRIMER Y EQUIPOSEGUNDO)  */
     // el segundo que se une tiene que ser j2
     socket.on("arranco-partida", data => {
         if (arranca == -1) {
@@ -364,18 +370,11 @@ Ronda.prototype.iniciar = function () {
 
             jugador1.sayCartasEnMano();
             
-            equipo1 = data.user
-            equipo2 = localStorage.getItem("user")
-            this.jugador1.nombre = equipo1
-            this.jugador2.nombre = equipo2
             this.equipoPrimero = jugador1
             this,equipoSegundo = jugador2
-            new Ronda(this.equipoPrimero, this.equipoSegundo);
+            // new Ronda(this.equipoPrimero, this.equipoSegundo);
 
-            console.log(this.jugador.nombre, "equipo1")
-            console.log(this.jugador.nombre, "equipo2")
-
-            socket.emit('mando-cartas', {data : jugador2, j2: equipo2, j1:equipo1} )
+            socket.emit('mando-cartas', {data : jugador2} )
             //document.getElementsByClassName("player-cards")[1].hidden = false
         }
      });
@@ -741,10 +740,10 @@ Ronda.prototype.continuarRonda = function (gano) {
         var repartir = function () {
             _log.innerHTML = 'Resultado Ronda: <b><i>' + ganador.nombre + '</i></b>' + '<br /> ' + _log.innerHTML;
 
-            if (_rondaActual.envidoStatsFlag && _rondaActual.equipoPrimero.jugador.cartasJugadas.length === 3) {
+           /* if (_rondaActual.envidoStatsFlag && _rondaActual.equipoPrimero.jugador.cartasJugadas.length === 3) {
                 var puntosEnv = _rondaActual.equipoPrimero.jugador.getPuntosDeEnvido(_rondaActual.equipoPrimero.jugador.cartasJugadas);
                 _rondaActual.equipoSegundo.jugador.statsEnvido(_rondaActual.cantos, _rondaActual.quienCanto, puntosEnv);
-            }
+            }*/
             _partidaActual.continuar();
         }
 
@@ -1198,7 +1197,7 @@ $(document).ready(function () {
     audio.fx['V'] = a;
     //Comienza la acción
     _partidaActual = new Partida();
-    _partidaActual.iniciar('Jugador 1', 'Computadora');
+    _partidaActual.iniciar(this.equipoPrimero1, this.equipoSegundo2);
 
     var _inputsName = $('.human-name');
     var _nAnterior = '';
