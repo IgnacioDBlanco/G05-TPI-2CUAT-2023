@@ -861,9 +861,11 @@ dialog{
   width: 100%;
 }
 
-.div-api{
+#clima{
 display: flex;
 align-items: end;
+margin-right: 50px;
+margin-bottom: 100px;
 }
 
 .api{
