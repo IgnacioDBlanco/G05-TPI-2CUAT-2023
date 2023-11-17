@@ -342,23 +342,20 @@ Ronda.prototype.pasarTurno = function () {
 Ronda.prototype.iniciar = function () {
     this.equipoPrimero.manos = 0;
     this.equipoSegundo.manos = 0;
-    this.equipoSegundo.jugador.estrategiaDeJuego = null;
     this.equipoPrimero.jugador.puntosGanadosEnvido = 0;
     this.equipoSegundo.jugador.puntosGanadosEnvido = 0;
     socket.on("usuario-unido", data => {
         if (data.user != localStorage.getItem("user")) {
+            console.log("data",data.user) // data.user es con el que te unis
+            console.log("local",localStorage.getItem("user")) // user es con el que se une la otr persona
             arranca = 1
-            equipo1 = localStorage.getItem("user")
-            console.log(equipo1, "equipo1")
-
             socket.emit('arranca-partida', data )
 
         }
     });
-    
+    // el segundo que se une tiene que ser j2
     socket.on("arranco-partida", data => {
         if (arranca == -1) {
-            console.log(localStorage.getItem("user"))
             arranca = 1
             jugador1.cartas = [...data.repartir];
             jugador2.cartas = [...data.repartir2];
@@ -367,9 +364,18 @@ Ronda.prototype.iniciar = function () {
 
             jugador1.sayCartasEnMano();
             
-            console.log(jugador1)
-            console.log(jugador2)
-            socket.emit('mando-cartas', {data : jugador2} )
+            equipo1 = data.user
+            equipo2 = localStorage.getItem("user")
+            this.jugador1.nombre = equipo1
+            this.jugador2.nombre = equipo2
+            this.equipoPrimero = jugador1
+            this,equipoSegundo = jugador2
+            new Ronda(this.equipoPrimero, this.equipoSegundo);
+
+            console.log(this.jugador.nombre, "equipo1")
+            console.log(this.jugador.nombre, "equipo2")
+
+            socket.emit('mando-cartas', {data : jugador2, j2: equipo2, j1:equipo1} )
             //document.getElementsByClassName("player-cards")[1].hidden = false
         }
      });
