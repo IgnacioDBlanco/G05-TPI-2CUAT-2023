@@ -600,10 +600,10 @@ html, body, .game-main {
 }
 .game-main {
 	display: inline-block;
-	width:62%;
+	width: 100%;
     min-width:450px;
 	vertical-align:top;
-    margin-left: 200px;
+    margin-left: 0px;
 }
 ul li {
     display:inline-block!important;
@@ -718,7 +718,7 @@ ul li {
 	height:100%;
 	border:1px solid white;
 	width:40%;
-	margin:auto;
+	margin-left: 55px;
     color: #fff;
 }
 #game-score td,
@@ -759,8 +759,8 @@ ul li {
 .game-deck {
 	height:180px; 
 	position:relative;
-    margin-top: 10%;
-	margin-left:10%;
+    margin-top: 5%;
+	margin-left:25%;
 }
 .game-deck .card {
 	width:98px; 
