@@ -7,6 +7,7 @@
 
 var jugador1
 var jugador2
+let miPartida
 
 jugador2 = new Jugador();
 jugador1 = new Jugador();
@@ -369,29 +370,28 @@ Ronda.prototype.iniciar = function () {
             jugador2.cartasEnMano = [...data.repartir2];
 
             jugador1.sayCartasEnMano();
+        
+            _partidaActual = new Partida();
+            _partidaActual.iniciar(this.equipoPrimero, this.equipoSegundo);
             
-            this.equipoPrimero = jugador1
-            this,equipoSegundo = jugador2
-            // new Ronda(this.equipoPrimero, this.equipoSegundo);
-
+            this.equipoPrimero.jugador = jugador1
+            this.equipoSegundo.jugador = jugador2
+            this.equipoPrimero.esMano = true
+            this.equipoSegundo.esMano = false
+            this.equipoPrimero.esSuTurno = true
+            this.equipoSegundo.esSuTurno = false
             socket.emit('mando-cartas', {data : jugador2} )
             //document.getElementsByClassName("player-cards")[1].hidden = false
         }
      });
-     
-    
-    //var c = this.repartirCartas(this.equipoSegundo.jugador);
-    // Y si aca en este codigo cuando reparte cartas, dejo que le reparta cartas solo al 1 j2?
 
-    // c devuelve 34 tmb; valor del largo del mazo sin las 6 en juego
     if (this.equipoPrimero.esMano) {
         this.equipoPrimero.esSuTurno = true;
-        this.equipoEnTurno = this.equipoPrimero;
+        this.equipoEnTurno = this.equipoPrimero
     } else {
         this.equipoSegundo.esSuTurno = true;
         this.equipoEnTurno = this.equipoSegundo;
     }
-    this.equipoPrimero.jugador.sayCartasEnMano();
     if (Debug)
         //_log.innerHTML = this.equipoPrimero.jugador.nombre + ' puntos para el envido: ' + this.equipoPrimero.jugador.getPuntosDeEnvido(this.equipoPrimero.jugador.cartas) + '<br />' + _log.innerHTML;
     this.equipoSegundo.jugador.sayCartasEnMano();
@@ -1143,14 +1143,14 @@ Partida.prototype.continuar = function () {
                 "TODO: " + this.equipoSegundo.jugador.prob.promedioPuntos(this.equipoSegundo.jugador.realEnvido.concat(this.equipoSegundo.jugador.revire, this.equipoSegundo.jugador.envidoS))
             );
 
-        var ronda = new Ronda(this.equipoPrimero, this.equipoSegundo);
+        var ronda = new Ronda(this.equipoPrimero1, this.equipoSegundo2);
         ronda.iniciar();
         if (ronda.enEspera) {
             break;
         }
 
     }
-    if ((this.equipoPrimero.puntos >= limitePuntaje || this.equipoSegundo.puntos >= limitePuntaje)) {
+    if ((this.equipoPrimero1.puntos >= limitePuntaje || this.equipoSegundo2.puntos >= limitePuntaje)) {
         swal({
             title: "Ganaste",
             icon: "success",
@@ -1196,8 +1196,7 @@ $(document).ready(function () {
     a.load();
     audio.fx['V'] = a;
     //Comienza la acción
-    _partidaActual = new Partida();
-    _partidaActual.iniciar(this.equipoPrimero1, this.equipoSegundo2);
+
 
     var _inputsName = $('.human-name');
     var _nAnterior = '';
